@@ -181,7 +181,7 @@ export default function ProblemPage() {
             gutterSize={8}
           >
             {/* Code Editor */}
-            <div className="overflow-hidden p-4">
+            <div className="h-full overflow-hidden p-4">
               <CodeEditor
                 value={code}
                 onChange={handleCodeChange}

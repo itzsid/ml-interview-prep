@@ -13,7 +13,7 @@ export default function CodeEditor({ value, onChange, height = '400px' }: CodeEd
   }, [onChange]);
 
   return (
-    <div className="border border-dark-700 rounded-lg overflow-hidden">
+    <div className="h-full border border-dark-700 rounded-lg overflow-hidden">
       <Editor
         height={height}
         defaultLanguage="python"
