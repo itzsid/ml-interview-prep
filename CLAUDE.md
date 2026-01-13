@@ -1,174 +1,220 @@
-# ML Interview Prep - Project Guide
+# ML Interview Prep - Claude Project Guide
 
-## Overview
+This file contains context and instructions for Claude to work on this project effectively.
 
-This is a LeetCode/HelloInterview-style web application for machine learning interview preparation. It features browser-based Python execution, progress tracking, and organized learning paths.
+## Project Overview
+
+This is a LeetCode/HelloInterview-style web application for ML interview preparation. Users can:
+- Read problem descriptions and theory introductions
+- Write Python code in a Monaco editor
+- Execute code in-browser via Pyodide (WebAssembly)
+- Run tests and see pass/fail results
+- Track progress across sections
+
+**Live site:** https://itzsid.github.io/ml-interview-prep/
+**Repository:** https://github.com/itzsid/ml-interview-prep
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS
-- **Code Editor**: Monaco Editor (@monaco-editor/react)
-- **Python Execution**: Pyodide (WebAssembly-based Python with NumPy support)
-- **State Management**: React Context + localStorage
-- **Routing**: React Router v6
-- **Testing**: Vitest + React Testing Library
+| Technology | Purpose | Version |
+|------------|---------|---------|
+| React | UI framework | 18.x |
+| TypeScript | Type safety | 5.6 |
+| Vite | Build tool | 5.x |
+| Tailwind CSS | Styling | 3.x |
+| Monaco Editor | Code editor | 4.6 |
+| Pyodide | In-browser Python | 0.26 |
+| React Router | Routing | 6.x |
+| Vitest | Testing | 2.x |
 
 ## Project Structure
 
 ```
 src/
 ├── components/           # Reusable UI components
-│   ├── Layout/          # Header, Sidebar, Layout wrapper
-│   ├── CodeEditor/      # Monaco editor wrapper
-│   ├── Console/         # Output display
-│   ├── ProblemView/     # Problem description, examples, hints
-│   ├── TestRunner/      # Test results display
-│   └── Progress/        # Progress bar components
+│   ├── Layout/
+│   │   ├── Header.tsx   # Top navigation with progress
+│   │   ├── Sidebar.tsx  # Section navigation
+│   │   └── Layout.tsx   # Main layout wrapper
+│   ├── CodeEditor/
+│   │   └── CodeEditor.tsx   # Monaco editor wrapper
+│   ├── Console/
+│   │   └── Console.tsx      # Output/debug console
+│   ├── ProblemView/
+│   │   ├── ProblemDescription.tsx  # Markdown renderer
+│   │   ├── Examples.tsx            # Input/output examples
+│   │   └── Hints.tsx               # Progressive hints + solution
+│   ├── TestRunner/
+│   │   └── TestResults.tsx  # Pass/fail display
+│   └── Progress/
+│       └── ProgressBar.tsx  # Progress indicator
 ├── context/
-│   └── ProgressContext.tsx  # Global progress state
+│   └── ProgressContext.tsx  # Global progress state (localStorage)
 ├── data/
-│   ├── sections.ts      # Section definitions with introductions
-│   └── problems/        # Problem definitions by section
+│   ├── sections.ts          # Section definitions with intros
+│   └── problems/            # Problem definitions by section
+│       ├── index.ts         # Exports all problems
+│       ├── python-basics.ts
+│       ├── data-preprocessing.ts
+│       ├── supervised-learning.ts
+│       ├── unsupervised-learning.ts
+│       ├── deep-learning.ts
+│       └── model-evaluation.ts
 ├── hooks/
 │   ├── usePyodide.ts    # Python execution hook
-│   └── useProgress.ts   # Progress tracking hook
+│   └── useProgress.ts   # Progress tracking (if needed separately)
 ├── pages/
 │   ├── HomePage.tsx     # Landing page with section cards
 │   ├── SectionPage.tsx  # Section intro + problem list
-│   └── ProblemPage.tsx  # Split-pane coding interface
+│   └── ProblemPage.tsx  # Main coding interface (split-pane)
 ├── types/
 │   └── index.ts         # TypeScript interfaces
 └── __tests__/           # Test files
 ```
 
+## Key Files to Understand
+
+### Data Layer
+- **`src/data/sections.ts`** - Defines the 6 learning sections with titles, descriptions, introductions (markdown), and problem IDs
+- **`src/data/problems/*.ts`** - Problem definitions with descriptions, starter code, test cases, hints, solutions
+
+### State Management
+- **`src/context/ProgressContext.tsx`** - React Context for tracking problem completion, saved code, stored in localStorage under key `ml-interview-progress`
+
+### Python Execution
+- **`src/hooks/usePyodide.ts`** - Loads Pyodide, executes user code, runs test cases, captures stdout/stderr
+
+### Main UI
+- **`src/pages/ProblemPage.tsx`** - The main coding interface with split panes (problem description | code editor + console)
+
 ## Commands
 
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Run tests
-npm test
-
-# Preview production build
-npm run preview
+npm install      # Install dependencies
+npm run dev      # Start dev server (http://localhost:5173)
+npm run build    # Production build
+npm test         # Run tests
+npm run deploy   # Build and deploy to GitHub Pages
 ```
-
-## Key Features
-
-### 1. Browser-Based Python Execution
-- Uses Pyodide (CPython compiled to WebAssembly)
-- NumPy is pre-loaded for ML operations
-- Code runs entirely client-side, no backend required
-
-### 2. Problem Structure
-Each problem has:
-- Description (Markdown)
-- Examples with input/output
-- Starter code template
-- Test cases (visible and hidden)
-- Progressive hints
-- Solution (revealed after hints)
-
-### 3. Progress Tracking
-- Stored in localStorage under key `ml-interview-progress`
-- Tracks: problem status, saved code, last attempt timestamp
-- Auto-saves code changes
-
-### 4. Test Runner
-- Extracts function name from starter code
-- Runs user code against test cases
-- Shows pass/fail with expected vs actual values
-- Hidden tests prevent hardcoding answers
-
-## Adding New Problems
-
-1. Create/edit file in `src/data/problems/[section].ts`
-2. Follow the `Problem` interface:
-
-```typescript
-{
-  id: 'unique-problem-id',
-  title: 'Problem Title',
-  section: 'section-id',
-  difficulty: 'easy' | 'medium' | 'hard',
-  description: '## Markdown description...',
-  examples: [{ input: '...', output: '...', explanation: '...' }],
-  starterCode: 'import numpy as np\n\ndef solution():\n    pass',
-  testCases: [
-    { id: '1', description: 'Test name', input: '[1,2,3]', expected: '6', hidden: false }
-  ],
-  hints: ['Hint 1', 'Hint 2'],
-  solution: '# Solution code'
-}
-```
-
-3. Add problem ID to the section's `problems` array in `src/data/sections.ts`
-
-## Adding New Sections
-
-1. Add section to `src/data/sections.ts`:
-
-```typescript
-{
-  id: 'section-id',
-  title: 'Section Title',
-  description: 'Short description',
-  introduction: '# Markdown intro content...',
-  icon: '🔥',
-  problems: ['problem-id-1', 'problem-id-2']
-}
-```
-
-2. Create corresponding problem file in `src/data/problems/`
-
-## Test Case Format
-
-- `input`: JSON-parseable string representing function arguments
-  - Single arg: `'[1, 2, 3]'`
-  - Multiple args: `'([1,2], [3,4])'` (tuple format)
-- `expected`: String representation of expected output
-- Test runner handles numpy array conversion automatically
-
-## Pyodide Integration Notes
-
-- Pyodide loads asynchronously on first use
-- Loading state shown in UI while initializing
-- NumPy is pre-loaded; other packages can be added via `pyodide.loadPackage()`
-- Stdout/stderr captured and displayed in console
-- Code execution has no timeout (could be added for safety)
-
-## Styling Guidelines
-
-- Uses Tailwind CSS with custom color palette
-- Dark theme by default (`dark-*` colors)
-- Primary accent: green (`primary-*` colors)
-- Responsive design with sidebar navigation
 
 ## Common Tasks
 
-### Fix a bug in Python execution
-Edit `src/hooks/usePyodide.ts`
+### Adding a New Problem
 
-### Modify problem layout
-Edit `src/pages/ProblemPage.tsx` and components in `src/components/ProblemView/`
+1. Edit the appropriate file in `src/data/problems/[section].ts`
+2. Add a problem object following this interface:
 
-### Update progress tracking logic
-Edit `src/context/ProgressContext.tsx`
+```typescript
+{
+  id: 'unique-problem-id',           // URL-safe ID
+  title: 'Problem Title',
+  section: 'section-id',             // Must match section.id
+  difficulty: 'easy' | 'medium' | 'hard',
+  description: `## Markdown description...`,
+  examples: [
+    { input: 'np.array([1,2,3])', output: '6', explanation: 'Sum of elements' }
+  ],
+  starterCode: `import numpy as np
 
-### Add new test cases to existing problem
-Edit the appropriate file in `src/data/problems/`
+def function_name(arr):
+    # Your code here
+    pass
+`,
+  testCases: [
+    { id: '1', description: 'Test name', input: '[1,2,3]', expected: '6', hidden: false },
+    { id: '2', description: 'Hidden test', input: '[4,5,6]', expected: '15', hidden: true }
+  ],
+  hints: ['Hint 1', 'Hint 2'],
+  solution: `import numpy as np
+
+def function_name(arr):
+    return np.sum(arr)
+`
+}
+```
+
+3. Add the problem ID to the section's `problems` array in `src/data/sections.ts`
+
+### Adding a New Section
+
+1. Add to `src/data/sections.ts`:
+```typescript
+{
+  id: 'new-section-id',
+  title: 'Section Title',
+  description: 'Short description for cards',
+  introduction: `# Markdown intro with theory...`,
+  icon: '🔥',
+  problems: ['problem-1', 'problem-2']
+}
+```
+
+2. Create `src/data/problems/new-section.ts` with problem definitions
+3. Export from `src/data/problems/index.ts`
+
+### Test Case Format
+
+- **input**: JSON string representing function arguments
+  - Single arg: `'[1, 2, 3]'`
+  - Multiple args: `'([1,2], [3,4])'` (tuple)
+  - Dict arg: `'{"key": "value"}'`
+- **expected**: String representation of expected output
+- The test runner in `usePyodide.ts` handles numpy array conversion
+
+### Modifying the UI
+
+- **Layout changes**: `src/components/Layout/`
+- **Problem page layout**: `src/pages/ProblemPage.tsx` (uses react-split for panes)
+- **Editor settings**: `src/components/CodeEditor/CodeEditor.tsx`
+- **Styling**: Tailwind classes, theme colors in `tailwind.config.js`
+
+### Fixing Python Execution Issues
+
+The Python execution logic is in `src/hooks/usePyodide.ts`:
+- `runCode()` - Executes arbitrary Python code
+- `runTests()` - Runs test cases against user's function
+- Function name is extracted from starter code via regex
+
+## Deployment
+
+The site deploys to GitHub Pages via the `gh-pages` npm package:
+
+```bash
+npm run deploy   # Builds and pushes to gh-pages branch
+```
+
+The `base` path in `vite.config.ts` is set to `/ml-interview-prep/` for GitHub Pages.
+
+## Known Limitations
+
+1. **Pyodide loading time** - First load takes a few seconds to download WebAssembly
+2. **Limited Python packages** - Only numpy is pre-loaded; sklearn requires additional loading
+3. **No code execution timeout** - Long-running code can freeze the browser
+4. **localStorage only** - Progress doesn't sync across devices
+
+## Future Improvements to Consider
+
+- Add more ML packages (sklearn, pandas)
+- Implement code execution timeout
+- Add user authentication for cloud sync
+- Add problem difficulty filters
+- Add search functionality
+- Add code submission history
+- Add discussion/comments section
+- Add dark/light theme toggle
 
 ## Testing
 
-- Unit tests in `src/__tests__/`
-- Run with `npm test`
-- Tests cover: ProgressContext, problems data validation
-- Uses Vitest with jsdom environment
+Tests are in `src/__tests__/`:
+- `ProgressContext.test.tsx` - Progress state management
+- `problems.test.ts` - Problem data validation
+
+Run with: `npm test`
+
+## Architecture Decisions
+
+1. **Pyodide over backend** - Eliminates need for server, enables offline use
+2. **localStorage for progress** - Simple, no auth needed for MVP
+3. **Monaco Editor** - Feature-rich, familiar to developers
+4. **Tailwind CSS** - Rapid styling, consistent design system
+5. **React Context over Redux** - Simpler state management for this scale
