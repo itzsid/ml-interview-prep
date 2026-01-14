@@ -329,4 +329,167 @@ output_size = (input_size - kernel_size + 2 * padding) / stride + 1
     return (input_size - kernel_size + 2 * padding) // stride + 1
 `,
   },
+  {
+    id: 'conv2d-advanced',
+    title: 'Advanced 2D Convolution',
+    section: 'cnn',
+    difficulty: 'hard',
+    description: `
+## Advanced 2D Convolution
+
+Implement a full-featured 2D convolution with **padding**, **stride**, and **groups** support.
+
+### Parameters
+- **padding**: Zero-padding added to input borders
+- **stride**: Step size when sliding the kernel
+- **groups**: Split input/output channels into groups (used in depthwise separable convolutions)
+
+### Group Convolution
+When \`groups > 1\`:
+- Input channels are split into \`groups\` chunks
+- Output channels are split into \`groups\` chunks
+- Each group's input is convolved only with its corresponding kernel group
+- \`in_channels\` and \`out_channels\` must be divisible by \`groups\`
+
+### Special Cases
+- \`groups=1\`: Standard convolution
+- \`groups=in_channels=out_channels\`: Depthwise convolution (MobileNet)
+
+### Output Size Formula
+\`\`\`
+H_out = (H_in + 2*padding - kernel_height) // stride + 1
+W_out = (W_in + 2*padding - kernel_width) // stride + 1
+\`\`\`
+
+### Function Signature
+\`\`\`python
+def conv2d_advanced(input, kernel, padding=0, stride=1, groups=1):
+    # input: (batch, in_channels, H, W)
+    # kernel: (out_channels, in_channels//groups, kH, kW)
+    # output: (batch, out_channels, H_out, W_out)
+\`\`\`
+    `,
+    examples: [
+      {
+        input: 'input (1, 4, 5, 5), kernel (8, 2, 3, 3), groups=2',
+        output: 'output (1, 8, 3, 3)',
+        explanation: 'Groups=2: channels 0-1 use kernels 0-3, channels 2-3 use kernels 4-7',
+      },
+      {
+        input: 'input (1, 1, 5, 5), kernel (1, 1, 3, 3), padding=1, stride=2',
+        output: 'output (1, 1, 3, 3)',
+        explanation: '(5+2*1-3)//2+1 = 3',
+      },
+    ],
+    starterCode: `import numpy as np
+
+def conv2d_advanced(input, kernel, padding=0, stride=1, groups=1):
+    """
+    Advanced 2D convolution with padding, stride, and groups.
+
+    Args:
+        input: Input tensor (batch, in_channels, H, W)
+        kernel: Convolution kernels (out_channels, in_channels//groups, kH, kW)
+        padding: Zero-padding added to input (default: 0)
+        stride: Stride of the convolution (default: 1)
+        groups: Number of groups for grouped convolution (default: 1)
+
+    Returns:
+        output: Convolved tensor (batch, out_channels, H_out, W_out)
+    """
+    # Your code here
+    pass
+`,
+    testCases: [
+      {
+        id: '1',
+        description: 'Basic convolution with padding and stride',
+        input: '(np.ones((1, 1, 5, 5)), np.ones((1, 1, 3, 3)), 1, 2, 1)',
+        expected: '(1, 1, 3, 3)',
+        hidden: false,
+      },
+      {
+        id: '2',
+        description: 'Grouped convolution (groups=2)',
+        input: '(np.arange(32).reshape(1, 2, 4, 4).astype(float), np.ones((4, 1, 2, 2)), 0, 1, 2)',
+        expected: '(1, 4, 3, 3)',
+        hidden: false,
+      },
+      {
+        id: '3',
+        description: 'Depthwise convolution (groups=in_channels)',
+        input: '(np.ones((2, 3, 4, 4)), np.ones((3, 1, 2, 2)), 0, 1, 3)',
+        expected: '(2, 3, 3, 3)',
+        hidden: true,
+      },
+      {
+        id: '4',
+        description: 'Verify correct output values with groups',
+        input: 'verify_groups_output',
+        expected: 'True',
+        hidden: true,
+      },
+    ],
+    hints: [
+      'First, pad the input using np.pad() along the H and W dimensions',
+      'Calculate output dimensions: H_out = (H_padded - kH) // stride + 1',
+      'For groups: split input channels into chunks of size in_channels//groups',
+      'For groups: split kernels into chunks of size out_channels//groups',
+      'Convolve each input group with its corresponding kernel group',
+      'Concatenate results along the channel dimension',
+    ],
+    solution: `import numpy as np
+
+def conv2d_advanced(input, kernel, padding=0, stride=1, groups=1):
+    input = np.array(input, dtype=float)
+    kernel = np.array(kernel, dtype=float)
+
+    batch, in_channels, H, W = input.shape
+    out_channels, kernel_in_channels, kH, kW = kernel.shape
+
+    # Pad input
+    if padding > 0:
+        input = np.pad(input, ((0, 0), (0, 0), (padding, padding), (padding, padding)), mode='constant')
+
+    _, _, H_padded, W_padded = input.shape
+
+    # Calculate output dimensions
+    H_out = (H_padded - kH) // stride + 1
+    W_out = (W_padded - kW) // stride + 1
+
+    # Initialize output
+    output = np.zeros((batch, out_channels, H_out, W_out))
+
+    # Channels per group
+    in_channels_per_group = in_channels // groups
+    out_channels_per_group = out_channels // groups
+
+    for g in range(groups):
+        # Input channels for this group
+        in_start = g * in_channels_per_group
+        in_end = in_start + in_channels_per_group
+
+        # Output channels for this group
+        out_start = g * out_channels_per_group
+        out_end = out_start + out_channels_per_group
+
+        # Get the input slice for this group
+        input_group = input[:, in_start:in_end, :, :]
+
+        # Get the kernels for this group
+        kernel_group = kernel[out_start:out_end, :, :, :]
+
+        # Perform convolution for this group
+        for b in range(batch):
+            for oc in range(out_channels_per_group):
+                for i in range(H_out):
+                    for j in range(W_out):
+                        h_start = i * stride
+                        w_start = j * stride
+                        region = input_group[b, :, h_start:h_start+kH, w_start:w_start+kW]
+                        output[b, out_start + oc, i, j] = np.sum(region * kernel_group[oc])
+
+    return output
+`,
+  },
 ];

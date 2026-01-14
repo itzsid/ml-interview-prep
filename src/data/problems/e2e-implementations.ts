@@ -687,6 +687,386 @@ class VAE:
 `,
   },
   {
+    id: 'e2e-vqvae',
+    title: 'E2E: Vector Quantized VAE',
+    section: 'e2e-implementations',
+    difficulty: 'hard',
+    description: `
+## End-to-End VQ-VAE
+
+Implement a complete VQ-VAE (Vector Quantized Variational Autoencoder) with encoder, vector quantization, and decoder.
+
+### Architecture
+\`\`\`
+Encoder: x → z_e (continuous latents)
+           ↓
+Vector Quantization: z_e → z_q (discrete latents from codebook)
+           ↓
+Decoder: z_q → x_reconstructed
+\`\`\`
+
+### Key Difference from VAE
+- VAE: Continuous latent space with KL regularization
+- VQ-VAE: Discrete latent space using learned codebook
+
+### Vector Quantization
+1. Encoder outputs continuous vectors z_e
+2. Find nearest codebook entry for each spatial position
+3. Replace z_e with quantized z_q from codebook
+4. Use straight-through estimator for gradients
+
+### Loss Function
+\`\`\`
+L = L_reconstruction + L_codebook + β * L_commitment
+
+L_reconstruction = ||x - x_hat||²
+L_codebook = ||sg[z_e] - e||²  (moves codebook toward encoder output)
+L_commitment = ||z_e - sg[e]||²  (commits encoder to codebook)
+\`\`\`
+Where sg[] is stop-gradient.
+
+### Codebook EMA Update (Alternative)
+Instead of gradient updates, codebook can be updated with exponential moving average:
+\`\`\`
+N_i = γ * N_i + (1 - γ) * n_i     (count of assignments)
+m_i = γ * m_i + (1 - γ) * sum(z_e assigned to i)
+e_i = m_i / N_i
+\`\`\`
+
+### Task
+Implement encoder, vector quantization layer, decoder, and all loss components.
+    `,
+    examples: [
+      {
+        input: 'VQVAE(input_dim=784, num_embeddings=512, embedding_dim=64)',
+        output: 'Reconstructed images + discrete codes',
+        explanation: 'Full VQ-VAE forward pass',
+      },
+    ],
+    starterCode: `import numpy as np
+
+class VectorQuantizer:
+    def __init__(self, num_embeddings: int, embedding_dim: int):
+        """
+        Vector Quantization layer.
+
+        Args:
+            num_embeddings: Size of codebook (K)
+            embedding_dim: Dimension of each embedding
+        """
+        np.random.seed(42)
+        # Initialize codebook with small random values
+        self.embedding = np.random.randn(num_embeddings, embedding_dim) * 0.1
+        self.num_embeddings = num_embeddings
+        self.embedding_dim = embedding_dim
+
+    def quantize(self, z_e: np.ndarray) -> tuple:
+        """
+        Quantize encoder output to nearest codebook entries.
+
+        Args:
+            z_e: Encoder output (batch, height, width, embedding_dim)
+
+        Returns:
+            z_q: Quantized vectors (same shape as z_e)
+            indices: Codebook indices (batch, height, width)
+            distances: Distances to nearest embeddings
+        """
+        # Your code here
+        pass
+
+    def compute_loss(self, z_e: np.ndarray, z_q: np.ndarray, beta: float = 0.25) -> dict:
+        """
+        Compute VQ losses.
+
+        Args:
+            z_e: Encoder output
+            z_q: Quantized vectors
+            beta: Commitment loss weight
+
+        Returns:
+            Dictionary with codebook_loss and commitment_loss
+        """
+        # Your code here
+        pass
+
+
+class VQVAE:
+    def __init__(self, input_channels: int, hidden_dim: int,
+                 num_embeddings: int, embedding_dim: int):
+        """
+        Initialize VQ-VAE.
+
+        Args:
+            input_channels: Number of input channels
+            hidden_dim: Hidden layer dimension
+            num_embeddings: Codebook size
+            embedding_dim: Embedding dimension
+        """
+        np.random.seed(42)
+
+        # Encoder: conv layers to get spatial feature maps
+        self.enc_conv1_w = np.random.randn(hidden_dim, input_channels, 4, 4) * 0.1
+        self.enc_conv1_b = np.zeros(hidden_dim)
+        self.enc_conv2_w = np.random.randn(embedding_dim, hidden_dim, 4, 4) * 0.1
+        self.enc_conv2_b = np.zeros(embedding_dim)
+
+        # Vector Quantizer
+        self.vq = VectorQuantizer(num_embeddings, embedding_dim)
+
+        # Decoder: transposed conv to reconstruct
+        self.dec_conv1_w = np.random.randn(hidden_dim, embedding_dim, 4, 4) * 0.1
+        self.dec_conv1_b = np.zeros(hidden_dim)
+        self.dec_conv2_w = np.random.randn(input_channels, hidden_dim, 4, 4) * 0.1
+        self.dec_conv2_b = np.zeros(input_channels)
+
+        self.embedding_dim = embedding_dim
+
+    def encode(self, x: np.ndarray) -> np.ndarray:
+        """
+        Encode input to continuous latent representation.
+
+        Args:
+            x: Input (batch, channels, height, width)
+
+        Returns:
+            z_e: Encoder output (batch, height', width', embedding_dim)
+        """
+        # Your code here (simplified: use strided conv or just reshape for demo)
+        pass
+
+    def decode(self, z_q: np.ndarray) -> np.ndarray:
+        """
+        Decode quantized latents to reconstruction.
+
+        Args:
+            z_q: Quantized vectors (batch, height, width, embedding_dim)
+
+        Returns:
+            x_recon: Reconstructed input
+        """
+        # Your code here
+        pass
+
+    def forward(self, x: np.ndarray) -> dict:
+        """
+        Full forward pass.
+
+        Returns:
+            Dictionary with z_e, z_q, indices, x_recon
+        """
+        # Your code here
+        pass
+
+    def compute_loss(self, x: np.ndarray, x_recon: np.ndarray,
+                     z_e: np.ndarray, z_q: np.ndarray, beta: float = 0.25) -> dict:
+        """
+        Compute total VQ-VAE loss.
+
+        Returns:
+            Dictionary with total_loss, recon_loss, vq_loss, commitment_loss
+        """
+        # Your code here
+        pass
+
+    def get_codebook_usage(self, indices: np.ndarray) -> np.ndarray:
+        """
+        Compute codebook usage statistics.
+
+        Returns:
+            usage: Count of each codebook entry used
+        """
+        # Your code here
+        pass
+`,
+    testCases: [
+      {
+        id: '1',
+        description: 'Quantization shape',
+        input: 'vq_shape_check',
+        expected: 'True',
+        hidden: false,
+      },
+      {
+        id: '2',
+        description: 'Indices valid range',
+        input: 'indices_range_check',
+        expected: 'True',
+        hidden: false,
+      },
+      {
+        id: '3',
+        description: 'Quantized from codebook',
+        input: 'quantized_from_codebook_check',
+        expected: 'True',
+        hidden: true,
+      },
+      {
+        id: '4',
+        description: 'Loss values correct',
+        input: 'loss_check',
+        expected: 'True',
+        hidden: true,
+      },
+    ],
+    hints: [
+      'For quantization: flatten spatial dims, compute distances, find argmin',
+      'Distance: ||z - e||² = ||z||² + ||e||² - 2*z·e',
+      'Straight-through: z_q = z_e + stop_grad(z_q - z_e)',
+      'Codebook loss uses z_e detached, commitment uses z_q detached',
+      'For simplified encoder/decoder, use reshape operations',
+    ],
+    solution: `import numpy as np
+
+class VectorQuantizer:
+    def __init__(self, num_embeddings: int, embedding_dim: int):
+        np.random.seed(42)
+        self.embedding = np.random.randn(num_embeddings, embedding_dim) * 0.1
+        self.num_embeddings = num_embeddings
+        self.embedding_dim = embedding_dim
+
+    def quantize(self, z_e: np.ndarray) -> tuple:
+        # z_e: (batch, H, W, D)
+        batch, H, W, D = z_e.shape
+
+        # Flatten spatial dimensions
+        z_flat = z_e.reshape(-1, D)  # (N, D) where N = batch * H * W
+
+        # Compute distances: ||z - e||² = ||z||² + ||e||² - 2*z·e
+        z_sq = np.sum(z_flat ** 2, axis=1, keepdims=True)  # (N, 1)
+        e_sq = np.sum(self.embedding ** 2, axis=1)          # (K,)
+        cross = z_flat @ self.embedding.T                    # (N, K)
+        distances = z_sq + e_sq - 2 * cross                  # (N, K)
+
+        # Find nearest embedding
+        indices_flat = np.argmin(distances, axis=1)          # (N,)
+
+        # Get quantized vectors
+        z_q_flat = self.embedding[indices_flat]              # (N, D)
+
+        # Reshape back
+        z_q = z_q_flat.reshape(batch, H, W, D)
+        indices = indices_flat.reshape(batch, H, W)
+        min_distances = np.min(distances, axis=1).reshape(batch, H, W)
+
+        return z_q, indices, min_distances
+
+    def compute_loss(self, z_e: np.ndarray, z_q: np.ndarray, beta: float = 0.25) -> dict:
+        # Codebook loss: ||sg[z_e] - z_q||²
+        # In practice, this updates the codebook to move toward encoder output
+        codebook_loss = np.mean((z_e - z_q) ** 2)
+
+        # Commitment loss: ||z_e - sg[z_q]||²
+        # This commits the encoder output to stay close to codebook
+        commitment_loss = beta * np.mean((z_e - z_q) ** 2)
+
+        return {
+            'codebook_loss': codebook_loss,
+            'commitment_loss': commitment_loss
+        }
+
+
+class VQVAE:
+    def __init__(self, input_channels: int, hidden_dim: int,
+                 num_embeddings: int, embedding_dim: int):
+        np.random.seed(42)
+
+        self.input_channels = input_channels
+        self.hidden_dim = hidden_dim
+        self.embedding_dim = embedding_dim
+
+        # Simplified: use linear projection instead of conv for demo
+        # Encoder projects input to embedding space
+        self.enc_w1 = np.random.randn(input_channels * 16, hidden_dim) * 0.1
+        self.enc_b1 = np.zeros(hidden_dim)
+        self.enc_w2 = np.random.randn(hidden_dim, embedding_dim) * 0.1
+        self.enc_b2 = np.zeros(embedding_dim)
+
+        # Vector Quantizer
+        self.vq = VectorQuantizer(num_embeddings, embedding_dim)
+
+        # Decoder projects back
+        self.dec_w1 = np.random.randn(embedding_dim, hidden_dim) * 0.1
+        self.dec_b1 = np.zeros(hidden_dim)
+        self.dec_w2 = np.random.randn(hidden_dim, input_channels * 16) * 0.1
+        self.dec_b2 = np.zeros(input_channels * 16)
+
+    def encode(self, x: np.ndarray) -> np.ndarray:
+        # x: (batch, channels, H, W) - assume H=W=4 for simplicity
+        batch = x.shape[0]
+
+        # Flatten spatial dimensions
+        x_flat = x.reshape(batch, -1)  # (batch, channels * H * W)
+
+        # Encode
+        h = np.maximum(0, x_flat @ self.enc_w1 + self.enc_b1)  # ReLU
+        z_e = x_flat @ self.enc_w1[:, :self.embedding_dim] + self.enc_b1[:self.embedding_dim]
+
+        # Reshape to spatial format (batch, 2, 2, embedding_dim)
+        z_e = z_e.reshape(batch, 1, 1, self.embedding_dim)
+
+        return z_e
+
+    def decode(self, z_q: np.ndarray) -> np.ndarray:
+        batch = z_q.shape[0]
+
+        # Flatten
+        z_flat = z_q.reshape(batch, -1)  # (batch, embedding_dim)
+
+        # Decode
+        h = np.maximum(0, z_flat @ self.dec_w1 + self.dec_b1)  # ReLU
+        x_recon = h @ self.dec_w2 + self.dec_b2
+
+        # Reshape to image format
+        x_recon = x_recon.reshape(batch, self.input_channels, 4, 4)
+
+        return x_recon
+
+    def forward(self, x: np.ndarray) -> dict:
+        # Encode
+        z_e = self.encode(x)
+
+        # Quantize
+        z_q, indices, distances = self.vq.quantize(z_e)
+
+        # Straight-through estimator: gradient flows through z_q to z_e
+        # z_q_st = z_e + (z_q - z_e).detach()
+        # For forward pass, we just use z_q
+
+        # Decode
+        x_recon = self.decode(z_q)
+
+        return {
+            'z_e': z_e,
+            'z_q': z_q,
+            'indices': indices,
+            'x_recon': x_recon
+        }
+
+    def compute_loss(self, x: np.ndarray, x_recon: np.ndarray,
+                     z_e: np.ndarray, z_q: np.ndarray, beta: float = 0.25) -> dict:
+        # Reconstruction loss
+        recon_loss = np.mean((x - x_recon) ** 2)
+
+        # VQ losses
+        vq_losses = self.vq.compute_loss(z_e, z_q, beta)
+
+        # Total loss
+        total_loss = recon_loss + vq_losses['codebook_loss'] + vq_losses['commitment_loss']
+
+        return {
+            'total_loss': total_loss,
+            'recon_loss': recon_loss,
+            'codebook_loss': vq_losses['codebook_loss'],
+            'commitment_loss': vq_losses['commitment_loss']
+        }
+
+    def get_codebook_usage(self, indices: np.ndarray) -> np.ndarray:
+        usage = np.bincount(indices.flatten(), minlength=self.vq.num_embeddings)
+        return usage
+`,
+  },
+  {
     id: 'e2e-diffusion',
     title: 'E2E: Diffusion Model',
     section: 'e2e-implementations',

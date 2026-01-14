@@ -100,27 +100,30 @@ np.einsum('subscripts', operands)
 ## Common Patterns
 
 ### Basic Operations
-| Einsum | Operation |
-|--------|-----------|
-| \`'ij->'\` | Sum all elements |
-| \`'ij->i'\` | Sum along axis 1 (row sums) |
-| \`'ij->j'\` | Sum along axis 0 (column sums) |
-| \`'ij->ji'\` | Transpose |
-| \`'ii->i'\` | Extract diagonal |
+\`\`\`
+'ij->'      Sum all elements
+'ij->i'     Sum along axis 1 (row sums)
+'ij->j'     Sum along axis 0 (column sums)
+'ij->ji'    Transpose
+'ii->i'     Extract diagonal
+'ii->'      Trace (sum of diagonal)
+\`\`\`
 
 ### Matrix Operations
-| Einsum | Operation |
-|--------|-----------|
-| \`'ik,kj->ij'\` | Matrix multiplication |
-| \`'ij,ij->ij'\` | Element-wise product |
-| \`'ij,ij->'\` | Frobenius inner product |
-| \`'i,j->ij'\` | Outer product |
+\`\`\`
+'ik,kj->ij'   Matrix multiplication (A @ B)
+'ij,ij->ij'   Element-wise product (A * B)
+'ij,ij->'     Frobenius inner product
+'i,j->ij'     Outer product
+'i,i->'       Dot product
+\`\`\`
 
 ### Batch Operations
-| Einsum | Operation |
-|--------|-----------|
-| \`'bij,bjk->bik'\` | Batch matrix multiply |
-| \`'bqd,bkd->bqk'\` | Attention scores |
+\`\`\`
+'bij,bjk->bik'   Batch matrix multiply
+'bqd,bkd->bqk'   Attention scores (Q @ K.T)
+'bhqk,bhkd->bhqd' Multi-head attention output
+\`\`\`
 
 ## Key Insight
 Letters that appear on both sides are kept.
@@ -471,7 +474,7 @@ output = (input - kernel + 2*padding) / stride + 1
 
 Let's implement CNN operations!
     `,
-    problems: ['conv-output-size', 'conv2d-forward', 'max-pool', 'flatten-layer'],
+    problems: ['conv-output-size', 'conv2d-forward', 'max-pool', 'flatten-layer', 'conv2d-advanced'],
   },
   {
     id: 'transformers',
@@ -567,7 +570,7 @@ x_t = sqrt(α_bar_t) * x_0 + sqrt(1 - α_bar_t) * ε
 
 Let's implement generative models!
     `,
-    problems: ['kl-divergence', 'vae-reparameterization', 'vae-loss', 'diffusion-noise-schedule', 'diffusion-forward'],
+    problems: ['kl-divergence', 'vae-reparameterization', 'vae-loss', 'vqvae-quantization', 'diffusion-noise-schedule', 'diffusion-forward'],
   },
 
   // ==========================================
@@ -629,6 +632,6 @@ Image classifier with:
 
 Build these models to truly understand deep learning!
     `,
-    problems: ['e2e-mlp', 'e2e-transformer', 'e2e-vae', 'e2e-diffusion', 'e2e-cnn'],
+    problems: ['e2e-mlp', 'e2e-transformer', 'e2e-vae', 'e2e-vqvae', 'e2e-diffusion', 'e2e-cnn'],
   },
 ];

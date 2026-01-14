@@ -340,6 +340,179 @@ def diffusion_forward(x_0, t, alpha_bars):
 `,
   },
   {
+    id: 'vqvae-quantization',
+    title: 'VQ-VAE Vector Quantization',
+    section: 'generative-models',
+    difficulty: 'hard',
+    description: `
+## VQ-VAE Vector Quantization
+
+Implement the vector quantization layer used in VQ-VAE (Vector Quantized Variational Autoencoder).
+
+### Overview
+Unlike standard VAEs that use continuous latent spaces, VQ-VAE uses **discrete** latent representations by mapping encoder outputs to the nearest embedding in a learned codebook.
+
+### Quantization Process
+1. **Encoder output**: z_e of shape (batch, H, W, D)
+2. **Codebook**: K embedding vectors of dimension D
+3. **Find nearest**: For each spatial position, find the closest codebook entry
+4. **Quantize**: Replace z_e with the nearest codebook vector z_q
+
+### Distance Calculation
+\`\`\`
+distances[b, h, w, k] = ||z_e[b, h, w] - codebook[k]||²
+\`\`\`
+
+### Straight-Through Estimator
+During training, gradients flow through z_q to z_e by copying gradients:
+\`\`\`
+z_q = z_e + stop_gradient(z_q - z_e)
+\`\`\`
+(We don't implement this here, just the forward pass)
+
+### VQ-VAE Loss Components
+\`\`\`
+L = reconstruction + β * ||sg[z_e] - e||² + ||z_e - sg[e]||²
+\`\`\`
+- **Codebook loss**: Moves embeddings toward encoder outputs
+- **Commitment loss**: Commits encoder to embeddings
+
+### Function Signature
+\`\`\`python
+def vq_quantize(z_e, codebook):
+    # z_e: (batch, H, W, embedding_dim) - encoder output
+    # codebook: (num_embeddings, embedding_dim) - K embedding vectors
+    # Returns: z_q, indices
+\`\`\`
+    `,
+    examples: [
+      {
+        input: 'z_e (2, 4, 4, 64), codebook (512, 64)',
+        output: 'z_q (2, 4, 4, 64), indices (2, 4, 4)',
+        explanation: 'Each spatial position mapped to one of 512 codes',
+      },
+    ],
+    starterCode: `import numpy as np
+
+def vq_quantize(z_e, codebook):
+    """
+    Vector quantization for VQ-VAE.
+
+    Args:
+        z_e: Encoder output (batch, H, W, embedding_dim)
+        codebook: Embedding vectors (num_embeddings, embedding_dim)
+
+    Returns:
+        z_q: Quantized vectors (batch, H, W, embedding_dim)
+        indices: Codebook indices used (batch, H, W)
+    """
+    # Your code here
+    pass
+
+
+def vq_loss(z_e, z_q, beta=0.25):
+    """
+    Compute VQ-VAE losses (codebook + commitment).
+
+    Args:
+        z_e: Encoder output (batch, H, W, embedding_dim)
+        z_q: Quantized vectors (batch, H, W, embedding_dim)
+        beta: Commitment loss weight (default: 0.25)
+
+    Returns:
+        codebook_loss: Loss to update codebook
+        commitment_loss: Loss to commit encoder to codebook
+    """
+    # Your code here
+    pass
+`,
+    testCases: [
+      {
+        id: '1',
+        description: 'Output shape matches input',
+        input: '(np.random.randn(2, 4, 4, 8), np.random.randn(16, 8))',
+        expected: '((2, 4, 4, 8), (2, 4, 4))',
+        hidden: false,
+      },
+      {
+        id: '2',
+        description: 'Indices are valid codebook indices',
+        input: 'valid_indices_test',
+        expected: 'True',
+        hidden: false,
+      },
+      {
+        id: '3',
+        description: 'Quantized vectors come from codebook',
+        input: 'vectors_from_codebook_test',
+        expected: 'True',
+        hidden: true,
+      },
+      {
+        id: '4',
+        description: 'VQ loss computation correct',
+        input: 'vq_loss_test',
+        expected: 'True',
+        hidden: true,
+      },
+    ],
+    hints: [
+      'Reshape z_e to (batch*H*W, D) for easier distance computation',
+      'Use broadcasting: ||a - b||² = ||a||² + ||b||² - 2*a·b',
+      'np.argmin along the codebook axis gives indices',
+      'Index into codebook with the indices to get z_q',
+      'Reshape back to original spatial dimensions',
+      'For loss: codebook_loss = ||z_e.detach() - z_q||², commitment = ||z_e - z_q.detach()||²',
+    ],
+    solution: `import numpy as np
+
+def vq_quantize(z_e, codebook):
+    z_e = np.array(z_e)
+    codebook = np.array(codebook)
+
+    batch, H, W, D = z_e.shape
+    K, _ = codebook.shape
+
+    # Flatten spatial dimensions: (batch*H*W, D)
+    z_flat = z_e.reshape(-1, D)
+
+    # Compute distances using: ||a-b||² = ||a||² + ||b||² - 2*a·b
+    # z_flat: (N, D), codebook: (K, D)
+    z_sq = np.sum(z_flat ** 2, axis=1, keepdims=True)  # (N, 1)
+    codebook_sq = np.sum(codebook ** 2, axis=1)        # (K,)
+    cross = z_flat @ codebook.T                        # (N, K)
+
+    distances = z_sq + codebook_sq - 2 * cross         # (N, K)
+
+    # Find nearest codebook entry
+    indices_flat = np.argmin(distances, axis=1)        # (N,)
+
+    # Get quantized vectors
+    z_q_flat = codebook[indices_flat]                  # (N, D)
+
+    # Reshape back
+    z_q = z_q_flat.reshape(batch, H, W, D)
+    indices = indices_flat.reshape(batch, H, W)
+
+    return z_q, indices
+
+
+def vq_loss(z_e, z_q, beta=0.25):
+    z_e = np.array(z_e)
+    z_q = np.array(z_q)
+
+    # Codebook loss: ||sg[z_e] - z_q||² (moves codebook toward encoder output)
+    # In practice, sg[z_e] means z_e is treated as constant
+    codebook_loss = np.mean((z_e - z_q) ** 2)
+
+    # Commitment loss: ||z_e - sg[z_q]||² (commits encoder to codebook)
+    # Same computation, but gradient only flows to z_e
+    commitment_loss = beta * np.mean((z_e - z_q) ** 2)
+
+    return round(codebook_loss, 4), round(commitment_loss, 4)
+`,
+  },
+  {
     id: 'kl-divergence',
     title: 'KL Divergence (Gaussians)',
     section: 'generative-models',
