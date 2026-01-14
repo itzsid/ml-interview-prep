@@ -84,8 +84,8 @@ export default function ProblemPage() {
   if (!problem || !section) {
     return (
       <div className="text-center py-12">
-        <h1 className="text-2xl font-bold text-white mb-4">Problem Not Found</h1>
-        <Link to="/" className="text-primary-400 hover:text-primary-300">
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">Problem Not Found</h1>
+        <Link to="/" className="text-primary-600 hover:text-primary-500">
           Return to Home
         </Link>
       </div>
@@ -99,27 +99,27 @@ export default function ProblemPage() {
   return (
     <div className="h-[calc(100vh-8rem)] flex flex-col -m-6">
       {/* Problem Header */}
-      <div className="flex items-center justify-between px-6 py-3 bg-dark-800 border-b border-dark-700">
+      <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
         <div className="flex items-center gap-3">
           <Link
             to={`/section/${sectionId}`}
-            className="text-dark-400 hover:text-white transition-colors"
+            className="text-gray-500 hover:text-gray-900 transition-colors"
           >
             ← {section.title}
           </Link>
-          <span className="text-dark-600">/</span>
-          <span className="text-white font-medium">{problem.title}</span>
+          <span className="text-gray-300">/</span>
+          <span className="text-gray-900 font-medium">{problem.title}</span>
         </div>
 
         <div className="flex items-center gap-3">
           {!isReady && (
-            <span className="text-dark-400 text-sm flex items-center gap-2">
+            <span className="text-gray-500 text-sm flex items-center gap-2">
               <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse" />
               {isLoading ? 'Loading Python...' : 'Python ready'}
             </span>
           )}
           {isReady && (
-            <span className="text-dark-400 text-sm flex items-center gap-2">
+            <span className="text-gray-500 text-sm flex items-center gap-2">
               <div className="w-2 h-2 bg-green-500 rounded-full" />
               Python ready
             </span>
@@ -136,16 +136,16 @@ export default function ProblemPage() {
         gutterAlign="center"
       >
         {/* Left Panel - Problem Description */}
-        <div className="overflow-auto p-6 bg-dark-900">
+        <div className="overflow-auto p-6 bg-gray-50">
           <ProblemDescription problem={problem} />
           <Examples examples={problem.examples} />
           <Hints hints={problem.hints} solution={problem.solution} />
         </div>
 
         {/* Right Panel - Editor and Console */}
-        <div className="flex flex-col overflow-hidden bg-dark-850">
+        <div className="flex flex-col overflow-hidden bg-white">
           {/* Action Bar */}
-          <div className="flex items-center justify-between px-4 py-2 bg-dark-800 border-b border-dark-700">
+          <div className="flex items-center justify-between px-4 py-2 bg-gray-50 border-b border-gray-200">
             <div className="flex items-center gap-2">
               <button
                 onClick={handleRunTests}
@@ -156,7 +156,7 @@ export default function ProblemPage() {
               </button>
               <button
                 onClick={handleReset}
-                className="px-4 py-1.5 bg-dark-700 text-dark-200 text-sm font-medium rounded-md hover:bg-dark-600 transition-colors"
+                className="px-4 py-1.5 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300 transition-colors"
               >
                 Reset
               </button>
@@ -165,7 +165,7 @@ export default function ProblemPage() {
             {testResults.length > 0 && testResults.every(r => r.passed) && nextProblemId && (
               <Link
                 to={`/problem/${sectionId}/${nextProblemId}`}
-                className="px-4 py-1.5 bg-green-500/20 text-green-400 text-sm font-medium rounded-md hover:bg-green-500/30 transition-colors"
+                className="px-4 py-1.5 bg-green-100 text-green-700 text-sm font-medium rounded-md hover:bg-green-200 transition-colors"
               >
                 Next Problem →
               </Link>
@@ -190,7 +190,7 @@ export default function ProblemPage() {
             </div>
 
             {/* Console and Test Results */}
-            <div className="overflow-auto p-4 space-y-4">
+            <div className="overflow-auto p-4 space-y-4 bg-gray-50">
               <TestResults results={testResults} isRunning={isRunning} />
               <Console output={output} isLoading={isRunning} />
             </div>

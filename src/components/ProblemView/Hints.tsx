@@ -24,11 +24,11 @@ export default function Hints({ hints, solution }: HintsProps) {
       {/* Hints Section */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-medium text-white">Hints</h3>
+          <h3 className="text-base font-medium text-gray-900">Hints</h3>
           {revealedHints < hints.length && (
             <button
               onClick={handleRevealHint}
-              className="text-sm text-primary-400 hover:text-primary-300 transition-colors"
+              className="text-sm text-primary-600 hover:text-primary-500 transition-colors"
             >
               Show Hint ({revealedHints}/{hints.length})
             </button>
@@ -40,17 +40,17 @@ export default function Hints({ hints, solution }: HintsProps) {
             {hints.slice(0, revealedHints).map((hint, index) => (
               <div
                 key={index}
-                className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3"
+                className="bg-yellow-50 border border-yellow-200 rounded-lg p-3"
               >
                 <div className="flex items-start gap-2">
-                  <span className="text-yellow-500">💡</span>
-                  <span className="text-dark-200 text-sm">{hint}</span>
+                  <span className="text-yellow-600">💡</span>
+                  <span className="text-gray-700 text-sm">{hint}</span>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="text-dark-500 text-sm italic">
+          <div className="text-gray-400 text-sm italic">
             Click "Show Hint" if you need help
           </div>
         )}
@@ -59,11 +59,11 @@ export default function Hints({ hints, solution }: HintsProps) {
       {/* Solution Section */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-medium text-white">Solution</h3>
+          <h3 className="text-base font-medium text-gray-900">Solution</h3>
           {!showSolution && revealedHints >= hints.length && (
             <button
               onClick={handleShowSolution}
-              className="text-sm text-primary-400 hover:text-primary-300 transition-colors"
+              className="text-sm text-primary-600 hover:text-primary-500 transition-colors"
             >
               Reveal Solution
             </button>
@@ -71,20 +71,20 @@ export default function Hints({ hints, solution }: HintsProps) {
         </div>
 
         {showSolution ? (
-          <div className="bg-dark-800 rounded-lg overflow-hidden">
-            <div className="px-4 py-2 bg-dark-700 border-b border-dark-600">
-              <span className="text-sm text-dark-300">Solution Code</span>
+          <div className="bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+            <div className="px-4 py-2 bg-gray-100 border-b border-gray-200">
+              <span className="text-sm text-gray-600">Solution Code</span>
             </div>
-            <pre className="p-4 text-sm text-dark-200 font-mono overflow-x-auto">
+            <pre className="p-4 text-sm text-gray-300 font-mono overflow-x-auto bg-gray-900">
               {solution}
             </pre>
           </div>
         ) : revealedHints < hints.length ? (
-          <div className="text-dark-500 text-sm italic">
+          <div className="text-gray-400 text-sm italic">
             Reveal all hints first to unlock the solution
           </div>
         ) : (
-          <div className="text-dark-500 text-sm italic">
+          <div className="text-gray-400 text-sm italic">
             Click "Reveal Solution" to see the answer
           </div>
         )}

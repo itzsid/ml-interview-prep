@@ -13,19 +13,19 @@ export default function Console({ output, isLoading = false }: ConsoleProps) {
   }, [output]);
 
   return (
-    <div className="bg-dark-900 border border-dark-700 rounded-lg h-full flex flex-col">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-dark-700 bg-dark-800">
-        <span className="text-sm font-medium text-dark-300">Console Output</span>
+    <div className="bg-white border border-gray-200 rounded-lg h-full flex flex-col shadow-sm">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-gray-200 bg-gray-50">
+        <span className="text-sm font-medium text-gray-700">Console Output</span>
         {isLoading && (
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-primary-500 rounded-full animate-pulse" />
-            <span className="text-xs text-dark-400">Running...</span>
+            <span className="text-xs text-gray-500">Running...</span>
           </div>
         )}
       </div>
-      <div className="flex-1 overflow-auto p-4 font-mono text-sm">
+      <div className="flex-1 overflow-auto p-4 font-mono text-sm bg-gray-900 rounded-b-lg">
         {output.length === 0 ? (
-          <div className="text-dark-500 italic">
+          <div className="text-gray-500 italic">
             Output will appear here when you run your code...
           </div>
         ) : (
@@ -39,7 +39,7 @@ export default function Console({ output, isLoading = false }: ConsoleProps) {
                   ? 'text-green-400'
                   : line.includes('FAILED')
                   ? 'text-red-400'
-                  : 'text-dark-200'
+                  : 'text-gray-300'
               }`}
             >
               {line.startsWith('Test') ? (

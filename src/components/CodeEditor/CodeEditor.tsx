@@ -13,11 +13,11 @@ export default function CodeEditor({ value, onChange, height = '400px' }: CodeEd
   }, [onChange]);
 
   return (
-    <div className="h-full border border-dark-700 rounded-lg overflow-hidden">
+    <div className="h-full border border-gray-200 rounded-lg overflow-hidden shadow-sm">
       <Editor
         height={height}
         defaultLanguage="python"
-        theme="vs-dark"
+        theme="light"
         value={value}
         onChange={handleChange}
         options={{
