@@ -10,6 +10,7 @@ This is a LeetCode/HelloInterview-style web application for learning ML by build
 - Execute code in-browser via Pyodide (WebAssembly)
 - Run tests and see pass/fail results
 - Track progress across sections
+- Use a Python scratchpad to experiment with code (NumPy pre-loaded)
 
 **Live site:** https://itzsid.github.io/ml-coding-lab/
 **Repository:** https://github.com/itzsid/ml-coding-lab
@@ -74,7 +75,8 @@ src/
 ├── pages/
 │   ├── HomePage.tsx     # Landing page with section cards
 │   ├── SectionPage.tsx  # Section intro + problem list
-│   └── ProblemPage.tsx  # Main coding interface (split-pane)
+│   ├── ProblemPage.tsx  # Main coding interface (split-pane)
+│   └── ScratchpadPage.tsx  # Python playground for experimentation
 ├── types/
 │   └── index.ts         # TypeScript interfaces
 └── __tests__/           # Test files
@@ -94,6 +96,7 @@ src/
 
 ### Main UI
 - **`src/pages/ProblemPage.tsx`** - The main coding interface with split panes (problem description | code editor + console)
+- **`src/pages/ScratchpadPage.tsx`** - Python playground for freeform experimentation (accessible via header button, code auto-saves to localStorage key `ml-interview-scratchpad`)
 
 ## Current Sections & Problems
 
