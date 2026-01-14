@@ -64,7 +64,104 @@ Error generating stack: `+a.message+`
  * LICENSE.md file in the root directory of this source tree.
  *
  * @license MIT
- */function Za(){return Za=Object.assign?Object.assign.bind():function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},Za.apply(this,arguments)}function Em(e,t){if(e==null)return{};var n={},r=Object.keys(e),i,a;for(a=0;a<r.length;a++)i=r[a],!(t.indexOf(i)>=0)&&(n[i]=e[i]);return n}function Yx(e){return!!(e.metaKey||e.altKey||e.ctrlKey||e.shiftKey)}function Qx(e,t){return e.button===0&&(!t||t==="_self")&&!Yx(e)}const Gx=["onClick","relative","reloadDocument","replace","state","target","to","preventScrollReset","viewTransition"],Zx=["aria-current","caseSensitive","className","end","style","to","viewTransition","children"],Jx="6";try{window.__reactRouterVersion=Jx}catch{}const e0=C.createContext({isTransitioning:!1}),t0="startTransition",td=$h[t0];function n0(e){let{basename:t,children:n,future:r,window:i}=e,a=C.useRef();a.current==null&&(a.current=ix({window:i,v5Compat:!0}));let o=a.current,[s,l]=C.useState({action:o.action,location:o.location}),{v7_startTransition:u}=r||{},c=C.useCallback(d=>{u&&td?td(()=>l(d)):l(d)},[l,u]);return C.useLayoutEffect(()=>o.listen(c),[o,c]),C.useEffect(()=>$x(r),[r]),C.createElement(Xx,{basename:t,children:n,location:s.location,navigationType:s.action,navigator:o,future:r})}const r0=typeof window<"u"&&typeof window.document<"u"&&typeof window.document.createElement<"u",i0=/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i,yn=C.forwardRef(function(t,n){let{onClick:r,relative:i,reloadDocument:a,replace:o,state:s,target:l,to:u,preventScrollReset:c,viewTransition:d}=t,p=Em(t,Gx),{basename:f}=C.useContext(Sn),w,v=!1;if(typeof u=="string"&&i0.test(u)&&(w=u,r0))try{let g=new URL(window.location.href),b=u.startsWith("//")?new URL(g.protocol+u):new URL(u),E=br(b.pathname,f);b.origin===g.origin&&E!=null?u=E+b.search+b.hash:v=!0}catch{}let S=Tx(u,{relative:i}),h=s0(u,{replace:o,state:s,target:l,preventScrollReset:c,relative:i,viewTransition:d});function m(g){r&&r(g),g.defaultPrevented||h(g)}return C.createElement("a",Za({},p,{href:w||S,onClick:v||a?r:m,ref:n,target:l}))}),a0=C.forwardRef(function(t,n){let{"aria-current":r="page",caseSensitive:i=!1,className:a="",end:o=!1,style:s,to:l,viewTransition:u,children:c}=t,d=Em(t,Zx),p=bo(l,{relative:d.relative}),f=Oi(),w=C.useContext(vm),{navigator:v,basename:S}=C.useContext(Sn),h=w!=null&&l0(p)&&u===!0,m=v.encodeLocation?v.encodeLocation(p).pathname:p.pathname,g=f.pathname,b=w&&w.navigation&&w.navigation.location?w.navigation.location.pathname:null;i||(g=g.toLowerCase(),b=b?b.toLowerCase():null,m=m.toLowerCase()),b&&S&&(b=br(b,S)||b);const E=m!=="/"&&m.endsWith("/")?m.length-1:m.length;let k=g===m||!o&&g.startsWith(m)&&g.charAt(E)==="/",P=b!=null&&(b===m||!o&&b.startsWith(m)&&b.charAt(m.length)==="/"),z={isActive:k,isPending:P,isTransitioning:h},O=k?r:void 0,L;typeof a=="function"?L=a(z):L=[a,k?"active":null,P?"pending":null,h?"transitioning":null].filter(Boolean).join(" ");let F=typeof s=="function"?s(z):s;return C.createElement(yn,Za({},d,{"aria-current":O,className:L,ref:n,style:F,to:l,viewTransition:u}),typeof c=="function"?c(z):c)});var hl;(function(e){e.UseScrollRestoration="useScrollRestoration",e.UseSubmit="useSubmit",e.UseSubmitFetcher="useSubmitFetcher",e.UseFetcher="useFetcher",e.useViewTransitionState="useViewTransitionState"})(hl||(hl={}));var nd;(function(e){e.UseFetcher="useFetcher",e.UseFetchers="useFetchers",e.UseScrollRestoration="useScrollRestoration"})(nd||(nd={}));function o0(e){let t=C.useContext(wo);return t||_e(!1),t}function s0(e,t){let{target:n,replace:r,state:i,preventScrollReset:a,relative:o,viewTransition:s}=t===void 0?{}:t,l=Lx(),u=Oi(),c=bo(e,{relative:o});return C.useCallback(d=>{if(Qx(d,n)){d.preventDefault();let p=r!==void 0?r:Ga(u)===Ga(c);l(e,{replace:p,state:i,preventScrollReset:a,relative:o,viewTransition:s})}},[u,l,c,r,i,n,e,a,o,s])}function l0(e,t){t===void 0&&(t={});let n=C.useContext(e0);n==null&&_e(!1);let{basename:r}=o0(hl.useViewTransitionState),i=bo(e,{relative:t.relative});if(!n.isTransitioning)return!1;let a=br(n.currentLocation.pathname,r)||n.currentLocation.pathname,o=br(n.nextLocation.pathname,r)||n.nextLocation.pathname;return fl(i.pathname,o)!=null||fl(i.pathname,a)!=null}const ns="ml-interview-progress",Pm=C.createContext(null);function u0({children:e}){const[t,n]=C.useState(()=>{const u=localStorage.getItem(ns);return u?JSON.parse(u):{}});C.useEffect(()=>{localStorage.setItem(ns,JSON.stringify(t))},[t]);const r=C.useCallback((u,c,d)=>{n(p=>{var f;return{...p,[u]:{...p[u],[c]:{...(f=p[u])==null?void 0:f[c],status:d,lastAttempt:new Date().toISOString()}}}})},[]),i=C.useCallback((u,c,d)=>{n(p=>{var f,w,v;return{...p,[u]:{...p[u],[c]:{...(f=p[u])==null?void 0:f[c],status:((v=(w=p[u])==null?void 0:w[c])==null?void 0:v.status)||"in_progress",code:d,lastAttempt:new Date().toISOString()}}}})},[]),a=C.useCallback((u,c)=>{var p;const d=(p=t[u])==null?void 0:p[c];return{status:(d==null?void 0:d.status)||"not_started",code:d==null?void 0:d.code}},[t]),o=C.useCallback((u,c)=>{const d=t[u];if(!d||c===0)return 0;const p=Object.values(d).filter(f=>f.status==="completed").length;return Math.round(p/c*100)},[t]),s=C.useCallback(u=>{const c=u.reduce((p,f)=>p+f.problemCount,0);if(c===0)return 0;let d=0;for(const p of u){const f=t[p.id];f&&(d+=Object.values(f).filter(w=>w.status==="completed").length)}return Math.round(d/c*100)},[t]),l=C.useCallback(()=>{n({}),localStorage.removeItem(ns)},[]);return x.jsx(Pm.Provider,{value:{progress:t,updateProblemStatus:r,saveProblemCode:i,getProblemProgress:a,getSectionProgress:o,getOverallProgress:s,resetProgress:l},children:e})}function Mi(){const e=C.useContext(Pm);if(!e)throw new Error("useProgress must be used within a ProgressProvider");return e}const Sr=[{id:"python-basics",title:"Python Basics for ML",description:"Master NumPy arrays and essential Python operations for machine learning.",icon:"🐍",introduction:"\n# Python Basics for Machine Learning\n\nNumPy is the foundation of nearly all machine learning in Python. Before diving into complex algorithms, you need to master array operations.\n\n## Key Concepts\n\n### NumPy Arrays\n- **Creation**: `np.array()`, `np.zeros()`, `np.ones()`, `np.arange()`\n- **Shape manipulation**: `reshape()`, `flatten()`, `transpose()`\n- **Indexing**: Slicing, boolean indexing, fancy indexing\n\n### Essential Operations\n- **Element-wise**: Addition, multiplication, mathematical functions\n- **Aggregations**: `sum()`, `mean()`, `std()`, `min()`, `max()`\n- **Broadcasting**: Automatic expansion of arrays for operations\n\n### Why It Matters\nEvery ML algorithm processes data as arrays. Understanding these operations lets you:\n- Prepare data efficiently\n- Debug model issues\n- Optimize performance\n\nLet's practice with hands-on problems!\n    ",problems:["numpy-array-sum","numpy-matrix-multiply","numpy-broadcast-add"]},{id:"data-preprocessing",title:"Data Preprocessing",description:"Learn essential data cleaning and transformation techniques.",icon:"🧹",introduction:`
+ */function Za(){return Za=Object.assign?Object.assign.bind():function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(e[r]=n[r])}return e},Za.apply(this,arguments)}function Em(e,t){if(e==null)return{};var n={},r=Object.keys(e),i,a;for(a=0;a<r.length;a++)i=r[a],!(t.indexOf(i)>=0)&&(n[i]=e[i]);return n}function Yx(e){return!!(e.metaKey||e.altKey||e.ctrlKey||e.shiftKey)}function Qx(e,t){return e.button===0&&(!t||t==="_self")&&!Yx(e)}const Gx=["onClick","relative","reloadDocument","replace","state","target","to","preventScrollReset","viewTransition"],Zx=["aria-current","caseSensitive","className","end","style","to","viewTransition","children"],Jx="6";try{window.__reactRouterVersion=Jx}catch{}const e0=C.createContext({isTransitioning:!1}),t0="startTransition",td=$h[t0];function n0(e){let{basename:t,children:n,future:r,window:i}=e,a=C.useRef();a.current==null&&(a.current=ix({window:i,v5Compat:!0}));let o=a.current,[s,l]=C.useState({action:o.action,location:o.location}),{v7_startTransition:u}=r||{},c=C.useCallback(d=>{u&&td?td(()=>l(d)):l(d)},[l,u]);return C.useLayoutEffect(()=>o.listen(c),[o,c]),C.useEffect(()=>$x(r),[r]),C.createElement(Xx,{basename:t,children:n,location:s.location,navigationType:s.action,navigator:o,future:r})}const r0=typeof window<"u"&&typeof window.document<"u"&&typeof window.document.createElement<"u",i0=/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i,yn=C.forwardRef(function(t,n){let{onClick:r,relative:i,reloadDocument:a,replace:o,state:s,target:l,to:u,preventScrollReset:c,viewTransition:d}=t,p=Em(t,Gx),{basename:f}=C.useContext(Sn),w,v=!1;if(typeof u=="string"&&i0.test(u)&&(w=u,r0))try{let g=new URL(window.location.href),b=u.startsWith("//")?new URL(g.protocol+u):new URL(u),E=br(b.pathname,f);b.origin===g.origin&&E!=null?u=E+b.search+b.hash:v=!0}catch{}let S=Tx(u,{relative:i}),h=s0(u,{replace:o,state:s,target:l,preventScrollReset:c,relative:i,viewTransition:d});function m(g){r&&r(g),g.defaultPrevented||h(g)}return C.createElement("a",Za({},p,{href:w||S,onClick:v||a?r:m,ref:n,target:l}))}),a0=C.forwardRef(function(t,n){let{"aria-current":r="page",caseSensitive:i=!1,className:a="",end:o=!1,style:s,to:l,viewTransition:u,children:c}=t,d=Em(t,Zx),p=bo(l,{relative:d.relative}),f=Oi(),w=C.useContext(vm),{navigator:v,basename:S}=C.useContext(Sn),h=w!=null&&l0(p)&&u===!0,m=v.encodeLocation?v.encodeLocation(p).pathname:p.pathname,g=f.pathname,b=w&&w.navigation&&w.navigation.location?w.navigation.location.pathname:null;i||(g=g.toLowerCase(),b=b?b.toLowerCase():null,m=m.toLowerCase()),b&&S&&(b=br(b,S)||b);const E=m!=="/"&&m.endsWith("/")?m.length-1:m.length;let k=g===m||!o&&g.startsWith(m)&&g.charAt(E)==="/",P=b!=null&&(b===m||!o&&b.startsWith(m)&&b.charAt(m.length)==="/"),z={isActive:k,isPending:P,isTransitioning:h},O=k?r:void 0,L;typeof a=="function"?L=a(z):L=[a,k?"active":null,P?"pending":null,h?"transitioning":null].filter(Boolean).join(" ");let F=typeof s=="function"?s(z):s;return C.createElement(yn,Za({},d,{"aria-current":O,className:L,ref:n,style:F,to:l,viewTransition:u}),typeof c=="function"?c(z):c)});var hl;(function(e){e.UseScrollRestoration="useScrollRestoration",e.UseSubmit="useSubmit",e.UseSubmitFetcher="useSubmitFetcher",e.UseFetcher="useFetcher",e.useViewTransitionState="useViewTransitionState"})(hl||(hl={}));var nd;(function(e){e.UseFetcher="useFetcher",e.UseFetchers="useFetchers",e.UseScrollRestoration="useScrollRestoration"})(nd||(nd={}));function o0(e){let t=C.useContext(wo);return t||_e(!1),t}function s0(e,t){let{target:n,replace:r,state:i,preventScrollReset:a,relative:o,viewTransition:s}=t===void 0?{}:t,l=Lx(),u=Oi(),c=bo(e,{relative:o});return C.useCallback(d=>{if(Qx(d,n)){d.preventDefault();let p=r!==void 0?r:Ga(u)===Ga(c);l(e,{replace:p,state:i,preventScrollReset:a,relative:o,viewTransition:s})}},[u,l,c,r,i,n,e,a,o,s])}function l0(e,t){t===void 0&&(t={});let n=C.useContext(e0);n==null&&_e(!1);let{basename:r}=o0(hl.useViewTransitionState),i=bo(e,{relative:t.relative});if(!n.isTransitioning)return!1;let a=br(n.currentLocation.pathname,r)||n.currentLocation.pathname,o=br(n.nextLocation.pathname,r)||n.nextLocation.pathname;return fl(i.pathname,o)!=null||fl(i.pathname,a)!=null}const ns="ml-interview-progress",Pm=C.createContext(null);function u0({children:e}){const[t,n]=C.useState(()=>{const u=localStorage.getItem(ns);return u?JSON.parse(u):{}});C.useEffect(()=>{localStorage.setItem(ns,JSON.stringify(t))},[t]);const r=C.useCallback((u,c,d)=>{n(p=>{var f;return{...p,[u]:{...p[u],[c]:{...(f=p[u])==null?void 0:f[c],status:d,lastAttempt:new Date().toISOString()}}}})},[]),i=C.useCallback((u,c,d)=>{n(p=>{var f,w,v;return{...p,[u]:{...p[u],[c]:{...(f=p[u])==null?void 0:f[c],status:((v=(w=p[u])==null?void 0:w[c])==null?void 0:v.status)||"in_progress",code:d,lastAttempt:new Date().toISOString()}}}})},[]),a=C.useCallback((u,c)=>{var p;const d=(p=t[u])==null?void 0:p[c];return{status:(d==null?void 0:d.status)||"not_started",code:d==null?void 0:d.code}},[t]),o=C.useCallback((u,c)=>{const d=t[u];if(!d||c===0)return 0;const p=Object.values(d).filter(f=>f.status==="completed").length;return Math.round(p/c*100)},[t]),s=C.useCallback(u=>{const c=u.reduce((p,f)=>p+f.problemCount,0);if(c===0)return 0;let d=0;for(const p of u){const f=t[p.id];f&&(d+=Object.values(f).filter(w=>w.status==="completed").length)}return Math.round(d/c*100)},[t]),l=C.useCallback(()=>{n({}),localStorage.removeItem(ns)},[]);return x.jsx(Pm.Provider,{value:{progress:t,updateProblemStatus:r,saveProblemCode:i,getProblemProgress:a,getSectionProgress:o,getOverallProgress:s,resetProgress:l},children:e})}function Mi(){const e=C.useContext(Pm);if(!e)throw new Error("useProgress must be used within a ProgressProvider");return e}const Sr=[{id:"numpy-fundamentals",title:"NumPy Fundamentals",description:"Master NumPy array operations essential for ML development.",icon:"🔢",introduction:"\n# NumPy Fundamentals\n\nNumPy is the backbone of scientific computing in Python. Every ML library builds on it.\n\n## Key Concepts\n\n### Array Creation\n- `np.array()`: Create from lists\n- `np.zeros()`, `np.ones()`: Initialize with values\n- `np.arange()`, `np.linspace()`: Numeric ranges\n- `np.eye()`: Identity matrix\n\n### Indexing & Slicing\n- Basic: `arr[0]`, `arr[1:5]`\n- Advanced: `arr[[0, 2, 4]]`, `arr[arr > 0]`\n- Multi-dimensional: `arr[1, :]`, `arr[:, 2:4]`\n\n### Broadcasting\nArrays of different shapes can be combined:\n- (3, 4) + (4,) → broadcasts to (3, 4)\n- (3, 1) * (1, 4) → broadcasts to (3, 4)\n\n### Aggregations\n- `sum()`, `mean()`, `std()` - with axis parameter\n- `argmax()`, `argmin()` - find indices\n\n### Shape Manipulation\n- `reshape()`: Change dimensions\n- `transpose()`, `.T`: Swap axes\n- `flatten()`, `ravel()`: To 1D\n\nMaster these operations to write efficient ML code!\n    ",problems:["numpy-array-creation","numpy-indexing","numpy-broadcasting","numpy-aggregations","numpy-reshape-transpose"]},{id:"python-basics",title:"Python Basics for ML",description:"Master NumPy arrays and essential Python operations for machine learning.",icon:"🐍",introduction:"\n# Python Basics for Machine Learning\n\nNumPy is the foundation of nearly all machine learning in Python. Before diving into complex algorithms, you need to master array operations.\n\n## Key Concepts\n\n### NumPy Arrays\n- **Creation**: `np.array()`, `np.zeros()`, `np.ones()`, `np.arange()`\n- **Shape manipulation**: `reshape()`, `flatten()`, `transpose()`\n- **Indexing**: Slicing, boolean indexing, fancy indexing\n\n### Essential Operations\n- **Element-wise**: Addition, multiplication, mathematical functions\n- **Aggregations**: `sum()`, `mean()`, `std()`, `min()`, `max()`\n- **Broadcasting**: Automatic expansion of arrays for operations\n\n### Why It Matters\nEvery ML algorithm processes data as arrays. Understanding these operations lets you:\n- Prepare data efficiently\n- Debug model issues\n- Optimize performance\n\nLet's practice with hands-on problems!\n    ",problems:["numpy-array-sum","numpy-matrix-multiply","numpy-broadcast-add"]},{id:"einsum",title:"Einstein Summation (Einsum)",description:"Master einsum for elegant tensor operations.",icon:"∑",introduction:`
+# Einstein Summation (Einsum)
+
+Einsum is a powerful notation for expressing tensor operations concisely.
+
+## Why Einsum?
+- Express complex operations in one line
+- Often faster than chained operations
+- Essential for attention mechanisms
+
+## Syntax
+\`\`\`python
+np.einsum('subscripts', operands)
+\`\`\`
+
+## Common Patterns
+
+### Basic Operations
+| Einsum | Operation |
+|--------|-----------|
+| \`'ij->'\` | Sum all elements |
+| \`'ij->i'\` | Sum along axis 1 (row sums) |
+| \`'ij->j'\` | Sum along axis 0 (column sums) |
+| \`'ij->ji'\` | Transpose |
+| \`'ii->i'\` | Extract diagonal |
+
+### Matrix Operations
+| Einsum | Operation |
+|--------|-----------|
+| \`'ik,kj->ij'\` | Matrix multiplication |
+| \`'ij,ij->ij'\` | Element-wise product |
+| \`'ij,ij->'\` | Frobenius inner product |
+| \`'i,j->ij'\` | Outer product |
+
+### Batch Operations
+| Einsum | Operation |
+|--------|-----------|
+| \`'bij,bjk->bik'\` | Batch matrix multiply |
+| \`'bqd,bkd->bqk'\` | Attention scores |
+
+## Key Insight
+Letters that appear on both sides are kept.
+Letters that disappear are summed over (contracted).
+
+Master einsum to write clean, efficient deep learning code!
+    `,problems:["einsum-basics","einsum-matrix-ops","einsum-batch-ops","einsum-advanced","einsum-vs-matmul"]},{id:"pytorch-basics",title:"PyTorch Basics",description:"Learn PyTorch patterns implemented in NumPy.",icon:"🔥",introduction:`
+# PyTorch Basics
+
+Learn PyTorch patterns and concepts. Since Pyodide doesn't support PyTorch, we implement these concepts in NumPy.
+
+## Tensor Operations
+
+### Creation
+\`\`\`python
+# PyTorch           # NumPy equivalent
+torch.tensor()      np.array()
+torch.zeros()       np.zeros()
+torch.randn()       np.random.randn()
+\`\`\`
+
+### Operations
+\`\`\`python
+# PyTorch           # NumPy equivalent
+x + y               x + y
+x @ y               x @ y
+x.sum(dim=1)        x.sum(axis=1)
+x.view(2, -1)       x.reshape(2, -1)
+\`\`\`
+
+## Autograd Concepts
+
+PyTorch tracks operations for automatic differentiation:
+\`\`\`python
+x = torch.tensor([2.0], requires_grad=True)
+y = x ** 2
+y.backward()  # dy/dx = 2x = 4
+\`\`\`
+
+We implement this manually to understand the math.
+
+## Module Pattern
+\`\`\`python
+class Linear(nn.Module):
+    def __init__(self, in_features, out_features):
+        self.weight = Parameter(...)
+        self.bias = Parameter(...)
+
+    def forward(self, x):
+        return x @ self.weight + self.bias
+\`\`\`
+
+## Loss Functions
+- CrossEntropyLoss: Classification
+- MSELoss: Regression
+- BCELoss: Binary classification
+
+Learn these patterns to understand PyTorch!
+    `,problems:["tensor-creation","tensor-operations","autograd-concepts","nn-modules","loss-functions"]},{id:"data-preprocessing",title:"Data Preprocessing",description:"Learn essential data cleaning and transformation techniques.",icon:"🧹",introduction:`
 # Data Preprocessing
 
 Real-world data is messy. Before training any model, you need to clean and transform your data.
@@ -156,7 +253,62 @@ Unsupervised learning finds patterns in unlabeled data.
 - Discuss limitations (K-means assumes spherical clusters)
 
 Let's implement these algorithms!
-    `,problems:["kmeans-clustering","pca-implementation"]},{id:"neural-networks",title:"Neural Networks",description:"Build neural networks from scratch with forward and backward passes.",icon:"🧠",introduction:`
+    `,problems:["kmeans-clustering","pca-implementation"]},{id:"model-evaluation",title:"Model Evaluation",description:"Learn metrics and techniques to evaluate ML models properly.",icon:"📈",introduction:`
+# Model Evaluation
+
+Building a model is only half the job. You need to evaluate it properly.
+
+## Key Concepts
+
+### Classification Metrics
+- **Accuracy**: Correct / Total (can be misleading!)
+- **Precision**: TP / (TP + FP) - "Of positive predictions, how many correct?"
+- **Recall**: TP / (TP + FN) - "Of actual positives, how many found?"
+- **F1 Score**: Harmonic mean of precision and recall
+
+### Regression Metrics
+- **MSE**: Mean Squared Error
+- **RMSE**: Root MSE (same units as target)
+- **MAE**: Mean Absolute Error (robust to outliers)
+- **R²**: Proportion of variance explained
+
+### Cross-Validation
+- **Why**: Single train/test split is unreliable
+- **K-Fold**: Split data into K parts, rotate test set
+- **Stratified**: Maintain class distribution in folds
+
+### Interview Essentials
+- Know when to use each metric
+- Implement cross-validation from scratch
+- Discuss precision-recall trade-offs
+
+Let's practice evaluation!
+    `,problems:["precision-recall-f1","cross-validation","confusion-matrix"]},{id:"deep-learning",title:"Deep Learning Basics",description:"Activation functions and fundamental building blocks.",icon:"⚡",introduction:`
+# Deep Learning Basics
+
+Core building blocks that appear in every neural network.
+
+## Key Concepts
+
+### Activation Functions
+- **ReLU**: max(0, x) - Most common, avoids vanishing gradient
+- **Sigmoid**: 1/(1+e^-x) - Output in [0,1], used for binary classification
+- **Softmax**: Converts logits to probabilities that sum to 1
+- **Tanh**: Output in [-1, 1], zero-centered
+
+### When to Use Each
+- **Hidden layers**: ReLU (or variants like LeakyReLU)
+- **Binary output**: Sigmoid
+- **Multi-class output**: Softmax
+- **RNNs**: Tanh (historically)
+
+### Dense Layers
+- **Forward pass**: output = activation(W @ x + b)
+- **Parameters**: Weights W and biases b
+- **Computation**: Matrix multiplication + bias + activation
+
+Let's implement these fundamentals!
+    `,problems:["perceptron","neural-network-forward","backpropagation"]},{id:"neural-networks",title:"Neural Networks",description:"Build neural networks from scratch with forward and backward passes.",icon:"🧠",introduction:`
 # Neural Networks
 
 Neural networks are the foundation of deep learning. Understanding the math behind them is essential for ML interviews.
@@ -304,159 +456,7 @@ x_t = sqrt(α_bar_t) * x_0 + sqrt(1 - α_bar_t) * ε
 - Compare GANs vs VAEs vs Diffusion
 
 Let's implement generative models!
-    `,problems:["kl-divergence","vae-reparameterization","vae-loss","diffusion-noise-schedule","diffusion-forward"]},{id:"model-evaluation",title:"Model Evaluation",description:"Learn metrics and techniques to evaluate ML models properly.",icon:"📈",introduction:`
-# Model Evaluation
-
-Building a model is only half the job. You need to evaluate it properly.
-
-## Key Concepts
-
-### Classification Metrics
-- **Accuracy**: Correct / Total (can be misleading!)
-- **Precision**: TP / (TP + FP) - "Of positive predictions, how many correct?"
-- **Recall**: TP / (TP + FN) - "Of actual positives, how many found?"
-- **F1 Score**: Harmonic mean of precision and recall
-
-### Regression Metrics
-- **MSE**: Mean Squared Error
-- **RMSE**: Root MSE (same units as target)
-- **MAE**: Mean Absolute Error (robust to outliers)
-- **R²**: Proportion of variance explained
-
-### Cross-Validation
-- **Why**: Single train/test split is unreliable
-- **K-Fold**: Split data into K parts, rotate test set
-- **Stratified**: Maintain class distribution in folds
-
-### Interview Essentials
-- Know when to use each metric
-- Implement cross-validation from scratch
-- Discuss precision-recall trade-offs
-
-Let's practice evaluation!
-    `,problems:["precision-recall-f1","cross-validation","confusion-matrix"]},{id:"deep-learning",title:"Deep Learning Basics",description:"Activation functions and fundamental building blocks.",icon:"⚡",introduction:`
-# Deep Learning Basics
-
-Core building blocks that appear in every neural network.
-
-## Key Concepts
-
-### Activation Functions
-- **ReLU**: max(0, x) - Most common, avoids vanishing gradient
-- **Sigmoid**: 1/(1+e^-x) - Output in [0,1], used for binary classification
-- **Softmax**: Converts logits to probabilities that sum to 1
-- **Tanh**: Output in [-1, 1], zero-centered
-
-### When to Use Each
-- **Hidden layers**: ReLU (or variants like LeakyReLU)
-- **Binary output**: Sigmoid
-- **Multi-class output**: Softmax
-- **RNNs**: Tanh (historically)
-
-### Dense Layers
-- **Forward pass**: output = activation(W @ x + b)
-- **Parameters**: Weights W and biases b
-- **Computation**: Matrix multiplication + bias + activation
-
-Let's implement these fundamentals!
-    `,problems:["perceptron","neural-network-forward","backpropagation"]},{id:"numpy-fundamentals",title:"NumPy Fundamentals",description:"Master NumPy array operations essential for ML development.",icon:"🔢",introduction:"\n# NumPy Fundamentals\n\nNumPy is the backbone of scientific computing in Python. Every ML library builds on it.\n\n## Key Concepts\n\n### Array Creation\n- `np.array()`: Create from lists\n- `np.zeros()`, `np.ones()`: Initialize with values\n- `np.arange()`, `np.linspace()`: Numeric ranges\n- `np.eye()`: Identity matrix\n\n### Indexing & Slicing\n- Basic: `arr[0]`, `arr[1:5]`\n- Advanced: `arr[[0, 2, 4]]`, `arr[arr > 0]`\n- Multi-dimensional: `arr[1, :]`, `arr[:, 2:4]`\n\n### Broadcasting\nArrays of different shapes can be combined:\n- (3, 4) + (4,) → broadcasts to (3, 4)\n- (3, 1) * (1, 4) → broadcasts to (3, 4)\n\n### Aggregations\n- `sum()`, `mean()`, `std()` - with axis parameter\n- `argmax()`, `argmin()` - find indices\n\n### Shape Manipulation\n- `reshape()`: Change dimensions\n- `transpose()`, `.T`: Swap axes\n- `flatten()`, `ravel()`: To 1D\n\nMaster these operations to write efficient ML code!\n    ",problems:["numpy-array-creation","numpy-indexing","numpy-broadcasting","numpy-aggregations","numpy-reshape-transpose"]},{id:"einsum",title:"Einstein Summation (Einsum)",description:"Master einsum for elegant tensor operations.",icon:"∑",introduction:`
-# Einstein Summation (Einsum)
-
-Einsum is a powerful notation for expressing tensor operations concisely.
-
-## Why Einsum?
-- Express complex operations in one line
-- Often faster than chained operations
-- Essential for attention mechanisms
-
-## Syntax
-\`\`\`python
-np.einsum('subscripts', operands)
-\`\`\`
-
-## Common Patterns
-
-### Basic Operations
-| Einsum | Operation |
-|--------|-----------|
-| \`'ij->'\` | Sum all elements |
-| \`'ij->i'\` | Sum along axis 1 (row sums) |
-| \`'ij->j'\` | Sum along axis 0 (column sums) |
-| \`'ij->ji'\` | Transpose |
-| \`'ii->i'\` | Extract diagonal |
-
-### Matrix Operations
-| Einsum | Operation |
-|--------|-----------|
-| \`'ik,kj->ij'\` | Matrix multiplication |
-| \`'ij,ij->ij'\` | Element-wise product |
-| \`'ij,ij->'\` | Frobenius inner product |
-| \`'i,j->ij'\` | Outer product |
-
-### Batch Operations
-| Einsum | Operation |
-|--------|-----------|
-| \`'bij,bjk->bik'\` | Batch matrix multiply |
-| \`'bqd,bkd->bqk'\` | Attention scores |
-
-## Key Insight
-Letters that appear on both sides are kept.
-Letters that disappear are summed over (contracted).
-
-Master einsum to write clean, efficient deep learning code!
-    `,problems:["einsum-basics","einsum-matrix-ops","einsum-batch-ops","einsum-advanced","einsum-vs-matmul"]},{id:"pytorch-basics",title:"PyTorch Basics",description:"Learn PyTorch patterns implemented in NumPy.",icon:"🔥",introduction:`
-# PyTorch Basics
-
-Learn PyTorch patterns and concepts. Since Pyodide doesn't support PyTorch, we implement these concepts in NumPy.
-
-## Tensor Operations
-
-### Creation
-\`\`\`python
-# PyTorch           # NumPy equivalent
-torch.tensor()      np.array()
-torch.zeros()       np.zeros()
-torch.randn()       np.random.randn()
-\`\`\`
-
-### Operations
-\`\`\`python
-# PyTorch           # NumPy equivalent
-x + y               x + y
-x @ y               x @ y
-x.sum(dim=1)        x.sum(axis=1)
-x.view(2, -1)       x.reshape(2, -1)
-\`\`\`
-
-## Autograd Concepts
-
-PyTorch tracks operations for automatic differentiation:
-\`\`\`python
-x = torch.tensor([2.0], requires_grad=True)
-y = x ** 2
-y.backward()  # dy/dx = 2x = 4
-\`\`\`
-
-We implement this manually to understand the math.
-
-## Module Pattern
-\`\`\`python
-class Linear(nn.Module):
-    def __init__(self, in_features, out_features):
-        self.weight = Parameter(...)
-        self.bias = Parameter(...)
-
-    def forward(self, x):
-        return x @ self.weight + self.bias
-\`\`\`
-
-## Loss Functions
-- CrossEntropyLoss: Classification
-- MSELoss: Regression
-- BCELoss: Binary classification
-
-Learn these patterns to understand PyTorch!
-    `,problems:["tensor-creation","tensor-operations","autograd-concepts","nn-modules","loss-functions"]},{id:"e2e-implementations",title:"End-to-End Implementations",description:"Build complete ML models from scratch.",icon:"🏗️",introduction:`
+    `,problems:["kl-divergence","vae-reparameterization","vae-loss","diffusion-noise-schedule","diffusion-forward"]},{id:"e2e-implementations",title:"End-to-End Implementations",description:"Build complete ML models from scratch.",icon:"🏗️",introduction:`
 # End-to-End Implementations
 
 Put everything together to build complete models from scratch.
