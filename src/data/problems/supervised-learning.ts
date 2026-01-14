@@ -189,7 +189,7 @@ def sigmoid(x: np.ndarray) -> np.ndarray:
         id: '3',
         description: 'Large values',
         input: '[-10, 10]',
-        expected: '[0.000045, 0.999955]',
+        expected: '[4.5e-05, 0.999955]',
         hidden: true,
       },
     ],
@@ -373,15 +373,8 @@ def logistic_regression(X, y, learning_rate=0.1, iterations=1000):
         id: '1',
         description: 'Simple separable data',
         input: '(np.array([[0, 0], [0, 1], [1, 0], [1, 1]]), np.array([0, 0, 0, 1]), 0.5, 1000)',
-        expected: 'converged',
+        expected: '([6.0141, 6.0141], -9.1984)',
         hidden: false,
-      },
-      {
-        id: '2',
-        description: 'Predictions reasonable',
-        input: 'prediction_test',
-        expected: 'True',
-        hidden: true,
       },
     ],
     hints: [
@@ -444,7 +437,7 @@ p = np.clip(p, 1e-15, 1 - 1e-15)
     examples: [
       {
         input: 'y = [1, 0, 1], p = [0.9, 0.1, 0.8]',
-        output: '0.1643',
+        output: '0.1446',
         explanation: 'Low loss for confident correct predictions',
       },
     ],
@@ -476,7 +469,7 @@ def binary_cross_entropy(y_true, y_pred):
         id: '2',
         description: 'Typical case',
         input: '([1, 0, 1], [0.9, 0.1, 0.8])',
-        expected: '0.1643',
+        expected: '0.1446',
         hidden: false,
       },
     ],

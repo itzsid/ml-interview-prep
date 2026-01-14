@@ -1,0 +1,1541 @@
+[
+  {
+    "id": "numpy-array-sum",
+    "title": "Array Sum",
+    "section": "python-basics",
+    "solution": "import numpy as np\n\ndef array_sum(arr: np.ndarray) -> float:\n    \"\"\"\n    Calculate the sum of all elements in a NumPy array.\n    \"\"\"\n    return np.sum(arr)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic positive numbers",
+        "input": "[1, 2, 3, 4, 5]",
+        "expected": "15",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "With negatives",
+        "input": "[-1, 0, 1]",
+        "expected": "0",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Single element",
+        "input": "[42]",
+        "expected": "42",
+        "hidden": false
+      },
+      {
+        "id": "4",
+        "description": "Larger array",
+        "input": "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]",
+        "expected": "55",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "numpy-matrix-multiply",
+    "title": "Matrix Multiplication",
+    "section": "python-basics",
+    "solution": "import numpy as np\n\ndef matrix_multiply(A: np.ndarray, B: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Multiply two matrices A and B.\n    \"\"\"\n    return np.dot(A, B)\n    # Alternative: return A @ B\n    # Alternative: return np.matmul(A, B)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "2x2 matrices",
+        "input": "([[1, 2], [3, 4]], [[5, 6], [7, 8]])",
+        "expected": "[[19, 22], [43, 50]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Identity multiplication",
+        "input": "([[1, 0], [0, 1]], [[5, 6], [7, 8]])",
+        "expected": "[[5, 6], [7, 8]]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Different dimensions",
+        "input": "([[1, 2, 3]], [[1], [2], [3]])",
+        "expected": "[[14]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "numpy-broadcast-add",
+    "title": "Broadcasting Addition",
+    "section": "python-basics",
+    "solution": "import numpy as np\n\ndef broadcast_add(matrix: np.ndarray, vector: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Add a vector to each row of a matrix using broadcasting.\n    \"\"\"\n    return matrix + vector\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic broadcasting",
+        "input": "([[1, 2, 3], [4, 5, 6]], [10, 20, 30])",
+        "expected": "[[11, 22, 33], [14, 25, 36]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "With zeros",
+        "input": "([[1, 2], [3, 4]], [0, 0])",
+        "expected": "[[1, 2], [3, 4]]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Negative values",
+        "input": "([[1, 2], [3, 4]], [-1, -2])",
+        "expected": "[[0, 0], [2, 2]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "normalize-features",
+    "title": "Normalize Features",
+    "section": "data-preprocessing",
+    "solution": "import numpy as np\n\ndef normalize(arr: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Apply min-max normalization to scale values to [0, 1].\n    \"\"\"\n    arr_min = np.min(arr)\n    arr_max = np.max(arr)\n    return (arr - arr_min) / (arr_max - arr_min)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic normalization",
+        "input": "[1, 2, 3, 4, 5]",
+        "expected": "[0.0, 0.25, 0.5, 0.75, 1.0]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "With negative values",
+        "input": "[-10, 0, 10]",
+        "expected": "[0.0, 0.5, 1.0]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Larger range",
+        "input": "[0, 50, 100]",
+        "expected": "[0.0, 0.5, 1.0]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "handle-missing-data",
+    "title": "Handle Missing Data",
+    "section": "data-preprocessing",
+    "solution": "import numpy as np\n\ndef fill_missing_with_mean(arr: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Replace NaN values with the mean of non-NaN values.\n    \"\"\"\n    arr = arr.copy()  # Don't modify original\n    mean_val = np.nanmean(arr)\n    arr[np.isnan(arr)] = mean_val\n    return arr\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic case",
+        "input": "[1.0, float(\"nan\"), 3.0, float(\"nan\"), 5.0]",
+        "expected": "[1.0, 3.0, 3.0, 3.0, 5.0]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Single NaN",
+        "input": "[2.0, 4.0, float(\"nan\"), 6.0]",
+        "expected": "[2.0, 4.0, 4.0, 6.0]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "NaN at start",
+        "input": "[float(\"nan\"), 10.0, 20.0]",
+        "expected": "[15.0, 10.0, 20.0]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "one-hot-encode",
+    "title": "One-Hot Encoding",
+    "section": "data-preprocessing",
+    "solution": "import numpy as np\n\ndef one_hot_encode(labels: np.ndarray, num_classes: int) -> np.ndarray:\n    \"\"\"\n    Convert integer labels to one-hot encoded format.\n    \"\"\"\n    # Method 1: Using np.eye\n    return np.eye(num_classes)[labels].astype(int)\n\n    # Method 2: Manual approach\n    # one_hot = np.zeros((len(labels), num_classes), dtype=int)\n    # one_hot[np.arange(len(labels)), labels] = 1\n    # return one_hot\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic encoding",
+        "input": "([0, 1, 2], 3)",
+        "expected": "[[1, 0, 0], [0, 1, 0], [0, 0, 1]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Repeated labels",
+        "input": "([0, 0, 1, 1], 2)",
+        "expected": "[[1, 0], [1, 0], [0, 1], [0, 1]]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "More classes than used",
+        "input": "([0, 2], 4)",
+        "expected": "[[1, 0, 0, 0], [0, 0, 1, 0]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "linear-regression-gd",
+    "title": "Linear Regression with Gradient Descent",
+    "section": "supervised-learning",
+    "solution": "import numpy as np\n\ndef linear_regression(X: np.ndarray, y: np.ndarray,\n                      learning_rate: float = 0.01,\n                      iterations: int = 1000) -> tuple:\n    \"\"\"\n    Train a simple linear regression model using gradient descent.\n    \"\"\"\n    w = 0.0\n    b = 0.0\n    n = len(X)\n\n    for _ in range(iterations):\n        # Forward pass\n        y_pred = w * X + b\n\n        # Compute gradients\n        dw = (2/n) * np.sum((y_pred - y) * X)\n        db = (2/n) * np.sum(y_pred - y)\n\n        # Update parameters\n        w = w - learning_rate * dw\n        b = b - learning_rate * db\n\n    return (round(w, 2), round(b, 2))\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Perfect linear relationship",
+        "input": "([1, 2, 3, 4], [2, 4, 6, 8], 0.1, 1000)",
+        "expected": "(2.0, 0.0)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "With intercept",
+        "input": "([1, 2, 3, 4], [3, 5, 7, 9], 0.1, 1000)",
+        "expected": "(2.0, 1.0)",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Different slope",
+        "input": "([0, 1, 2, 3], [1, 4, 7, 10], 0.1, 1000)",
+        "expected": "(3.0, 1.0)",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "logistic-regression",
+    "title": "Sigmoid Function",
+    "section": "supervised-learning",
+    "solution": "import numpy as np\n\ndef sigmoid(x: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute the sigmoid activation function.\n    \"\"\"\n    return 1 / (1 + np.exp(-x))\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Zero input",
+        "input": "[0]",
+        "expected": "[0.5]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Positive and negative",
+        "input": "[-1, 0, 1]",
+        "expected": "[0.268941, 0.5, 0.731059]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Large values",
+        "input": "[-10, 10]",
+        "expected": "[4.5e-05, 0.999955]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "decision-tree-split",
+    "title": "Gini Impurity",
+    "section": "supervised-learning",
+    "solution": "import numpy as np\n\ndef gini_impurity(labels: np.ndarray) -> float:\n    \"\"\"\n    Calculate Gini impurity for a set of labels.\n    \"\"\"\n    if len(labels) == 0:\n        return 0.0\n\n    # Count occurrences of each class\n    _, counts = np.unique(labels, return_counts=True)\n\n    # Calculate probabilities\n    probabilities = counts / len(labels)\n\n    # Gini = 1 - sum(p^2)\n    return 1 - np.sum(probabilities ** 2)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Pure node",
+        "input": "[0, 0, 0, 0]",
+        "expected": "0.0",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Maximum impurity",
+        "input": "[0, 0, 1, 1]",
+        "expected": "0.5",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Unequal split",
+        "input": "[0, 0, 0, 1]",
+        "expected": "0.375",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "logistic-regression-full",
+    "title": "Logistic Regression with Gradient Descent",
+    "section": "supervised-learning",
+    "solution": "import numpy as np\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef logistic_regression(X, y, learning_rate=0.1, iterations=1000):\n    m, n = X.shape\n    w = np.zeros(n)\n    b = 0.0\n\n    for _ in range(iterations):\n        # Forward pass\n        z = X @ w + b\n        y_pred = sigmoid(z)\n\n        # Compute gradients\n        dw = (1/m) * X.T @ (y_pred - y)\n        db = (1/m) * np.sum(y_pred - y)\n\n        # Update parameters\n        w = w - learning_rate * dw\n        b = b - learning_rate * db\n\n    return np.round(w, 4), round(b, 4)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Simple separable data",
+        "input": "(np.array([[0, 0], [0, 1], [1, 0], [1, 1]]), np.array([0, 0, 0, 1]), 0.5, 1000)",
+        "expected": "([6.0141, 6.0141], -9.1984)",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "binary-cross-entropy",
+    "title": "Binary Cross-Entropy Loss",
+    "section": "supervised-learning",
+    "solution": "import numpy as np\n\ndef binary_cross_entropy(y_true, y_pred):\n    y_true = np.array(y_true)\n    y_pred = np.array(y_pred)\n\n    # Clip for numerical stability\n    y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)\n\n    # BCE formula\n    loss = -np.mean(y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred))\n\n    return round(loss, 4)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Perfect predictions",
+        "input": "([1, 0, 1, 0], [1.0, 0.0, 1.0, 0.0])",
+        "expected": "0.0",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Typical case",
+        "input": "([1, 0, 1], [0.9, 0.1, 0.8])",
+        "expected": "0.1446",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "kmeans-clustering",
+    "title": "K-Means: Assign to Nearest Centroid",
+    "section": "unsupervised-learning",
+    "solution": "import numpy as np\n\ndef assign_clusters(X: np.ndarray, centroids: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Assign each point to its nearest centroid.\n    \"\"\"\n    # Calculate distances from each point to each centroid\n    # Using broadcasting: X[:, np.newaxis] has shape (n, 1, d)\n    # centroids has shape (k, d)\n    # Difference has shape (n, k, d)\n    distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)\n\n    # Return index of minimum distance for each point\n    return np.argmin(distances, axis=1)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Simple 2D case",
+        "input": "([[0, 0], [1, 1], [10, 10]], [[0, 0], [10, 10]])",
+        "expected": "[0, 0, 1]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Three clusters",
+        "input": "([[0, 0], [5, 5], [10, 10]], [[0, 0], [5, 5], [10, 10]])",
+        "expected": "[0, 1, 2]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Tiebreaker (first centroid wins)",
+        "input": "([[5, 5]], [[0, 0], [10, 10]])",
+        "expected": "[0]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "pca-implementation",
+    "title": "PCA: Center Data",
+    "section": "unsupervised-learning",
+    "solution": "import numpy as np\n\ndef center_data(X: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Center the data by subtracting the mean of each feature.\n    \"\"\"\n    mean = np.mean(X, axis=0)\n    return X - mean\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic centering",
+        "input": "[[1, 2], [3, 4], [5, 6]]",
+        "expected": "[[-2.0, -2.0], [0.0, 0.0], [2.0, 2.0]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Already centered",
+        "input": "[[-1, -1], [0, 0], [1, 1]]",
+        "expected": "[[-1.0, -1.0], [0.0, 0.0], [1.0, 1.0]]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Single column",
+        "input": "[[10], [20], [30]]",
+        "expected": "[[-10.0], [0.0], [10.0]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "perceptron",
+    "title": "ReLU Activation",
+    "section": "deep-learning",
+    "solution": "import numpy as np\n\ndef relu(x: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Apply ReLU activation function.\n    \"\"\"\n    return np.maximum(0, x)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Mixed values",
+        "input": "[-2, -1, 0, 1, 2]",
+        "expected": "[0, 0, 0, 1, 2]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "All negative",
+        "input": "[-5, -3, -1]",
+        "expected": "[0, 0, 0]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "All positive",
+        "input": "[1, 2, 3]",
+        "expected": "[1, 2, 3]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "neural-network-forward",
+    "title": "Dense Layer Forward Pass",
+    "section": "deep-learning",
+    "solution": "import numpy as np\n\ndef dense_forward(X: np.ndarray, W: np.ndarray, b: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute forward pass of a dense layer with ReLU activation.\n    \"\"\"\n    # Linear transformation\n    Z = np.dot(X, W) + b\n    # ReLU activation\n    return np.maximum(0, Z)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic forward pass",
+        "input": "([[1, 2]], [[1, 0], [0, 1]], [1, 1])",
+        "expected": "[[2, 3]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "With negative pre-activation",
+        "input": "([[1, 1]], [[1, -2], [-1, 1]], [0, 0])",
+        "expected": "[[0, 0]]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Batch of 2",
+        "input": "([[1, 0], [0, 1]], [[2, 0], [0, 2]], [0, 0])",
+        "expected": "[[2, 0], [0, 2]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "backpropagation",
+    "title": "Softmax Function",
+    "section": "deep-learning",
+    "solution": "import numpy as np\n\ndef softmax(x: np.ndarray) -> np.ndarray:\n    \"\"\"\n    Compute softmax probabilities.\n    \"\"\"\n    # Subtract max for numerical stability\n    x_shifted = x - np.max(x)\n    exp_x = np.exp(x_shifted)\n    return exp_x / np.sum(exp_x)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic softmax",
+        "input": "[1, 2, 3]",
+        "expected": "[0.090031, 0.244728, 0.665241]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Equal inputs",
+        "input": "[1, 1, 1]",
+        "expected": "[0.333333, 0.333333, 0.333333]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Large values",
+        "input": "[100, 101, 102]",
+        "expected": "[0.090031, 0.244728, 0.665241]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "precision-recall-f1",
+    "title": "Precision and Recall",
+    "section": "model-evaluation",
+    "solution": "import numpy as np\n\ndef precision_recall(y_true: np.ndarray, y_pred: np.ndarray) -> tuple:\n    \"\"\"\n    Calculate precision and recall for binary classification.\n    \"\"\"\n    y_true = np.array(y_true)\n    y_pred = np.array(y_pred)\n\n    # Calculate TP, FP, FN\n    tp = np.sum((y_true == 1) & (y_pred == 1))\n    fp = np.sum((y_true == 0) & (y_pred == 1))\n    fn = np.sum((y_true == 1) & (y_pred == 0))\n\n    # Calculate precision and recall\n    precision = tp / (tp + fp) if (tp + fp) > 0 else 0\n    recall = tp / (tp + fn) if (tp + fn) > 0 else 0\n\n    return (round(precision, 4), round(recall, 4))\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Mixed predictions",
+        "input": "([1, 1, 0, 1, 0], [1, 0, 0, 1, 1])",
+        "expected": "(0.6667, 0.6667)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Perfect predictions",
+        "input": "([1, 1, 0, 0], [1, 1, 0, 0])",
+        "expected": "(1.0, 1.0)",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "High precision, low recall",
+        "input": "([1, 1, 1, 1, 0], [1, 0, 0, 0, 0])",
+        "expected": "(1.0, 0.25)",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "cross-validation",
+    "title": "K-Fold Split Indices",
+    "section": "model-evaluation",
+    "solution": "import numpy as np\n\ndef kfold_indices(n_samples: int, k: int) -> list:\n    \"\"\"\n    Generate train/validation indices for K-fold cross-validation.\n    \"\"\"\n    indices = np.arange(n_samples)\n    fold_sizes = np.full(k, n_samples // k)\n    fold_sizes[:n_samples % k] += 1\n\n    folds = []\n    current = 0\n    for fold_size in fold_sizes:\n        val_indices = list(range(current, current + fold_size))\n        train_indices = [i for i in range(n_samples) if i not in val_indices]\n        folds.append((train_indices, val_indices))\n        current += fold_size\n\n    return folds\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic 3-fold",
+        "input": "(6, 3)",
+        "expected": "[[[2, 3, 4, 5], [0, 1]], [[0, 1, 4, 5], [2, 3]], [[0, 1, 2, 3], [4, 5]]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "2-fold",
+        "input": "(4, 2)",
+        "expected": "[[[2, 3], [0, 1]], [[0, 1], [2, 3]]]",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "4-fold",
+        "input": "(8, 4)",
+        "expected": "[[[2, 3, 4, 5, 6, 7], [0, 1]], [[0, 1, 4, 5, 6, 7], [2, 3]], [[0, 1, 2, 3, 6, 7], [4, 5]], [[0, 1, 2, 3, 4, 5], [6, 7]]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "confusion-matrix",
+    "title": "Accuracy Score",
+    "section": "model-evaluation",
+    "solution": "import numpy as np\n\ndef accuracy(y_true: np.ndarray, y_pred: np.ndarray) -> float:\n    \"\"\"\n    Calculate accuracy of predictions.\n    \"\"\"\n    y_true = np.array(y_true)\n    y_pred = np.array(y_pred)\n    return np.mean(y_true == y_pred)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic accuracy",
+        "input": "([0, 1, 1, 0, 1], [0, 1, 0, 0, 1])",
+        "expected": "0.8",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Perfect accuracy",
+        "input": "([1, 1, 0, 0], [1, 1, 0, 0])",
+        "expected": "1.0",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Zero accuracy",
+        "input": "([0, 0, 1, 1], [1, 1, 0, 0])",
+        "expected": "0.0",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "mlp-forward",
+    "title": "MLP Forward Pass",
+    "section": "neural-networks",
+    "solution": "import numpy as np\n\ndef relu(x):\n    return np.maximum(0, x)\n\ndef softmax(x):\n    exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))\n    return exp_x / np.sum(exp_x, axis=1, keepdims=True)\n\ndef mlp_forward(X, W1, b1, W2, b2):\n    # First layer\n    Z1 = X @ W1 + b1\n    A1 = relu(Z1)\n\n    # Second layer\n    Z2 = A1 @ W2 + b2\n    output = softmax(Z2)\n\n    # Cache for backprop\n    cache = (X, Z1, A1, Z2, W1, W2)\n\n    return output, cache\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output shape correct",
+        "input": "(np.array([[1, 2, 3], [4, 5, 6]]), np.ones((3, 4)), np.zeros(4), np.ones((4, 2)), np.zeros(2))",
+        "expected": "(2, 2)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Probabilities sum to 1",
+        "input": "(np.array([[1, 0], [0, 1]]), np.array([[1, 0], [0, 1]]), np.zeros(2), np.array([[1, 0], [0, 1]]), np.zeros(2))",
+        "expected": "1.0",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "backprop-gradients",
+    "title": "Backpropagation Gradients",
+    "section": "neural-networks",
+    "solution": "import numpy as np\n\ndef backprop(X, Y, output, cache):\n    m = X.shape[0]\n    X, Z1, A1, Z2, W1, W2 = cache\n\n    # Output layer gradient (softmax + cross-entropy)\n    dZ2 = output - Y\n    dW2 = (1/m) * A1.T @ dZ2\n    db2 = (1/m) * np.sum(dZ2, axis=0)\n\n    # Hidden layer gradient\n    dA1 = dZ2 @ W2.T\n    dZ1 = dA1 * (Z1 > 0)  # ReLU derivative\n    dW1 = (1/m) * X.T @ dZ1\n    db1 = (1/m) * np.sum(dZ1, axis=0)\n\n    return {'dW1': dW1, 'db1': db1, 'dW2': dW2, 'db2': db2}\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "dW2 shape matches W2",
+        "input": "shapes_match",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Gradients are non-zero",
+        "input": "non_zero_grads",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "cross-entropy-loss",
+    "title": "Cross-Entropy Loss",
+    "section": "neural-networks",
+    "solution": "import numpy as np\n\ndef cross_entropy_loss(Y_pred, Y_true):\n    m = Y_pred.shape[0]\n    epsilon = 1e-15\n    log_probs = np.log(Y_pred + epsilon)\n    loss = -np.sum(Y_true * log_probs) / m\n    return round(loss, 4)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Perfect prediction",
+        "input": "([[1.0, 0.0], [0.0, 1.0]], [[1, 0], [0, 1]])",
+        "expected": "0.0",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Typical case",
+        "input": "([[0.7, 0.3], [0.2, 0.8]], [[1, 0], [0, 1]])",
+        "expected": "0.2899",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "weight-init",
+    "title": "Xavier/He Weight Initialization",
+    "section": "neural-networks",
+    "solution": "import numpy as np\n\ndef initialize_weights(n_in, n_out, method='xavier'):\n    np.random.seed(42)\n\n    if method == 'xavier':\n        std = np.sqrt(2.0 / (n_in + n_out))\n    elif method == 'he':\n        std = np.sqrt(2.0 / n_in)\n    else:\n        raise ValueError(\"Method must be 'xavier' or 'he'\")\n\n    W = np.random.randn(n_in, n_out) * std\n    return round(np.std(W), 4)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Xavier std correct",
+        "input": "(100, 50, \"xavier\")",
+        "expected": "0.1151",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "He std correct",
+        "input": "(100, 50, \"he\")",
+        "expected": "0.1409",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "batch-norm",
+    "title": "Batch Normalization",
+    "section": "neural-networks",
+    "solution": "import numpy as np\n\ndef batch_norm_forward(X, gamma, beta, eps=1e-5):\n    # Compute batch statistics\n    mu = np.mean(X, axis=0)\n    var = np.var(X, axis=0)\n\n    # Normalize\n    X_norm = (X - mu) / np.sqrt(var + eps)\n\n    # Scale and shift\n    out = gamma * X_norm + beta\n\n    # Cache for backward pass\n    cache = (X, X_norm, mu, var, gamma, eps)\n\n    return out, cache\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output mean near zero",
+        "input": "(np.array([[1, 2], [3, 4], [5, 6]]), np.ones(2), np.zeros(2))",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Gamma scales output",
+        "input": "(np.array([[0, 0], [2, 2]]), np.array([2, 3]), np.zeros(2))",
+        "expected": "[2.0, 3.0]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "dropout",
+    "title": "Dropout",
+    "section": "neural-networks",
+    "solution": "import numpy as np\n\ndef dropout_forward(X, keep_prob=0.5, training=True):\n    if not training:\n        return X, None\n\n    # Create mask and scale\n    mask = (np.random.rand(*X.shape) < keep_prob) / keep_prob\n    out = X * mask\n\n    return out, mask\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Inference returns unchanged",
+        "input": "(np.array([[1, 2, 3, 4]]), 0.5, False)",
+        "expected": "[[1, 2, 3, 4]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Expected value preserved",
+        "input": "expected_value_test",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "conv2d-forward",
+    "title": "2D Convolution",
+    "section": "cnn",
+    "solution": "import numpy as np\n\ndef conv2d(image, kernel):\n    image = np.array(image)\n    kernel = np.array(kernel)\n\n    H, W = image.shape\n    kH, kW = kernel.shape\n\n    out_H = H - kH + 1\n    out_W = W - kW + 1\n\n    output = np.zeros((out_H, out_W))\n\n    for i in range(out_H):\n        for j in range(out_W):\n            region = image[i:i+kH, j:j+kW]\n            output[i, j] = np.sum(region * kernel)\n\n    return output.astype(int).tolist()\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Identity kernel",
+        "input": "([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[0, 0, 0], [0, 1, 0], [0, 0, 0]])",
+        "expected": "[[5]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Edge detection",
+        "input": "([[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]], [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])",
+        "expected": "[[5, 5], [5, 5]]",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "max-pool",
+    "title": "Max Pooling",
+    "section": "cnn",
+    "solution": "import numpy as np\n\ndef max_pool2d(image, pool_size=2):\n    image = np.array(image)\n    H, W = image.shape\n\n    out_H = H // pool_size\n    out_W = W // pool_size\n\n    output = np.zeros((out_H, out_W))\n\n    for i in range(out_H):\n        for j in range(out_W):\n            region = image[i*pool_size:(i+1)*pool_size,\n                          j*pool_size:(j+1)*pool_size]\n            output[i, j] = np.max(region)\n\n    return output.astype(int).tolist()\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "4x4 to 2x2",
+        "input": "[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]",
+        "expected": "[[6, 8], [14, 16]]",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "With negative values",
+        "input": "[[-1, -2, -3, -4], [-5, -6, -7, -8], [-9, -10, -11, -12], [-13, -14, -15, -16]]",
+        "expected": "[[-1, -3], [-9, -11]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "flatten-layer",
+    "title": "Flatten Layer",
+    "section": "cnn",
+    "solution": "import numpy as np\n\ndef flatten(X):\n    batch_size = X.shape[0]\n    return X.reshape(batch_size, -1)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Correct output shape",
+        "input": "np.random.randn(2, 4, 4, 3)",
+        "expected": "(2, 48)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Values preserved",
+        "input": "np.arange(24).reshape(1, 2, 3, 4)",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "conv-output-size",
+    "title": "Convolution Output Size",
+    "section": "cnn",
+    "solution": "def conv_output_size(input_size, kernel_size, padding=0, stride=1):\n    return (input_size - kernel_size + 2 * padding) // stride + 1\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Same padding",
+        "input": "(32, 3, 1, 1)",
+        "expected": "32",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "No padding, stride 2",
+        "input": "(32, 3, 0, 2)",
+        "expected": "15",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Large kernel",
+        "input": "(224, 7, 3, 2)",
+        "expected": "112",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "conv2d-advanced",
+    "title": "Advanced 2D Convolution",
+    "section": "cnn",
+    "solution": "import numpy as np\n\ndef conv2d_advanced(input, kernel, padding=0, stride=1, groups=1):\n    input = np.array(input, dtype=float)\n    kernel = np.array(kernel, dtype=float)\n\n    batch, in_channels, H, W = input.shape\n    out_channels, kernel_in_channels, kH, kW = kernel.shape\n\n    # Pad input\n    if padding > 0:\n        input = np.pad(input, ((0, 0), (0, 0), (padding, padding), (padding, padding)), mode='constant')\n\n    _, _, H_padded, W_padded = input.shape\n\n    # Calculate output dimensions\n    H_out = (H_padded - kH) // stride + 1\n    W_out = (W_padded - kW) // stride + 1\n\n    # Initialize output\n    output = np.zeros((batch, out_channels, H_out, W_out))\n\n    # Channels per group\n    in_channels_per_group = in_channels // groups\n    out_channels_per_group = out_channels // groups\n\n    for g in range(groups):\n        # Input channels for this group\n        in_start = g * in_channels_per_group\n        in_end = in_start + in_channels_per_group\n\n        # Output channels for this group\n        out_start = g * out_channels_per_group\n        out_end = out_start + out_channels_per_group\n\n        # Get the input slice for this group\n        input_group = input[:, in_start:in_end, :, :]\n\n        # Get the kernels for this group\n        kernel_group = kernel[out_start:out_end, :, :, :]\n\n        # Perform convolution for this group\n        for b in range(batch):\n            for oc in range(out_channels_per_group):\n                for i in range(H_out):\n                    for j in range(W_out):\n                        h_start = i * stride\n                        w_start = j * stride\n                        region = input_group[b, :, h_start:h_start+kH, w_start:w_start+kW]\n                        output[b, out_start + oc, i, j] = np.sum(region * kernel_group[oc])\n\n    return output\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Basic convolution with padding and stride",
+        "input": "(np.ones((1, 1, 5, 5)), np.ones((1, 1, 3, 3)), 1, 2, 1)",
+        "expected": "(1, 1, 3, 3)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Grouped convolution (groups=2)",
+        "input": "(np.arange(32).reshape(1, 2, 4, 4).astype(float), np.ones((4, 1, 2, 2)), 0, 1, 2)",
+        "expected": "(1, 4, 3, 3)",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Depthwise convolution (groups=in_channels)",
+        "input": "(np.ones((2, 3, 4, 4)), np.ones((3, 1, 2, 2)), 0, 1, 3)",
+        "expected": "(2, 3, 3, 3)",
+        "hidden": true
+      },
+      {
+        "id": "4",
+        "description": "Verify correct output values with groups",
+        "input": "verify_groups_output",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "scaled-dot-product-attention",
+    "title": "Scaled Dot-Product Attention",
+    "section": "transformers",
+    "solution": "import numpy as np\n\ndef softmax(x, axis=-1):\n    exp_x = np.exp(x - np.max(x, axis=axis, keepdims=True))\n    return exp_x / np.sum(exp_x, axis=axis, keepdims=True)\n\ndef scaled_dot_product_attention(Q, K, V):\n    d_k = Q.shape[-1]\n\n    # Compute attention scores\n    scores = Q @ K.T / np.sqrt(d_k)\n\n    # Apply softmax\n    attention_weights = softmax(scores)\n\n    # Compute output\n    output = attention_weights @ V\n\n    return output, attention_weights\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output shape correct",
+        "input": "(np.random.randn(4, 8), np.random.randn(4, 8), np.random.randn(4, 8))",
+        "expected": "(4, 8)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Attention weights sum to 1",
+        "input": "attention_sum_test",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "multi-head-attention",
+    "title": "Multi-Head Attention",
+    "section": "transformers",
+    "solution": "import numpy as np\n\ndef softmax(x, axis=-1):\n    exp_x = np.exp(x - np.max(x, axis=axis, keepdims=True))\n    return exp_x / np.sum(exp_x, axis=axis, keepdims=True)\n\ndef multi_head_attention(Q, K, V, num_heads):\n    seq_len, d_model = Q.shape\n    d_k = d_model // num_heads\n\n    # Reshape to (seq_len, num_heads, d_k)\n    Q = Q.reshape(seq_len, num_heads, d_k)\n    K = K.reshape(seq_len, num_heads, d_k)\n    V = V.reshape(seq_len, num_heads, d_k)\n\n    # Transpose to (num_heads, seq_len, d_k)\n    Q = Q.transpose(1, 0, 2)\n    K = K.transpose(1, 0, 2)\n    V = V.transpose(1, 0, 2)\n\n    # Scaled dot-product attention for each head\n    scores = Q @ K.transpose(0, 2, 1) / np.sqrt(d_k)\n    attention = softmax(scores)\n    heads = attention @ V\n\n    # Transpose and reshape back\n    heads = heads.transpose(1, 0, 2)  # (seq_len, num_heads, d_k)\n    output = heads.reshape(seq_len, d_model)\n\n    return output\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output shape preserved",
+        "input": "(np.random.randn(4, 64), np.random.randn(4, 64), np.random.randn(4, 64), 8)",
+        "expected": "(4, 64)",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "positional-encoding",
+    "title": "Sinusoidal Positional Encoding",
+    "section": "transformers",
+    "solution": "import numpy as np\n\ndef positional_encoding(max_len, d_model):\n    PE = np.zeros((max_len, d_model))\n\n    position = np.arange(max_len)[:, np.newaxis]\n    div_term = np.exp(np.arange(0, d_model, 2) * (-np.log(10000.0) / d_model))\n\n    PE[:, 0::2] = np.sin(position * div_term)\n    PE[:, 1::2] = np.cos(position * div_term)\n\n    return PE\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Correct shape",
+        "input": "(50, 64)",
+        "expected": "(50, 64)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "First position values",
+        "input": "(10, 4)",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "layer-norm",
+    "title": "Layer Normalization",
+    "section": "transformers",
+    "solution": "import numpy as np\n\ndef layer_norm(X, gamma, beta, eps=1e-5):\n    # Compute statistics along last dimension\n    mean = np.mean(X, axis=-1, keepdims=True)\n    var = np.var(X, axis=-1, keepdims=True)\n\n    # Normalize\n    X_norm = (X - mean) / np.sqrt(var + eps)\n\n    # Scale and shift\n    return gamma * X_norm + beta\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output mean near zero",
+        "input": "(np.array([[1, 2, 3, 4], [5, 6, 7, 8]]), np.ones(4), np.zeros(4))",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Gamma and beta work",
+        "input": "(np.array([[0, 0, 2, 2]]), np.array([1, 2, 1, 2]), np.zeros(4))",
+        "expected": "[[-1.0, -2.0, 1.0, 2.0]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "causal-mask",
+    "title": "Causal Attention Mask",
+    "section": "transformers",
+    "solution": "import numpy as np\n\ndef create_causal_mask(seq_len):\n    # Create upper triangular matrix (above diagonal)\n    mask = np.triu(np.ones((seq_len, seq_len)), k=1)\n    # Replace 1s with -inf\n    mask = np.where(mask == 1, float('-inf'), 0.0)\n    return mask\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Correct shape and pattern",
+        "input": "4",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Works with attention",
+        "input": "3",
+        "expected": "[[0.0, -Infinity, -Infinity], [0.0, 0.0, -Infinity], [0.0, 0.0, 0.0]]",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "vae-reparameterization",
+    "title": "VAE Reparameterization Trick",
+    "section": "generative-models",
+    "solution": "import numpy as np\n\ndef reparameterize(mu, log_var):\n    np.random.seed(42)\n    # Compute standard deviation\n    std = np.exp(0.5 * log_var)\n    # Sample epsilon from standard normal\n    eps = np.random.randn(*mu.shape)\n    # Reparameterization trick\n    z = mu + std * eps\n    return z\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output shape matches input",
+        "input": "(np.zeros((2, 4)), np.zeros((2, 4)))",
+        "expected": "(2, 4)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Zero variance returns mu",
+        "input": "zero_var_test",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "vae-loss",
+    "title": "VAE Loss Function",
+    "section": "generative-models",
+    "solution": "import numpy as np\n\ndef vae_loss(x, x_reconstructed, mu, log_var):\n    # Reconstruction loss (MSE)\n    recon_loss = np.mean((x - x_reconstructed) ** 2)\n\n    # KL divergence\n    kl_loss = -0.5 * np.mean(1 + log_var - mu**2 - np.exp(log_var))\n\n    total_loss = recon_loss + kl_loss\n\n    return round(total_loss, 4), round(recon_loss, 4), round(kl_loss, 4)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Perfect case",
+        "input": "(np.zeros((2, 4)), np.zeros((2, 4)), np.zeros((2, 2)), np.zeros((2, 2)))",
+        "expected": "(0.0, 0.0, 0.0)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Non-zero KL",
+        "input": "(np.zeros((1, 4)), np.zeros((1, 4)), np.ones((1, 2)), np.zeros((1, 2)))",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "diffusion-noise-schedule",
+    "title": "Diffusion Noise Schedule",
+    "section": "generative-models",
+    "solution": "import numpy as np\n\ndef linear_noise_schedule(T, beta_start=0.0001, beta_end=0.02):\n    # Linear schedule\n    betas = np.linspace(beta_start, beta_end, T)\n\n    # Compute alphas\n    alphas = 1 - betas\n\n    # Cumulative product\n    alpha_bars = np.cumprod(alphas)\n\n    return betas, alphas, alpha_bars\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Beta range correct",
+        "input": "(100, 0.0001, 0.02)",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Alpha bar decreases",
+        "input": "(50, 0.001, 0.01)",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "diffusion-forward",
+    "title": "Diffusion Forward Process",
+    "section": "generative-models",
+    "solution": "import numpy as np\n\ndef diffusion_forward(x_0, t, alpha_bars):\n    np.random.seed(42)\n\n    alpha_bar_t = alpha_bars[t]\n\n    # Sample noise\n    noise = np.random.randn(*x_0.shape)\n\n    # Forward process\n    x_t = np.sqrt(alpha_bar_t) * x_0 + np.sqrt(1 - alpha_bar_t) * noise\n\n    return x_t, noise\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output shape matches input",
+        "input": "(np.random.randn(2, 4), 50, np.linspace(0.99, 0.01, 100))",
+        "expected": "(2, 4)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "t=0 returns near original",
+        "input": "t_zero_test",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "vqvae-quantization",
+    "title": "VQ-VAE Vector Quantization",
+    "section": "generative-models",
+    "solution": "import numpy as np\n\ndef vq_quantize(z_e, codebook):\n    z_e = np.array(z_e)\n    codebook = np.array(codebook)\n\n    batch, H, W, D = z_e.shape\n    K, _ = codebook.shape\n\n    # Flatten spatial dimensions: (batch*H*W, D)\n    z_flat = z_e.reshape(-1, D)\n\n    # Compute distances using: ||a-b||² = ||a||² + ||b||² - 2*a·b\n    # z_flat: (N, D), codebook: (K, D)\n    z_sq = np.sum(z_flat ** 2, axis=1, keepdims=True)  # (N, 1)\n    codebook_sq = np.sum(codebook ** 2, axis=1)        # (K,)\n    cross = z_flat @ codebook.T                        # (N, K)\n\n    distances = z_sq + codebook_sq - 2 * cross         # (N, K)\n\n    # Find nearest codebook entry\n    indices_flat = np.argmin(distances, axis=1)        # (N,)\n\n    # Get quantized vectors\n    z_q_flat = codebook[indices_flat]                  # (N, D)\n\n    # Reshape back\n    z_q = z_q_flat.reshape(batch, H, W, D)\n    indices = indices_flat.reshape(batch, H, W)\n\n    return z_q, indices\n\n\ndef vq_loss(z_e, z_q, beta=0.25):\n    z_e = np.array(z_e)\n    z_q = np.array(z_q)\n\n    # Codebook loss: ||sg[z_e] - z_q||² (moves codebook toward encoder output)\n    # In practice, sg[z_e] means z_e is treated as constant\n    codebook_loss = np.mean((z_e - z_q) ** 2)\n\n    # Commitment loss: ||z_e - sg[z_q]||² (commits encoder to codebook)\n    # Same computation, but gradient only flows to z_e\n    commitment_loss = beta * np.mean((z_e - z_q) ** 2)\n\n    return round(codebook_loss, 4), round(commitment_loss, 4)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output shape matches input",
+        "input": "(np.random.randn(2, 4, 4, 8), np.random.randn(16, 8))",
+        "expected": "((2, 4, 4, 8), (2, 4, 4))",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Indices are valid codebook indices",
+        "input": "valid_indices_test",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Quantized vectors come from codebook",
+        "input": "vectors_from_codebook_test",
+        "expected": "True",
+        "hidden": true
+      },
+      {
+        "id": "4",
+        "description": "VQ loss computation correct",
+        "input": "vq_loss_test",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "kl-divergence",
+    "title": "KL Divergence (Gaussians)",
+    "section": "generative-models",
+    "solution": "import numpy as np\n\ndef kl_divergence_gaussian(mu_p, sigma_p, mu_q, sigma_q):\n    term1 = np.log(sigma_q / sigma_p)\n    term2 = (sigma_p**2 + (mu_p - mu_q)**2) / (2 * sigma_q**2)\n    term3 = -0.5\n\n    kl = term1 + term2 + term3\n    return round(kl, 4)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Same distribution",
+        "input": "(0, 1, 0, 1)",
+        "expected": "0.0",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Different means",
+        "input": "(1, 1, 0, 1)",
+        "expected": "0.5",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Different variances",
+        "input": "(0, 2, 0, 1)",
+        "expected": "0.8069",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "numpy-array-creation",
+    "title": "Array Creation Methods",
+    "section": "numpy-fundamentals",
+    "solution": "import numpy as np\n\ndef create_arrays() -> dict:\n    return {\n        'zeros': np.zeros((3, 4)),\n        'ones': np.ones((2, 3)),\n        'arange': np.arange(10),\n        'linspace': np.linspace(0, 1, 5),\n        'eye': np.eye(4)\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Zeros shape correct",
+        "input": "zeros_shape",
+        "expected": "(3, 4)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Linspace length correct",
+        "input": "linspace_len",
+        "expected": "5",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Eye is identity",
+        "input": "eye_check",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "numpy-indexing",
+    "title": "Advanced Indexing",
+    "section": "numpy-fundamentals",
+    "solution": "import numpy as np\n\ndef advanced_indexing(arr: np.ndarray) -> dict:\n    return {\n        'row_1': arr[1],\n        'col_2': arr[:, 2],\n        'subarray': arr[1:3, 2:5],\n        'diagonal': np.diag(arr),\n        'reversed': arr[::-1]\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Row extraction",
+        "input": "(np.arange(20).reshape(4, 5),)",
+        "expected": "row_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Subarray correct",
+        "input": "subarray_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "numpy-broadcasting",
+    "title": "Broadcasting Operations",
+    "section": "numpy-fundamentals",
+    "solution": "import numpy as np\n\ndef broadcasting_ops(arr: np.ndarray, bias: np.ndarray, scale: np.ndarray) -> dict:\n    # Row centered: subtract mean of each row\n    row_means = arr.mean(axis=1, keepdims=True)  # (3, 1)\n    row_centered = arr - row_means\n\n    # Column centered: subtract mean of each column\n    col_means = arr.mean(axis=0)  # (4,)\n    col_centered = arr - col_means\n\n    # Add bias to each row\n    biased = arr + bias  # bias (4,) broadcasts to (3, 4)\n\n    # Scale each row\n    scaled = arr * scale  # scale (3, 1) broadcasts to (3, 4)\n\n    return {\n        'row_centered': row_centered,\n        'col_centered': col_centered,\n        'biased': biased,\n        'scaled': scaled\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Row centering",
+        "input": "row_center_test",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Bias addition",
+        "input": "bias_test",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "numpy-aggregations",
+    "title": "Aggregation Functions",
+    "section": "numpy-fundamentals",
+    "solution": "import numpy as np\n\ndef compute_aggregations(arr: np.ndarray) -> dict:\n    return {\n        'global_mean': arr.mean(),\n        'global_std': arr.std(),\n        'global_min': arr.min(),\n        'global_max': arr.max(),\n        'global_sum': arr.sum(),\n        'row_mean': arr.mean(axis=1),\n        'row_sum': arr.sum(axis=1),\n        'col_mean': arr.mean(axis=0),\n        'col_sum': arr.sum(axis=0),\n        'argmax': np.unravel_index(arr.argmax(), arr.shape),\n        'argmin': np.unravel_index(arr.argmin(), arr.shape),\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Global mean",
+        "input": "(np.array([[1, 2, 3], [4, 5, 6]]),)",
+        "expected": "mean_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Row sums",
+        "input": "row_sum_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "numpy-reshape-transpose",
+    "title": "Reshape and Transpose",
+    "section": "numpy-fundamentals",
+    "solution": "import numpy as np\n\ndef reshape_transpose(arr: np.ndarray) -> dict:\n    # 2D reshape\n    arr_2d = arr.reshape(4, 6)\n\n    # 3D reshape\n    arr_3d = arr.reshape(2, 3, 4)\n\n    # Transpose 2D\n    arr_2d_T = arr_2d.T\n\n    # Swap axes on 3D (swap axis 0 and 2)\n    arr_3d_swapped = arr_3d.transpose(2, 1, 0)\n\n    # Flatten\n    arr_flat = arr_2d.flatten()\n\n    return {\n        'arr_2d': arr_2d,\n        'arr_3d': arr_3d,\n        'arr_2d_transposed': arr_2d_T,\n        'arr_3d_swapped': arr_3d_swapped,\n        'arr_flat': arr_flat\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "2D reshape shape",
+        "input": "(np.arange(24),)",
+        "expected": "shape_2d_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "3D reshape shape",
+        "input": "shape_3d_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "einsum-basics",
+    "title": "Einsum Fundamentals",
+    "section": "einsum",
+    "solution": "import numpy as np\n\ndef einsum_basics(arr: np.ndarray) -> dict:\n    return {\n        'sum_all': np.einsum('ij->', arr),\n        'row_sum': np.einsum('ij->i', arr),\n        'col_sum': np.einsum('ij->j', arr),\n        'transpose': np.einsum('ij->ji', arr),\n        'diagonal': np.einsum('ii->i', arr) if arr.shape[0] == arr.shape[1] else None\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Sum all elements",
+        "input": "(np.array([[1, 2], [3, 4]]),)",
+        "expected": "sum_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Transpose",
+        "input": "transpose_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "einsum-matrix-ops",
+    "title": "Matrix Operations with Einsum",
+    "section": "einsum",
+    "solution": "import numpy as np\n\ndef einsum_matrix_ops(A: np.ndarray, B: np.ndarray, v: np.ndarray) -> dict:\n    return {\n        'matmul': np.einsum('ik,kj->ij', A, B),\n        'matvec': np.einsum('ij,j->i', A, v),\n        'outer_product': np.einsum('i,j->ij', v, v),\n        'hadamard': np.einsum('ij,ij->ij', A, A),  # A * A\n        'frobenius': np.einsum('ij,ij->', A, A),   # sum(A * A)\n        'trace': np.einsum('ii->', A) if A.shape[0] == A.shape[1] else None\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Matrix multiplication",
+        "input": "(np.array([[1,2],[3,4]]), np.array([[5,6],[7,8]]), np.array([1,2]))",
+        "expected": "matmul_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Outer product",
+        "input": "outer_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "einsum-batch-ops",
+    "title": "Batch Operations with Einsum",
+    "section": "einsum",
+    "solution": "import numpy as np\n\ndef einsum_batch_ops(Q: np.ndarray, K: np.ndarray, V: np.ndarray) -> dict:\n    # Q: (batch, seq_q, dim)\n    # K: (batch, seq_k, dim)\n    # V: (batch, seq_k, dim_v)\n\n    # Attention scores: Q @ K.T for each batch\n    # Result: (batch, seq_q, seq_k)\n    scores = np.einsum('bqd,bkd->bqk', Q, K)\n\n    # Scale scores\n    d_k = Q.shape[-1]\n    scaled_scores = scores / np.sqrt(d_k)\n\n    # Softmax (simplified, along last axis)\n    exp_scores = np.exp(scaled_scores - scaled_scores.max(axis=-1, keepdims=True))\n    attention_weights = exp_scores / exp_scores.sum(axis=-1, keepdims=True)\n\n    # Weighted sum of values\n    # Result: (batch, seq_q, dim_v)\n    output = np.einsum('bqk,bkv->bqv', attention_weights, V)\n\n    return {\n        'scores': scores,\n        'attention_weights': attention_weights,\n        'output': output\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Attention scores shape",
+        "input": "(np.random.randn(2, 4, 8), np.random.randn(2, 6, 8), np.random.randn(2, 6, 16))",
+        "expected": "scores_shape_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Output shape",
+        "input": "output_shape_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "einsum-advanced",
+    "title": "Advanced Einsum Patterns",
+    "section": "einsum",
+    "solution": "import numpy as np\n\ndef multi_head_attention_einsum(Q: np.ndarray, K: np.ndarray, V: np.ndarray,\n                                 num_heads: int) -> np.ndarray:\n    batch, seq_q, d_model = Q.shape\n    seq_k = K.shape[1]\n    d_k = d_model // num_heads\n\n    # Reshape to (batch, seq, num_heads, d_k)\n    Q = Q.reshape(batch, seq_q, num_heads, d_k)\n    K = K.reshape(batch, seq_k, num_heads, d_k)\n    V = V.reshape(batch, seq_k, num_heads, d_k)\n\n    # Compute attention scores for all heads\n    # (batch, seq_q, heads, d_k) x (batch, seq_k, heads, d_k) -> (batch, heads, seq_q, seq_k)\n    scores = np.einsum('bqhd,bkhd->bhqk', Q, K) / np.sqrt(d_k)\n\n    # Softmax\n    exp_scores = np.exp(scores - scores.max(axis=-1, keepdims=True))\n    attention = exp_scores / exp_scores.sum(axis=-1, keepdims=True)\n\n    # Weighted sum of values\n    # (batch, heads, seq_q, seq_k) x (batch, seq_k, heads, d_k) -> (batch, seq_q, heads, d_k)\n    output = np.einsum('bhqk,bkhd->bqhd', attention, V)\n\n    # Reshape back to (batch, seq_q, d_model)\n    output = output.reshape(batch, seq_q, d_model)\n\n    return output\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output shape preserved",
+        "input": "(np.random.randn(2, 4, 64), np.random.randn(2, 4, 64), np.random.randn(2, 4, 64), 8)",
+        "expected": "(2, 4, 64)",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Attention computed correctly",
+        "input": "attention_check",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "einsum-vs-matmul",
+    "title": "Einsum vs Traditional Operations",
+    "section": "einsum",
+    "solution": "import numpy as np\n\ndef einsum_equivalence(A: np.ndarray, B: np.ndarray) -> dict:\n    results = {\n        'sum': {\n            'einsum': np.einsum('ij->', A),\n            'numpy': np.sum(A)\n        },\n        'row_sum': {\n            'einsum': np.einsum('ij->i', A),\n            'numpy': np.sum(A, axis=1)\n        },\n        'matmul': {\n            'einsum': np.einsum('ik,kj->ij', A, B),\n            'numpy': A @ B\n        },\n        'transpose': {\n            'einsum': np.einsum('ij->ji', A),\n            'numpy': A.T\n        },\n        'hadamard_sum': {\n            'einsum': np.einsum('ij,ij->', A, A),\n            'numpy': np.sum(A * A)\n        }\n    }\n\n    # Verify all match\n    all_match = all(\n        np.allclose(v['einsum'], v['numpy'])\n        for v in results.values()\n    )\n\n    return {'results': results, 'all_match': all_match}\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "All results match",
+        "input": "(np.random.randn(3, 4), np.random.randn(4, 5))",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "tensor-creation",
+    "title": "Tensor Creation (NumPy Style)",
+    "section": "pytorch-basics",
+    "solution": "import numpy as np\n\ndef create_tensors() -> dict:\n    np.random.seed(42)\n\n    return {\n        'from_list': np.array([1, 2, 3, 4], dtype=np.float32),\n        'zeros': np.zeros((3, 4)),\n        'ones': np.ones((2, 3)),\n        'randn': np.random.randn(2, 3),\n        'arange': np.arange(10),\n        'linspace': np.linspace(0, 1, 5),\n        'eye': np.eye(4),\n        'full': np.full((2, 3), 7.0),\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Zeros shape",
+        "input": "zeros_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Random tensor shape",
+        "input": "randn_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "tensor-operations",
+    "title": "Tensor Operations",
+    "section": "pytorch-basics",
+    "solution": "import numpy as np\n\ndef tensor_ops(x: np.ndarray, y: np.ndarray) -> dict:\n    return {\n        # Arithmetic\n        'add': x + y,\n        'sub': x - y,\n        'mul': x * y,\n        'div': x / (y + 1e-8),\n        'pow': x ** 2,\n\n        # Reductions\n        'sum_all': x.sum(),\n        'sum_axis0': x.sum(axis=0),\n        'sum_axis1': x.sum(axis=1),\n        'mean': x.mean(),\n        'std': x.std(),\n        'max': x.max(),\n        'argmax': x.argmax(),\n\n        # Shape ops\n        'reshape': x.reshape(3, 2),\n        'flatten': x.flatten(),\n        'unsqueeze': np.expand_dims(x, axis=0),  # (1, 2, 3)\n        'squeeze': np.squeeze(np.expand_dims(x, 0)),\n        'transpose': x.T,\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Addition",
+        "input": "(np.array([[1,2,3],[4,5,6]]), np.array([[1,1,1],[2,2,2]]))",
+        "expected": "add_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Mean computation",
+        "input": "mean_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "autograd-concepts",
+    "title": "Autograd Concepts (Manual)",
+    "section": "pytorch-basics",
+    "solution": "import numpy as np\n\ndef compute_gradients(x: float) -> dict:\n    # Forward pass\n    y = x ** 2 + 3 * x + 1\n\n    # Backward pass (analytical gradient)\n    grad = 2 * x + 3\n\n    return {'y': y, 'grad': grad}\n\n\ndef linear_layer_gradients(X: np.ndarray, W: np.ndarray, b: np.ndarray,\n                           grad_output: np.ndarray) -> dict:\n    # Forward: Y = X @ W + b\n\n    # Backward:\n    # dL/dW = X.T @ grad_output\n    grad_W = X.T @ grad_output\n\n    # dL/db = sum of grad_output over batch\n    grad_b = grad_output.sum(axis=0)\n\n    # dL/dX = grad_output @ W.T\n    grad_X = grad_output @ W.T\n\n    return {\n        'grad_W': grad_W,\n        'grad_b': grad_b,\n        'grad_X': grad_X\n    }\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Simple gradient",
+        "input": "(2.0,)",
+        "expected": "grad_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Linear layer gradients",
+        "input": "linear_grad_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "nn-modules",
+    "title": "Neural Network Modules",
+    "section": "pytorch-basics",
+    "solution": "import numpy as np\n\nclass Linear:\n    def __init__(self, in_features: int, out_features: int):\n        self.W = np.random.randn(in_features, out_features) * 0.01\n        self.b = np.zeros(out_features)\n\n    def forward(self, x: np.ndarray) -> np.ndarray:\n        return x @ self.W + self.b\n\n    def parameters(self):\n        return [self.W, self.b]\n\n\nclass ReLU:\n    def forward(self, x: np.ndarray) -> np.ndarray:\n        return np.maximum(0, x)\n\n\nclass Sequential:\n    def __init__(self, *layers):\n        self.layers = layers\n\n    def forward(self, x: np.ndarray) -> np.ndarray:\n        for layer in self.layers:\n            x = layer.forward(x)\n        return x\n\n\ndef create_mlp(input_dim: int, hidden_dim: int, output_dim: int):\n    return Sequential(\n        Linear(input_dim, hidden_dim),\n        ReLU(),\n        Linear(hidden_dim, output_dim)\n    )\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Linear output shape",
+        "input": "linear_shape_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Sequential forward",
+        "input": "sequential_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "loss-functions",
+    "title": "Loss Functions",
+    "section": "pytorch-basics",
+    "solution": "import numpy as np\n\ndef softmax(x: np.ndarray) -> np.ndarray:\n    exp_x = np.exp(x - np.max(x, axis=-1, keepdims=True))\n    return exp_x / np.sum(exp_x, axis=-1, keepdims=True)\n\n\ndef cross_entropy_loss(logits: np.ndarray, targets: np.ndarray) -> float:\n    batch_size = logits.shape[0]\n    probs = softmax(logits)\n\n    # Clip for numerical stability\n    probs = np.clip(probs, 1e-15, 1 - 1e-15)\n\n    # Select probability of correct class for each sample\n    correct_probs = probs[np.arange(batch_size), targets]\n\n    # Negative log likelihood\n    loss = -np.mean(np.log(correct_probs))\n    return loss\n\n\ndef mse_loss(y_pred: np.ndarray, y_true: np.ndarray) -> float:\n    return np.mean((y_pred - y_true) ** 2)\n\n\ndef binary_cross_entropy(y_pred: np.ndarray, y_true: np.ndarray) -> float:\n    y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)\n    return -np.mean(y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred))\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Cross-entropy computation",
+        "input": "(np.array([[2.0, 1.0, 0.1]]), np.array([0]))",
+        "expected": "ce_check",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "MSE computation",
+        "input": "mse_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "e2e-mlp",
+    "title": "E2E: 2-Layer MLP with Backprop",
+    "section": "e2e-implementations",
+    "solution": "import numpy as np\n\nclass MLP:\n    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):\n        np.random.seed(42)\n        self.W1 = np.random.randn(input_dim, hidden_dim) * np.sqrt(2.0 / input_dim)\n        self.b1 = np.zeros(hidden_dim)\n        self.W2 = np.random.randn(hidden_dim, output_dim) * np.sqrt(2.0 / hidden_dim)\n        self.b2 = np.zeros(output_dim)\n        self.cache = {}\n\n    def relu(self, x):\n        return np.maximum(0, x)\n\n    def softmax(self, x):\n        exp_x = np.exp(x - np.max(x, axis=-1, keepdims=True))\n        return exp_x / np.sum(exp_x, axis=-1, keepdims=True)\n\n    def forward(self, X: np.ndarray) -> np.ndarray:\n        # Layer 1: Linear + ReLU\n        z1 = X @ self.W1 + self.b1\n        h = self.relu(z1)\n\n        # Layer 2: Linear\n        logits = h @ self.W2 + self.b2\n\n        # Cache for backward\n        self.cache = {'X': X, 'z1': z1, 'h': h, 'logits': logits}\n\n        return logits\n\n    def compute_loss(self, logits: np.ndarray, y: np.ndarray) -> float:\n        probs = self.softmax(logits)\n        batch_size = logits.shape[0]\n        correct_probs = probs[np.arange(batch_size), y]\n        loss = -np.mean(np.log(np.clip(correct_probs, 1e-15, 1)))\n        self.cache['probs'] = probs\n        return loss\n\n    def backward(self, y: np.ndarray) -> dict:\n        X = self.cache['X']\n        h = self.cache['h']\n        z1 = self.cache['z1']\n        probs = self.cache['probs']\n        batch_size = X.shape[0]\n\n        # One-hot encode targets\n        y_onehot = np.zeros_like(probs)\n        y_onehot[np.arange(batch_size), y] = 1\n\n        # Output layer gradients\n        d_logits = (probs - y_onehot) / batch_size\n        dW2 = h.T @ d_logits\n        db2 = d_logits.sum(axis=0)\n\n        # Hidden layer gradients\n        d_h = d_logits @ self.W2.T\n        d_relu = d_h * (z1 > 0)  # ReLU derivative\n        dW1 = X.T @ d_relu\n        db1 = d_relu.sum(axis=0)\n\n        return {'dW1': dW1, 'db1': db1, 'dW2': dW2, 'db2': db2}\n\n    def train_step(self, X: np.ndarray, y: np.ndarray, lr: float = 0.01) -> float:\n        logits = self.forward(X)\n        loss = self.compute_loss(logits, y)\n        grads = self.backward(y)\n\n        # Update weights\n        self.W1 -= lr * grads['dW1']\n        self.b1 -= lr * grads['db1']\n        self.W2 -= lr * grads['dW2']\n        self.b2 -= lr * grads['db2']\n\n        return loss\n\n\ndef train_mlp(X_train, y_train, epochs=100, lr=0.01):\n    input_dim = X_train.shape[1]\n    output_dim = len(np.unique(y_train))\n    model = MLP(input_dim, 64, output_dim)\n\n    losses = []\n    for _ in range(epochs):\n        loss = model.train_step(X_train, y_train, lr)\n        losses.append(loss)\n\n    return model, losses\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Forward pass shape",
+        "input": "forward_shape_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Loss decreases",
+        "input": "loss_decrease_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Gradients computed",
+        "input": "gradients_check",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "e2e-transformer",
+    "title": "E2E: Transformer Encoder",
+    "section": "e2e-implementations",
+    "solution": "import numpy as np\n\ndef softmax(x, axis=-1):\n    exp_x = np.exp(x - np.max(x, axis=axis, keepdims=True))\n    return exp_x / np.sum(exp_x, axis=axis, keepdims=True)\n\n\ndef layer_norm(x, gamma, beta, eps=1e-5):\n    mean = np.mean(x, axis=-1, keepdims=True)\n    var = np.var(x, axis=-1, keepdims=True)\n    return gamma * (x - mean) / np.sqrt(var + eps) + beta\n\n\ndef positional_encoding(seq_len, d_model):\n    PE = np.zeros((seq_len, d_model))\n    position = np.arange(seq_len)[:, np.newaxis]\n    div_term = np.exp(np.arange(0, d_model, 2) * (-np.log(10000.0) / d_model))\n    PE[:, 0::2] = np.sin(position * div_term)\n    PE[:, 1::2] = np.cos(position * div_term)\n    return PE\n\n\ndef scaled_dot_product_attention(Q, K, V, mask=None):\n    d_k = Q.shape[-1]\n    scores = Q @ K.transpose(0, 2, 1) / np.sqrt(d_k)\n    if mask is not None:\n        scores = scores + mask\n    attention = softmax(scores, axis=-1)\n    return attention @ V, attention\n\n\ndef multi_head_attention(Q, K, V, num_heads):\n    batch, seq_len, d_model = Q.shape\n    d_k = d_model // num_heads\n\n    Q = Q.reshape(batch, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)\n    K = K.reshape(batch, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)\n    V = V.reshape(batch, seq_len, num_heads, d_k).transpose(0, 2, 1, 3)\n\n    d_k = Q.shape[-1]\n    scores = np.einsum('bhqd,bhkd->bhqk', Q, K) / np.sqrt(d_k)\n    attention = softmax(scores, axis=-1)\n    output = np.einsum('bhqk,bhkd->bhqd', attention, V)\n\n    output = output.transpose(0, 2, 1, 3).reshape(batch, seq_len, d_model)\n    return output\n\n\ndef feed_forward(x, W1, b1, W2, b2):\n    hidden = np.maximum(0, x @ W1 + b1)\n    return hidden @ W2 + b2\n\n\nclass TransformerEncoderBlock:\n    def __init__(self, d_model: int, num_heads: int, d_ff: int):\n        np.random.seed(42)\n        self.d_model = d_model\n        self.num_heads = num_heads\n\n        # Layer norm parameters\n        self.ln1_gamma = np.ones(d_model)\n        self.ln1_beta = np.zeros(d_model)\n        self.ln2_gamma = np.ones(d_model)\n        self.ln2_beta = np.zeros(d_model)\n\n        # FFN parameters\n        self.W1 = np.random.randn(d_model, d_ff) * 0.02\n        self.b1 = np.zeros(d_ff)\n        self.W2 = np.random.randn(d_ff, d_model) * 0.02\n        self.b2 = np.zeros(d_model)\n\n    def forward(self, x: np.ndarray) -> np.ndarray:\n        # Multi-head self-attention + residual + layer norm\n        attn_output = multi_head_attention(x, x, x, self.num_heads)\n        x = layer_norm(x + attn_output, self.ln1_gamma, self.ln1_beta)\n\n        # Feed-forward + residual + layer norm\n        ff_output = feed_forward(x, self.W1, self.b1, self.W2, self.b2)\n        x = layer_norm(x + ff_output, self.ln2_gamma, self.ln2_beta)\n\n        return x\n\n\ndef transformer_encoder(x, num_layers=2, d_model=64, num_heads=8, d_ff=256):\n    batch, seq_len, _ = x.shape\n\n    # Add positional encoding\n    PE = positional_encoding(seq_len, d_model)\n    x = x + PE\n\n    # Stack encoder blocks\n    for _ in range(num_layers):\n        block = TransformerEncoderBlock(d_model, num_heads, d_ff)\n        x = block.forward(x)\n\n    return x\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Output shape preserved",
+        "input": "shape_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Attention weights sum to 1",
+        "input": "attention_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "e2e-vae",
+    "title": "E2E: Variational Autoencoder",
+    "section": "e2e-implementations",
+    "solution": "import numpy as np\n\nclass VAE:\n    def __init__(self, input_dim: int, hidden_dim: int, latent_dim: int):\n        np.random.seed(42)\n\n        self.W_enc = np.random.randn(input_dim, hidden_dim) * 0.01\n        self.b_enc = np.zeros(hidden_dim)\n        self.W_mu = np.random.randn(hidden_dim, latent_dim) * 0.01\n        self.b_mu = np.zeros(latent_dim)\n        self.W_logvar = np.random.randn(hidden_dim, latent_dim) * 0.01\n        self.b_logvar = np.zeros(latent_dim)\n        self.W_dec1 = np.random.randn(latent_dim, hidden_dim) * 0.01\n        self.b_dec1 = np.zeros(hidden_dim)\n        self.W_dec2 = np.random.randn(hidden_dim, input_dim) * 0.01\n        self.b_dec2 = np.zeros(input_dim)\n        self.latent_dim = latent_dim\n\n    def encode(self, x: np.ndarray) -> tuple:\n        h = np.maximum(0, x @ self.W_enc + self.b_enc)\n        mu = h @ self.W_mu + self.b_mu\n        log_var = h @ self.W_logvar + self.b_logvar\n        return mu, log_var\n\n    def reparameterize(self, mu: np.ndarray, log_var: np.ndarray) -> np.ndarray:\n        std = np.exp(0.5 * log_var)\n        eps = np.random.randn(*mu.shape)\n        return mu + std * eps\n\n    def decode(self, z: np.ndarray) -> np.ndarray:\n        h = np.maximum(0, z @ self.W_dec1 + self.b_dec1)\n        x_recon = 1 / (1 + np.exp(-(h @ self.W_dec2 + self.b_dec2)))  # Sigmoid\n        return x_recon\n\n    def forward(self, x: np.ndarray) -> dict:\n        mu, log_var = self.encode(x)\n        z = self.reparameterize(mu, log_var)\n        x_recon = self.decode(z)\n        return {'mu': mu, 'log_var': log_var, 'z': z, 'x_recon': x_recon}\n\n    def compute_loss(self, x: np.ndarray, x_recon: np.ndarray,\n                     mu: np.ndarray, log_var: np.ndarray) -> dict:\n        # Reconstruction loss (MSE)\n        recon_loss = np.mean((x - x_recon) ** 2)\n\n        # KL divergence\n        kl_loss = -0.5 * np.mean(1 + log_var - mu**2 - np.exp(log_var))\n\n        total_loss = recon_loss + kl_loss\n\n        return {'total_loss': total_loss, 'recon_loss': recon_loss, 'kl_loss': kl_loss}\n\n    def sample(self, num_samples: int) -> np.ndarray:\n        z = np.random.randn(num_samples, self.latent_dim)\n        return self.decode(z)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Reconstruction shape",
+        "input": "recon_shape_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "KL divergence non-negative",
+        "input": "kl_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "e2e-vqvae",
+    "title": "E2E: Vector Quantized VAE",
+    "section": "e2e-implementations",
+    "solution": "import numpy as np\n\nclass VectorQuantizer:\n    def __init__(self, num_embeddings: int, embedding_dim: int):\n        np.random.seed(42)\n        self.embedding = np.random.randn(num_embeddings, embedding_dim) * 0.1\n        self.num_embeddings = num_embeddings\n        self.embedding_dim = embedding_dim\n\n    def quantize(self, z_e: np.ndarray) -> tuple:\n        # z_e: (batch, H, W, D)\n        batch, H, W, D = z_e.shape\n\n        # Flatten spatial dimensions\n        z_flat = z_e.reshape(-1, D)  # (N, D) where N = batch * H * W\n\n        # Compute distances: ||z - e||² = ||z||² + ||e||² - 2*z·e\n        z_sq = np.sum(z_flat ** 2, axis=1, keepdims=True)  # (N, 1)\n        e_sq = np.sum(self.embedding ** 2, axis=1)          # (K,)\n        cross = z_flat @ self.embedding.T                    # (N, K)\n        distances = z_sq + e_sq - 2 * cross                  # (N, K)\n\n        # Find nearest embedding\n        indices_flat = np.argmin(distances, axis=1)          # (N,)\n\n        # Get quantized vectors\n        z_q_flat = self.embedding[indices_flat]              # (N, D)\n\n        # Reshape back\n        z_q = z_q_flat.reshape(batch, H, W, D)\n        indices = indices_flat.reshape(batch, H, W)\n        min_distances = np.min(distances, axis=1).reshape(batch, H, W)\n\n        return z_q, indices, min_distances\n\n    def compute_loss(self, z_e: np.ndarray, z_q: np.ndarray, beta: float = 0.25) -> dict:\n        # Codebook loss: ||sg[z_e] - z_q||²\n        # In practice, this updates the codebook to move toward encoder output\n        codebook_loss = np.mean((z_e - z_q) ** 2)\n\n        # Commitment loss: ||z_e - sg[z_q]||²\n        # This commits the encoder output to stay close to codebook\n        commitment_loss = beta * np.mean((z_e - z_q) ** 2)\n\n        return {\n            'codebook_loss': codebook_loss,\n            'commitment_loss': commitment_loss\n        }\n\n\nclass VQVAE:\n    def __init__(self, input_channels: int, hidden_dim: int,\n                 num_embeddings: int, embedding_dim: int):\n        np.random.seed(42)\n\n        self.input_channels = input_channels\n        self.hidden_dim = hidden_dim\n        self.embedding_dim = embedding_dim\n\n        # Simplified: use linear projection instead of conv for demo\n        # Encoder projects input to embedding space\n        self.enc_w1 = np.random.randn(input_channels * 16, hidden_dim) * 0.1\n        self.enc_b1 = np.zeros(hidden_dim)\n        self.enc_w2 = np.random.randn(hidden_dim, embedding_dim) * 0.1\n        self.enc_b2 = np.zeros(embedding_dim)\n\n        # Vector Quantizer\n        self.vq = VectorQuantizer(num_embeddings, embedding_dim)\n\n        # Decoder projects back\n        self.dec_w1 = np.random.randn(embedding_dim, hidden_dim) * 0.1\n        self.dec_b1 = np.zeros(hidden_dim)\n        self.dec_w2 = np.random.randn(hidden_dim, input_channels * 16) * 0.1\n        self.dec_b2 = np.zeros(input_channels * 16)\n\n    def encode(self, x: np.ndarray) -> np.ndarray:\n        # x: (batch, channels, H, W) - assume H=W=4 for simplicity\n        batch = x.shape[0]\n\n        # Flatten spatial dimensions\n        x_flat = x.reshape(batch, -1)  # (batch, channels * H * W)\n\n        # Encode\n        h = np.maximum(0, x_flat @ self.enc_w1 + self.enc_b1)  # ReLU\n        z_e = x_flat @ self.enc_w1[:, :self.embedding_dim] + self.enc_b1[:self.embedding_dim]\n\n        # Reshape to spatial format (batch, 2, 2, embedding_dim)\n        z_e = z_e.reshape(batch, 1, 1, self.embedding_dim)\n\n        return z_e\n\n    def decode(self, z_q: np.ndarray) -> np.ndarray:\n        batch = z_q.shape[0]\n\n        # Flatten\n        z_flat = z_q.reshape(batch, -1)  # (batch, embedding_dim)\n\n        # Decode\n        h = np.maximum(0, z_flat @ self.dec_w1 + self.dec_b1)  # ReLU\n        x_recon = h @ self.dec_w2 + self.dec_b2\n\n        # Reshape to image format\n        x_recon = x_recon.reshape(batch, self.input_channels, 4, 4)\n\n        return x_recon\n\n    def forward(self, x: np.ndarray) -> dict:\n        # Encode\n        z_e = self.encode(x)\n\n        # Quantize\n        z_q, indices, distances = self.vq.quantize(z_e)\n\n        # Straight-through estimator: gradient flows through z_q to z_e\n        # z_q_st = z_e + (z_q - z_e).detach()\n        # For forward pass, we just use z_q\n\n        # Decode\n        x_recon = self.decode(z_q)\n\n        return {\n            'z_e': z_e,\n            'z_q': z_q,\n            'indices': indices,\n            'x_recon': x_recon\n        }\n\n    def compute_loss(self, x: np.ndarray, x_recon: np.ndarray,\n                     z_e: np.ndarray, z_q: np.ndarray, beta: float = 0.25) -> dict:\n        # Reconstruction loss\n        recon_loss = np.mean((x - x_recon) ** 2)\n\n        # VQ losses\n        vq_losses = self.vq.compute_loss(z_e, z_q, beta)\n\n        # Total loss\n        total_loss = recon_loss + vq_losses['codebook_loss'] + vq_losses['commitment_loss']\n\n        return {\n            'total_loss': total_loss,\n            'recon_loss': recon_loss,\n            'codebook_loss': vq_losses['codebook_loss'],\n            'commitment_loss': vq_losses['commitment_loss']\n        }\n\n    def get_codebook_usage(self, indices: np.ndarray) -> np.ndarray:\n        usage = np.bincount(indices.flatten(), minlength=self.vq.num_embeddings)\n        return usage\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Quantization shape",
+        "input": "vq_shape_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Indices valid range",
+        "input": "indices_range_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "3",
+        "description": "Quantized from codebook",
+        "input": "quantized_from_codebook_check",
+        "expected": "True",
+        "hidden": true
+      },
+      {
+        "id": "4",
+        "description": "Loss values correct",
+        "input": "loss_check",
+        "expected": "True",
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "e2e-diffusion",
+    "title": "E2E: Diffusion Model",
+    "section": "e2e-implementations",
+    "solution": "import numpy as np\n\nclass DiffusionModel:\n    def __init__(self, T: int = 1000, beta_start: float = 0.0001, beta_end: float = 0.02):\n        self.T = T\n\n        # Linear noise schedule\n        self.betas = np.linspace(beta_start, beta_end, T)\n        self.alphas = 1 - self.betas\n        self.alpha_bars = np.cumprod(self.alphas)\n\n        # For reverse process\n        self.sqrt_alpha_bars = np.sqrt(self.alpha_bars)\n        self.sqrt_one_minus_alpha_bars = np.sqrt(1 - self.alpha_bars)\n        self.sqrt_alphas = np.sqrt(self.alphas)\n\n    def get_noise_schedule(self) -> dict:\n        return {\n            'betas': self.betas,\n            'alphas': self.alphas,\n            'alpha_bars': self.alpha_bars\n        }\n\n    def forward_diffusion(self, x_0: np.ndarray, t: int) -> tuple:\n        np.random.seed(42)\n        noise = np.random.randn(*x_0.shape)\n\n        sqrt_alpha_bar = self.sqrt_alpha_bars[t]\n        sqrt_one_minus_alpha_bar = self.sqrt_one_minus_alpha_bars[t]\n\n        x_t = sqrt_alpha_bar * x_0 + sqrt_one_minus_alpha_bar * noise\n\n        return x_t, noise\n\n    def reverse_step(self, x_t: np.ndarray, t: int, predicted_noise: np.ndarray) -> np.ndarray:\n        alpha = self.alphas[t]\n        alpha_bar = self.alpha_bars[t]\n        beta = self.betas[t]\n\n        # Mean of reverse distribution\n        coef1 = 1 / np.sqrt(alpha)\n        coef2 = beta / np.sqrt(1 - alpha_bar)\n        mean = coef1 * (x_t - coef2 * predicted_noise)\n\n        if t > 0:\n            # Add noise (except at final step)\n            sigma = np.sqrt(beta)\n            noise = np.random.randn(*x_t.shape)\n            x_prev = mean + sigma * noise\n        else:\n            x_prev = mean\n\n        return x_prev\n\n    def compute_loss(self, true_noise: np.ndarray, predicted_noise: np.ndarray) -> float:\n        return np.mean((true_noise - predicted_noise) ** 2)\n\n    def sample(self, shape: tuple, noise_predictor) -> np.ndarray:\n        # Start from pure noise\n        x = np.random.randn(*shape)\n\n        # Reverse diffusion\n        for t in reversed(range(self.T)):\n            predicted_noise = noise_predictor(x, t)\n            x = self.reverse_step(x, t, predicted_noise)\n\n        return x\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Alpha bar decreases",
+        "input": "alpha_bar_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Forward noise shape",
+        "input": "forward_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "e2e-cnn",
+    "title": "E2E: Convolutional Neural Network",
+    "section": "e2e-implementations",
+    "solution": "import numpy as np\n\ndef conv2d(x: np.ndarray, kernel: np.ndarray, bias: np.ndarray) -> np.ndarray:\n    batch, in_ch, H, W = x.shape\n    out_ch, _, kH, kW = kernel.shape\n    out_H = H - kH + 1\n    out_W = W - kW + 1\n\n    output = np.zeros((batch, out_ch, out_H, out_W))\n\n    for b in range(batch):\n        for oc in range(out_ch):\n            for i in range(out_H):\n                for j in range(out_W):\n                    receptive_field = x[b, :, i:i+kH, j:j+kW]\n                    output[b, oc, i, j] = np.sum(receptive_field * kernel[oc]) + bias[oc]\n\n    return output\n\n\ndef maxpool2d(x: np.ndarray, pool_size: int = 2) -> np.ndarray:\n    batch, channels, H, W = x.shape\n    out_H = H // pool_size\n    out_W = W // pool_size\n\n    output = np.zeros((batch, channels, out_H, out_W))\n\n    for i in range(out_H):\n        for j in range(out_W):\n            h_start = i * pool_size\n            w_start = j * pool_size\n            output[:, :, i, j] = np.max(\n                x[:, :, h_start:h_start+pool_size, w_start:w_start+pool_size],\n                axis=(2, 3)\n            )\n\n    return output\n\n\ndef flatten(x: np.ndarray) -> np.ndarray:\n    return x.reshape(x.shape[0], -1)\n\n\nclass CNN:\n    def __init__(self, input_shape: tuple, num_classes: int):\n        np.random.seed(42)\n        in_channels, H, W = input_shape\n\n        # Conv layers\n        self.conv1_w = np.random.randn(32, in_channels, 3, 3) * 0.1\n        self.conv1_b = np.zeros(32)\n        self.conv2_w = np.random.randn(64, 32, 3, 3) * 0.1\n        self.conv2_b = np.zeros(64)\n\n        # Calculate size after convolutions and pooling\n        # After conv1 (3x3): H-2, W-2\n        # After pool1 (2x2): (H-2)//2, (W-2)//2\n        # After conv2 (3x3): (H-2)//2 - 2, (W-2)//2 - 2\n        # After pool2 (2x2): ((H-2)//2 - 2)//2, ((W-2)//2 - 2)//2\n        h1 = (H - 2) // 2\n        w1 = (W - 2) // 2\n        h2 = (h1 - 2) // 2\n        w2 = (w1 - 2) // 2\n        flat_size = 64 * h2 * w2\n\n        # FC layers\n        self.fc1_w = np.random.randn(flat_size, 128) * 0.1\n        self.fc1_b = np.zeros(128)\n        self.fc2_w = np.random.randn(128, num_classes) * 0.1\n        self.fc2_b = np.zeros(num_classes)\n\n    def forward(self, x: np.ndarray) -> np.ndarray:\n        # Conv block 1\n        x = conv2d(x, self.conv1_w, self.conv1_b)\n        x = np.maximum(0, x)  # ReLU\n        x = maxpool2d(x)\n\n        # Conv block 2\n        x = conv2d(x, self.conv2_w, self.conv2_b)\n        x = np.maximum(0, x)  # ReLU\n        x = maxpool2d(x)\n\n        # Flatten\n        x = flatten(x)\n\n        # FC layers\n        x = np.maximum(0, x @ self.fc1_w + self.fc1_b)  # ReLU\n        x = x @ self.fc2_w + self.fc2_b  # Logits\n\n        return x\n\n\ndef test_cnn():\n    # Test with MNIST-like data\n    cnn = CNN(input_shape=(1, 28, 28), num_classes=10)\n    x = np.random.randn(4, 1, 28, 28)\n    logits = cnn.forward(x)\n    print(f\"Input shape: {x.shape}\")\n    print(f\"Output shape: {logits.shape}\")\n    return logits.shape == (4, 10)\n",
+    "testCases": [
+      {
+        "id": "1",
+        "description": "Conv output shape",
+        "input": "conv_shape_check",
+        "expected": "True",
+        "hidden": false
+      },
+      {
+        "id": "2",
+        "description": "Pool output shape",
+        "input": "pool_shape_check",
+        "expected": "True",
+        "hidden": false
+      }
+    ]
+  }
+]

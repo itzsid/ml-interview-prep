@@ -144,7 +144,59 @@ export function usePyodide(): UsePyodideReturn {
       // Run each test case
       for (const testCase of testCases) {
         try {
-          const testCode = `
+          // Check if input is an expression (starts with function name or contains method calls)
+          const isExpression = testCase.input.includes(functionName) ||
+                               testCase.input.includes('.') ||
+                               /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(testCase.input.trim());
+
+          let testCode: string;
+
+          if (isExpression && !testCase.input.startsWith('[') && !testCase.input.startsWith('(')) {
+            // Expression-based test: evaluate the expression directly
+            testCode = `
+import numpy as np
+import json
+
+# Evaluate expression directly
+result = ${testCase.input}
+
+# Convert result to string for comparison
+if isinstance(result, bool):
+    result_str = str(result)
+elif isinstance(result, (np.bool_, )):
+    result_str = str(bool(result))
+elif isinstance(result, np.ndarray):
+    result_str = str(result.tolist())
+elif isinstance(result, tuple):
+    # Convert tuple elements
+    converted = []
+    for item in result:
+        if isinstance(item, bool):
+            converted.append(item)
+        elif isinstance(item, (np.bool_, )):
+            converted.append(bool(item))
+        elif isinstance(item, np.ndarray):
+            converted.append(item.tolist())
+        elif isinstance(item, (np.floating, float)):
+            converted.append(round(float(item), 6))
+        elif isinstance(item, (np.integer, int)):
+            converted.append(int(item))
+        else:
+            converted.append(item)
+    result_str = str(tuple(converted))
+elif isinstance(result, (list, dict)):
+    result_str = json.dumps(result)
+elif isinstance(result, (np.floating, float)):
+    result_str = str(round(float(result), 6))
+elif isinstance(result, (np.integer, int)):
+    result_str = str(int(result))
+else:
+    result_str = str(result)
+result_str
+`;
+          } else {
+            // Standard test: pass input as function arguments
+            testCode = `
 import numpy as np
 import json
 
@@ -160,16 +212,40 @@ else:
     result = ${functionName}(test_input)
 
 # Convert result to string for comparison
-if isinstance(result, np.ndarray):
+if isinstance(result, bool):
+    result_str = str(result)
+elif isinstance(result, (np.bool_, )):
+    result_str = str(bool(result))
+elif isinstance(result, np.ndarray):
     result_str = str(result.tolist())
+elif isinstance(result, tuple):
+    # Convert tuple elements
+    converted = []
+    for item in result:
+        if isinstance(item, bool):
+            converted.append(item)
+        elif isinstance(item, (np.bool_, )):
+            converted.append(bool(item))
+        elif isinstance(item, np.ndarray):
+            converted.append(item.tolist())
+        elif isinstance(item, (np.floating, float)):
+            converted.append(round(float(item), 6))
+        elif isinstance(item, (np.integer, int)):
+            converted.append(int(item))
+        else:
+            converted.append(item)
+    result_str = str(tuple(converted))
 elif isinstance(result, (list, dict)):
     result_str = json.dumps(result)
-elif isinstance(result, float):
-    result_str = str(round(result, 6))
+elif isinstance(result, (np.floating, float)):
+    result_str = str(round(float(result), 6))
+elif isinstance(result, (np.integer, int)):
+    result_str = str(int(result))
 else:
     result_str = str(result)
 result_str
 `;
+          }
           const result = await pyodideRef.current.runPythonAsync(testCode);
           const actualStr = String(result);
 

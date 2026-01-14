@@ -204,14 +204,113 @@ def function_name(arr):
 2. Create `src/data/problems/new-section.ts` with problem definitions
 3. Export from `src/data/problems/index.ts`
 
-### Test Case Format
+### Test Case Format & Guidelines
 
-- **input**: JSON string representing function arguments
-  - Single arg: `'[1, 2, 3]'`
-  - Multiple args: `'([1,2], [3,4])'` (tuple)
-  - Dict arg: `'{"key": "value"}'`
-- **expected**: String representation of expected output
-- The test runner in `usePyodide.ts` handles numpy array conversion
+The test runner in `src/hooks/usePyodide.ts` supports two types of test inputs:
+
+#### 1. Expression-Based Tests (Recommended)
+
+Use when you need to call the function and check properties of the result:
+
+```typescript
+// Check output shape
+{ input: 'function_name(np.random.randn(4, 8)).shape', expected: '(4, 8)' }
+
+// Check boolean condition with np.allclose
+{ input: 'bool(np.allclose(function_name(np.ones((4,))), np.array([0.25, 0.25, 0.25, 0.25])))', expected: 'True' }
+
+// Access dictionary keys from returned dict
+{ input: 'create_arrays()["zeros"].shape', expected: '(3, 3)' }
+
+// Access tuple elements
+{ input: 'function_name(x, y)[0].shape', expected: '(4, 8)' }
+```
+
+**Detection**: The test runner detects expressions by checking if `input` contains the function name, contains `.`, or is a simple identifier.
+
+#### 2. Argument-Based Tests (Simple Cases)
+
+For simple functions where input is passed directly as arguments:
+
+```typescript
+// Single array argument
+{ input: '[1, 2, 3]', expected: '6' }
+
+// Multiple arguments as tuple
+{ input: '([1, 2], [3, 4])', expected: '[[1, 2], [3, 4]]' }
+
+// Dict argument
+{ input: '{"key": "value"}', expected: 'result' }
+```
+
+#### Critical: Boolean Handling
+
+**ALWAYS wrap boolean comparisons with `bool()`** to avoid NumPy boolean issues:
+
+```typescript
+// WRONG - np.allclose returns np.bool_ which stringifies to '1' or '0'
+{ input: 'np.allclose(result, expected)', expected: 'True' }  // Will show '1' not 'True'
+
+// CORRECT - wrap with bool()
+{ input: 'bool(np.allclose(result, expected))', expected: 'True' }
+```
+
+This is because `np.bool_` is a NumPy type that Python's `isinstance(x, int)` catches (since `bool` is a subclass of `int`), causing `1`/`0` output instead of `True`/`False`.
+
+#### Complex Test Setups with Lambda
+
+For tests requiring setup code, use lambda with walrus operator:
+
+```typescript
+{
+  input: '(lambda: (model := create_mlp([784, 128, 10]), model.forward(np.random.randn(1, 784)).shape)[-1])()',
+  expected: '(1, 10)',
+}
+```
+
+Or multi-step validation:
+
+```typescript
+{
+  input: `(lambda: (
+    x := np.random.randn(2, 4),
+    out := function_name(x),
+    bool(out.shape == (2, 4) and np.allclose(out.mean(axis=-1), 0, atol=1e-5))
+  )[-1])()`,
+  expected: 'True',
+}
+```
+
+#### Common Patterns
+
+| Pattern | Example |
+|---------|---------|
+| Shape check | `function(input).shape` → `'(4, 8)'` |
+| Boolean check | `bool(np.allclose(...))` → `'True'` |
+| Dict access | `function()["key"]` → `'value'` |
+| Tuple access | `function()[0].shape` → `'(2, 2)'` |
+| Rounded float | `round(function(x), 4)` → `'0.1234'` |
+| List output | `function(x).tolist()` → `'[[1, 2], [3, 4]]'` |
+
+#### Common Pitfalls to Avoid
+
+1. **Undefined variables**: Never use bare variable names like `zeros_shape` - always call the function: `create_arrays()["zeros"].shape`
+
+2. **NumPy booleans**: Always wrap with `bool()` when comparing with `np.allclose`, `np.all`, `np.any`
+
+3. **Floating point precision**: Use `round(value, N)` or `np.allclose` for float comparisons
+
+4. **Random inputs in expected values**: For random-dependent tests, check shapes/properties, not exact values
+
+5. **Tuple vs List**: Python tuples use `()`, lists use `[]`. Be consistent with expected output format
+
+#### Validating Test Cases
+
+Before adding new test cases, verify they pass with the solution:
+1. Run the dev server: `npm run dev`
+2. Navigate to the problem
+3. Click "Show Solution" and copy it to the editor
+4. Click "Run Tests" - all tests should pass
 
 ### Modifying the UI
 
