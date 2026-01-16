@@ -877,7 +877,7 @@ def sigmoid(x: np.ndarray) -> np.ndarray:
     """
     # Your code here
     pass
-`,testCases:[{id:"1",description:"Zero input",input:"[0]",expected:"[0.5]",hidden:!1},{id:"2",description:"Positive and negative",input:"[-1, 0, 1]",expected:"[0.268941, 0.5, 0.731059]",hidden:!1},{id:"3",description:"Large values",input:"[-10, 10]",expected:"[4.5e-05, 0.999955]",hidden:!0}],hints:["Use np.exp() for the exponential function.","The formula is 1 / (1 + exp(-x))"],solution:`import numpy as np
+`,testCases:[{id:"1",description:"Zero input",input:"[0]",expected:"[0.5]",hidden:!1},{id:"2",description:"Positive and negative",input:"bool(np.allclose(sigmoid(np.array([-1, 0, 1])), [0.268941, 0.5, 0.731059], atol=1e-5))",expected:"True",hidden:!1},{id:"3",description:"Large values",input:"bool(np.allclose(sigmoid(np.array([-10, 10])), [4.5e-05, 0.999955], atol=1e-5))",expected:"True",hidden:!0}],hints:["Use np.exp() for the exponential function.","The formula is 1 / (1 + exp(-x))"],solution:`import numpy as np
 
 def sigmoid(x: np.ndarray) -> np.ndarray:
     """
@@ -1266,7 +1266,7 @@ def softmax(x: np.ndarray) -> np.ndarray:
     # Your code here
     # Hint: subtract max for numerical stability
     pass
-`,testCases:[{id:"1",description:"Basic softmax",input:"[1, 2, 3]",expected:"[0.090031, 0.244728, 0.665241]",hidden:!1},{id:"2",description:"Equal inputs",input:"[1, 1, 1]",expected:"[0.333333, 0.333333, 0.333333]",hidden:!1},{id:"3",description:"Large values",input:"[100, 101, 102]",expected:"[0.090031, 0.244728, 0.665241]",hidden:!0}],hints:["Subtract the max value for numerical stability.","Compute exp of each element.","Divide by the sum of all exp values."],solution:`import numpy as np
+`,testCases:[{id:"1",description:"Basic softmax",input:"bool(np.allclose(softmax(np.array([1, 2, 3])), [0.090031, 0.244728, 0.665241], atol=1e-5))",expected:"True",hidden:!1},{id:"2",description:"Equal inputs",input:"bool(np.allclose(softmax(np.array([1, 1, 1])), [0.333333, 0.333333, 0.333333], atol=1e-5))",expected:"True",hidden:!1},{id:"3",description:"Large values",input:"bool(np.allclose(softmax(np.array([100, 101, 102])), [0.090031, 0.244728, 0.665241], atol=1e-5))",expected:"True",hidden:!0}],hints:["Subtract the max value for numerical stability.","Compute exp of each element.","Divide by the sum of all exp values."],solution:`import numpy as np
 
 def softmax(x: np.ndarray) -> np.ndarray:
     """
