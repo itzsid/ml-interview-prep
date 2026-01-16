@@ -286,16 +286,18 @@ Given a 2D array, compute:
 - Column-wise statistics (along axis=0)
 - Argmax and argmin (indices of max/min values)
 
-### Function Signature
-\`\`\`python
-def compute_aggregations(arr: np.ndarray) -> dict:
-\`\`\`
+### Expected Return Format
+Return a dictionary with these keys:
+- **Global**: \`'global_mean'\`, \`'global_std'\`, \`'global_min'\`, \`'global_max'\`, \`'global_sum'\`
+- **Row-wise**: \`'row_mean'\`, \`'row_sum'\`
+- **Column-wise**: \`'col_mean'\`, \`'col_sum'\`
+- **Indices**: \`'argmax'\` (2D index tuple), \`'argmin'\` (2D index tuple)
     `,
     examples: [
       {
         input: 'np.array([[1, 2, 3], [4, 5, 6]])',
-        output: "{'global_mean': 3.5, 'row_sum': [6, 15], ...}",
-        explanation: 'Various aggregation results',
+        output: "{'global_mean': 3.5, 'global_sum': 21, 'row_sum': [6, 15], 'col_mean': [2.5, 3.5, 4.5], 'argmax': (1, 2), ...}",
+        explanation: 'Global, row-wise, and column-wise aggregations',
       },
     ],
     starterCode: `import numpy as np
@@ -376,16 +378,19 @@ Given a 1D array of 24 elements:
 - \`transpose\` swaps axes
 - \`-1\` in reshape means "infer this dimension"
 
-### Function Signature
-\`\`\`python
-def reshape_transpose(arr: np.ndarray) -> dict:
-\`\`\`
+### Expected Return Format
+Return a dictionary with these keys:
+- \`'arr_2d'\`: Reshaped to (4, 6)
+- \`'arr_3d'\`: Reshaped to (2, 3, 4)
+- \`'arr_2d_transposed'\`: Transpose of arr_2d, shape (6, 4)
+- \`'arr_3d_swapped'\`: arr_3d with axes swapped (2,1,0), shape (4, 3, 2)
+- \`'arr_flat'\`: Flattened back to 1D, shape (24,)
     `,
     examples: [
       {
         input: 'np.arange(24)',
-        output: "{'shape_4x6': (4,6), 'shape_2x3x4': (2,3,4), ...}",
-        explanation: 'Various reshaping results',
+        output: "{'arr_2d': shape (4,6), 'arr_3d': shape (2,3,4), 'arr_2d_transposed': shape (6,4), ...}",
+        explanation: 'Various reshape and transpose operations',
       },
     ],
     starterCode: `import numpy as np

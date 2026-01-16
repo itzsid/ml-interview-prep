@@ -362,7 +362,7 @@ def initialize_weights(n_in, n_out, method='xavier'):
         method: 'xavier' or 'he'
 
     Returns:
-        W: Initialized weight matrix (n_in, n_out)
+        std: Standard deviation of initialized weights (rounded to 4 decimals)
     """
     np.random.seed(42)  # For reproducibility
     # Your code here
