@@ -38,7 +38,7 @@ export default function Header() {
               Scratchpad
             </Link>
             <a
-              href={`${import.meta.env.BASE_URL}ml-cheatsheet.pdf`}
+              href={`${import.meta.env.BASE_URL}ml-cheatsheet.html`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-1.5 bg-amber-100 text-amber-700 text-sm font-medium rounded-md hover:bg-amber-200 transition-colors flex items-center gap-2"
