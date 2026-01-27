@@ -278,6 +278,39 @@ Return a dictionary with these keys:
 - **Indices**: \`'argmax'\` (2D index tuple), \`'argmin'\` (2D index tuple)
 ```
 
+#### 5. Document Cache/Tuple Return Formats
+
+For functions that return tuples with cache values (common in forward pass implementations), **always** document what goes in the cache:
+
+**Bad example** (vague):
+```python
+def batch_norm_forward(X, gamma, beta, eps=1e-5):
+    """
+    Returns:
+        out: Normalized output
+        cache: Values needed for backward pass  # What values?!
+    """
+```
+
+**Good example** (explicit):
+```markdown
+### Return Format
+Return \`(out, cache)\` where:
+- \`out\`: Normalized and scaled output
+- \`cache\`: Tuple \`(X, X_norm, mu, var, gamma, eps)\` for backward pass
+```
+
+```python
+def batch_norm_forward(X, gamma, beta, eps=1e-5):
+    """
+    Returns:
+        out: Normalized output (batch_size, features)
+        cache: Tuple (X, X_norm, mu, var, gamma, eps) for backward pass
+    """
+```
+
+This ensures users know exactly what to store and in what order, which is critical for implementing the backward pass correctly.
+
 ### Adding a New Section
 
 1. Add to `src/data/sections.ts`:
