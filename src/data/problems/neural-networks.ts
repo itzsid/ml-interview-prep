@@ -296,14 +296,14 @@ def cross_entropy_loss(Y_pred, Y_true):
       {
         id: '1',
         description: 'Perfect prediction',
-        input: '([[1.0, 0.0], [0.0, 1.0]], [[1, 0], [0, 1]])',
+        input: 'abs(cross_entropy_loss(np.array([[1.0, 0.0], [0.0, 1.0]]), np.array([[1, 0], [0, 1]])))',
         expected: '0.0',
         hidden: false,
       },
       {
         id: '2',
         description: 'Typical case',
-        input: '([[0.7, 0.3], [0.2, 0.8]], [[1, 0], [0, 1]])',
+        input: 'cross_entropy_loss(np.array([[0.7, 0.3], [0.2, 0.8]]), np.array([[1, 0], [0, 1]]))',
         expected: '0.2899',
         hidden: false,
       },
