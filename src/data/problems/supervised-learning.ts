@@ -372,7 +372,7 @@ def logistic_regression(X, y, learning_rate=0.1, iterations=1000):
       {
         id: '1',
         description: 'Simple separable data',
-        input: '(np.array([[0, 0], [0, 1], [1, 0], [1, 1]]), np.array([0, 0, 0, 1]), 0.5, 1000)',
+        input: 'logistic_regression(np.array([[0, 0], [0, 1], [1, 0], [1, 1]]), np.array([0, 0, 0, 1]), 0.5, 1000)',
         expected: '([6.0141, 6.0141], -9.1984)',
         hidden: false,
       },
