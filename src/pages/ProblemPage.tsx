@@ -11,7 +11,7 @@ import ProblemDescription from '../components/ProblemView/ProblemDescription';
 import Examples from '../components/ProblemView/Examples';
 import Hints from '../components/ProblemView/Hints';
 import TestResults from '../components/TestRunner/TestResults';
-import { TestResult } from '../types';
+import { TestResult, TestCase } from '../types';
 
 export default function ProblemPage() {
   const { sectionId, problemId } = useParams<{ sectionId: string; problemId: string }>();
@@ -25,12 +25,15 @@ export default function ProblemPage() {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [isEditorMaximized, setIsEditorMaximized] = useState(false);
+  const [editableTestCases, setEditableTestCases] = useState<TestCase[]>([]);
+  const [resetKey, setResetKey] = useState(0);
 
   // Load saved code or starter code
   useEffect(() => {
     if (problem && sectionId) {
       const savedProgress = getProblemProgress(sectionId, problem.id);
       setCode(savedProgress.code || problem.starterCode);
+      setEditableTestCases(problem.testCases);
     }
   }, [problem, sectionId, getProblemProgress]);
 
@@ -52,6 +55,8 @@ export default function ProblemPage() {
     if (problem) {
       setCode(problem.starterCode);
       setTestResults([]);
+      setEditableTestCases(problem.testCases);
+      setResetKey(k => k + 1);
       clearOutput();
     }
   }, [problem, clearOutput]);
@@ -71,7 +76,7 @@ export default function ProblemPage() {
 
     try {
       const functionName = extractFunctionName(problem.starterCode);
-      const results = await runTests(code, problem.testCases, functionName);
+      const results = await runTests(code, editableTestCases, functionName);
       setTestResults(results);
 
       // Check if all tests passed
@@ -82,7 +87,7 @@ export default function ProblemPage() {
     } finally {
       setIsRunning(false);
     }
-  }, [problem, isReady, sectionId, code, runTests, updateProblemStatus]);
+  }, [problem, isReady, sectionId, code, editableTestCases, runTests, updateProblemStatus]);
 
   if (!problem || !section) {
     return (
@@ -198,7 +203,14 @@ export default function ProblemPage() {
             {/* Console and Test Results */}
             <div className="overflow-auto p-4 space-y-4 bg-gray-50">
               <TestResults results={testResults} isRunning={isRunning} />
-              <Console output={output} isLoading={isRunning} />
+              <Console
+                output={output}
+                isLoading={isRunning}
+                testCases={editableTestCases}
+                onTestCasesChange={setEditableTestCases}
+                problemId={problemId}
+                resetKey={resetKey}
+              />
             </div>
           </Split>
         </div>
@@ -284,7 +296,14 @@ export default function ProblemPage() {
               {/* Console and Test Results */}
               <div className="overflow-auto p-4 space-y-4 bg-gray-50">
                 <TestResults results={testResults} isRunning={isRunning} />
-                <Console output={output} isLoading={isRunning} />
+                <Console
+                  output={output}
+                  isLoading={isRunning}
+                  testCases={editableTestCases}
+                  onTestCasesChange={setEditableTestCases}
+                  problemId={problemId}
+                  resetKey={resetKey}
+                />
               </div>
             </Split>
           </div>
