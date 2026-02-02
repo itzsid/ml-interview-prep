@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { sections } from '../data/sections';
 import { getProblemsBySection } from '../data/problems';
 import { useProgress } from '../context/ProgressContext';
+import SEO from '../components/SEO/SEO';
 
 export default function SectionPage() {
   const { sectionId } = useParams<{ sectionId: string }>();
@@ -26,6 +27,11 @@ export default function SectionPage() {
 
   return (
     <div className="max-w-4xl mx-auto">
+      <SEO
+        title={section.title}
+        description={`${section.description} Learn ${section.title.toLowerCase()} with ${section.problems.length} hands-on coding problems.`}
+        canonical={`/section/${section.id}`}
+      />
       {/* Section Header */}
       <div className="mb-8">
         <div className="flex items-center gap-4 mb-4">

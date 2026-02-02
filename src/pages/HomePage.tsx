@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { sections } from '../data/sections';
 import { useProgress } from '../context/ProgressContext';
+import SEO from '../components/SEO/SEO';
 
 export default function HomePage() {
   const { getSectionProgress, getOverallProgress } = useProgress();
@@ -14,6 +15,7 @@ export default function HomePage() {
 
   return (
     <div className="max-w-5xl mx-auto">
+      <SEO canonical="/" />
       {/* Hero Section */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">

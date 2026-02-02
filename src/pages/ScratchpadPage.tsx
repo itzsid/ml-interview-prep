@@ -4,6 +4,7 @@ import Split from 'react-split';
 import { usePyodide } from '../hooks/usePyodide';
 import CodeEditor from '../components/CodeEditor/CodeEditor';
 import Console from '../components/Console/Console';
+import SEO from '../components/SEO/SEO';
 
 const STORAGE_KEY = 'ml-interview-scratchpad';
 
@@ -63,6 +64,12 @@ export default function ScratchpadPage() {
 
   return (
     <div className="h-[calc(100vh-8rem)] flex flex-col -m-6">
+      <SEO
+        title="Python Scratchpad"
+        description="Free Python playground with NumPy pre-loaded. Run Python code directly in your browser - no setup required. Practice machine learning code instantly."
+        canonical="/scratchpad"
+        keywords="Python playground, online Python, NumPy, code sandbox, ML practice, browser Python"
+      />
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
         <div className="flex items-center gap-3">

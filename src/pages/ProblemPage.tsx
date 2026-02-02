@@ -11,6 +11,7 @@ import ProblemDescription from '../components/ProblemView/ProblemDescription';
 import Examples from '../components/ProblemView/Examples';
 import Hints from '../components/ProblemView/Hints';
 import TestResults from '../components/TestRunner/TestResults';
+import SEO from '../components/SEO/SEO';
 import { TestResult, TestCase } from '../types';
 
 export default function ProblemPage() {
@@ -104,8 +105,23 @@ export default function ProblemPage() {
   const currentIndex = section.problems.indexOf(problem.id);
   const nextProblemId = section.problems[currentIndex + 1];
 
+  // Create description from first paragraph of problem description
+  const problemDescriptionText = problem.description
+    .replace(/[#*`]/g, '')
+    .split('\n')
+    .filter(line => line.trim())
+    .slice(0, 2)
+    .join(' ')
+    .substring(0, 155);
+
   return (
     <div className="h-[calc(100vh-8rem)] flex flex-col -m-6">
+      <SEO
+        title={`${problem.title} - ${section.title}`}
+        description={`${problemDescriptionText}... Practice this ${problem.difficulty} ML coding problem with instant feedback.`}
+        canonical={`/problem/${sectionId}/${problemId}`}
+        keywords={`${problem.title}, ${section.title}, machine learning, coding practice, ${problem.difficulty}`}
+      />
       {/* Problem Header */}
       <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
         <div className="flex items-center gap-3">
