@@ -57,7 +57,7 @@ export default function TermsPage() {
               <li>Test cases and examples</li>
             </ul>
             <p className="text-gray-600 mb-4">
-              is copyrighted material owned by Siddharth Garg. This content may not be reproduced,
+              is copyrighted material owned by Siddharth Choudhary. This content may not be reproduced,
               distributed, modified, or used to create derivative works without explicit written
               permission from the copyright holder.
             </p>
