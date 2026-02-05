@@ -409,6 +409,260 @@ def logistic_regression(X, y, learning_rate=0.1, iterations=1000):
 `,
   },
   {
+    id: 'hinge-loss',
+    title: 'Hinge Loss',
+    section: 'supervised-learning',
+    difficulty: 'easy',
+    description: `
+## Hinge Loss
+
+Implement the hinge loss function used in Support Vector Machines (SVMs).
+
+### Formula
+\`\`\`
+L = (1/n) * sum(max(0, 1 - y * s))
+\`\`\`
+
+Where:
+- **y**: True labels in {-1, +1}
+- **s**: Raw model scores (not probabilities)
+- **n**: Number of samples
+
+### Properties
+- Loss is **0** when the prediction has the correct sign AND confidence margin >= 1
+- Loss increases linearly when the prediction is wrong or within the margin
+- Unlike cross-entropy, hinge loss encourages a "margin" of separation between classes
+
+### Function Signature
+\`\`\`python
+def hinge_loss(y_true: np.ndarray, scores: np.ndarray) -> float:
+\`\`\`
+
+Returns the mean hinge loss rounded to 4 decimal places.
+    `,
+    examples: [
+      {
+        input: 'y_true = [1, -1, 1], scores = [0.5, -0.8, 1.5]',
+        output: '0.2333',
+        explanation: 'Margins: [0.5, 0.2, -0.5] → losses: [0.5, 0.2, 0.0] → mean = 0.2333',
+      },
+      {
+        input: 'y_true = [1, -1], scores = [2.0, -3.0]',
+        output: '0.0',
+        explanation: 'Both predictions correct with margin >= 1, so zero loss',
+      },
+    ],
+    starterCode: `import numpy as np
+
+def hinge_loss(y_true, scores):
+    """
+    Compute the mean hinge loss.
+
+    Args:
+        y_true: True labels in {-1, +1}, shape (n,)
+        scores: Raw model scores, shape (n,)
+
+    Returns:
+        Mean hinge loss (float, rounded to 4 decimals)
+    """
+    # Your code here
+    pass
+`,
+    testCases: [
+      {
+        id: '1',
+        description: 'Perfect predictions with large margin',
+        input: '([1, -1], [2.0, -3.0])',
+        expected: '0.0',
+        hidden: false,
+      },
+      {
+        id: '2',
+        description: 'Partial margin violations',
+        input: '([1, -1, 1], [0.5, -0.8, 1.5])',
+        expected: '0.2333',
+        hidden: false,
+      },
+      {
+        id: '3',
+        description: 'All misclassified',
+        input: '([1, 1], [-1.0, -2.0])',
+        expected: '2.5',
+        hidden: false,
+      },
+      {
+        id: '4',
+        description: 'On the decision boundary (margin = 1)',
+        input: '([1, -1], [1.0, -1.0])',
+        expected: '0.0',
+        hidden: true,
+      },
+    ],
+    hints: [
+      'Compute element-wise margins: y_true * scores',
+      'Apply max(0, 1 - margin) using np.maximum',
+      'Return the mean of the losses, rounded to 4 decimals',
+    ],
+    solution: `import numpy as np
+
+def hinge_loss(y_true, scores):
+    """
+    Compute the mean hinge loss.
+    """
+    y_true = np.array(y_true, dtype=float)
+    scores = np.array(scores, dtype=float)
+
+    # Compute hinge loss for each sample
+    losses = np.maximum(0, 1 - y_true * scores)
+
+    return round(float(np.mean(losses)), 4)
+`,
+  },
+  {
+    id: 'linear-svm',
+    title: 'Linear SVM with Gradient Descent',
+    section: 'supervised-learning',
+    difficulty: 'medium',
+    description: `
+## Linear SVM with Gradient Descent
+
+Implement a linear Support Vector Machine (SVM) classifier using gradient descent on the hinge loss with L2 regularization.
+
+### Objective
+\`\`\`
+L = (λ/2) * ||w||² + (1/m) * Σ max(0, 1 - yᵢ * (Xᵢ · w + b))
+\`\`\`
+
+### Gradients
+Compute gradients over all samples. For samples where the margin \`yᵢ * (Xᵢ · w + b) < 1\` (hinge loss is active):
+\`\`\`
+dw = λ * w - (1/m) * Σ yᵢ * Xᵢ    (sum over violating samples)
+db = -(1/m) * Σ yᵢ                  (sum over violating samples)
+\`\`\`
+
+For samples where the margin >= 1:
+\`\`\`
+dw contribution = λ * w   (only regularization)
+db contribution = 0
+\`\`\`
+
+### Function Signature
+\`\`\`python
+def linear_svm(X, y, learning_rate=0.01, lambda_param=0.01, iterations=1000):
+\`\`\`
+
+Returns \`(w, b)\` — the learned weight vector (rounded to 4 decimals) and bias (rounded to 4 decimals).
+
+**Note**: Labels \`y\` are in {-1, +1}.
+    `,
+    examples: [
+      {
+        input: 'X = [[2,1],[3,2],[-2,-1],[-3,-2]], y = [1,1,-1,-1], lr=0.01, λ=0.01, iters=1000',
+        output: 'w and b that correctly classify all points',
+        explanation: 'SVM finds a maximum-margin hyperplane separating positive and negative points',
+      },
+    ],
+    starterCode: `import numpy as np
+
+def linear_svm(X, y, learning_rate=0.01, lambda_param=0.01, iterations=1000):
+    """
+    Train a linear SVM using gradient descent on hinge loss + L2 regularization.
+
+    Args:
+        X: Features (m samples, n features)
+        y: Labels in {-1, +1}, shape (m,)
+        learning_rate: Step size for gradient descent
+        lambda_param: L2 regularization strength
+        iterations: Number of training iterations
+
+    Returns:
+        w: Learned weights (n,), rounded to 4 decimals
+        b: Learned bias (scalar), rounded to 4 decimals
+    """
+    m, n = X.shape
+    w = np.zeros(n)
+    b = 0.0
+
+    # Your gradient descent implementation here
+    pass
+
+    return np.round(w, 4), round(b, 4)
+`,
+    testCases: [
+      {
+        id: '1',
+        description: 'Correctly classifies separable 2D data',
+        input: `(lambda: (
+    X := np.array([[2, 1], [3, 2], [1, 3], [-2, -1], [-3, -2], [-1, -3]]),
+    y := np.array([1, 1, 1, -1, -1, -1]),
+    result := linear_svm(X, y, 0.01, 0.01, 1000),
+    preds := np.sign(X @ result[0] + result[1]),
+    bool(np.array_equal(preds, y))
+)[-1])()`,
+        expected: 'True',
+        hidden: false,
+      },
+      {
+        id: '2',
+        description: 'Correctly classifies 1D data',
+        input: `(lambda: (
+    X := np.array([[3], [4], [5], [-3], [-4], [-5]]),
+    y := np.array([1, 1, 1, -1, -1, -1]),
+    result := linear_svm(X, y, 0.01, 0.01, 1000),
+    preds := np.sign(X @ result[0] + result[1]),
+    bool(np.array_equal(preds, y))
+)[-1])()`,
+        expected: 'True',
+        hidden: false,
+      },
+      {
+        id: '3',
+        description: 'Weight vector has correct sign',
+        input: `(lambda: (
+    X := np.array([[1], [-1]]),
+    y := np.array([1, -1]),
+    result := linear_svm(X, y, 0.1, 0.01, 500),
+    bool(result[0][0] > 0)
+)[-1])()`,
+        expected: 'True',
+        hidden: true,
+      },
+    ],
+    hints: [
+      'Compute margins for all samples: margins = y * (X @ w + b)',
+      'Find violating samples with mask = margins < 1',
+      'Gradient: dw = lambda_param * w - (1/m) * X[mask].T @ y[mask]',
+      'Update w and b using gradient descent',
+    ],
+    solution: `import numpy as np
+
+def linear_svm(X, y, learning_rate=0.01, lambda_param=0.01, iterations=1000):
+    """
+    Train a linear SVM using gradient descent on hinge loss + L2 regularization.
+    """
+    m, n = X.shape
+    w = np.zeros(n)
+    b = 0.0
+
+    for _ in range(iterations):
+        # Compute margins
+        margins = y * (X @ w + b)
+
+        # Find samples violating the margin
+        mask = margins < 1
+
+        # Compute gradients
+        dw = lambda_param * w - (1/m) * (X[mask].T @ y[mask])
+        db = -(1/m) * np.sum(y[mask])
+
+        # Update parameters
+        w -= learning_rate * dw
+        b -= learning_rate * db
+
+    return np.round(w, 4), round(b, 4)
+`,
+  },
+  {
     id: 'binary-cross-entropy',
     title: 'Binary Cross-Entropy Loss',
     section: 'supervised-learning',

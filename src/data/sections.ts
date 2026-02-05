@@ -266,15 +266,22 @@ Supervised learning is when you train a model on labeled data to make prediction
 - **Splitting criteria**: Gini impurity, Information gain
 - **Advantages**: Interpretable, handles non-linear relationships
 
+### Support Vector Machines (SVMs)
+- **Goal**: Find the maximum-margin hyperplane
+- **Hinge loss**: max(0, 1 - y * score) — penalizes misclassified and low-margin samples
+- **Regularization**: L2 penalty on weights to maximize margin
+- **Key insight**: Only "support vectors" (points near the boundary) affect the decision boundary
+
 ### The Interview Perspective
 Interviewers often ask you to:
 - Implement gradient descent from scratch
 - Explain the math behind these algorithms
+- Compute and interpret hinge loss
 - Discuss trade-offs between algorithms
 
 Let's build these algorithms!
     `,
-    problems: ['linear-regression-gd', 'logistic-regression', 'logistic-regression-full', 'binary-cross-entropy', 'decision-tree-split'],
+    problems: ['linear-regression-gd', 'logistic-regression', 'logistic-regression-full', 'binary-cross-entropy', 'hinge-loss', 'linear-svm', 'decision-tree-split'],
   },
   {
     id: 'unsupervised-learning',
