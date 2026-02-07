@@ -10,7 +10,6 @@ import Console from '../components/Console/Console';
 import ProblemDescription from '../components/ProblemView/ProblemDescription';
 import Examples from '../components/ProblemView/Examples';
 import Hints from '../components/ProblemView/Hints';
-import TestResults from '../components/TestRunner/TestResults';
 import SEO from '../components/SEO/SEO';
 import { TestResult, TestCase } from '../types';
 import SuccessBanner from '../components/SuccessBanner/SuccessBanner';
@@ -300,9 +299,8 @@ export default function ProblemPage() {
               />
             </div>
 
-            {/* Console and Test Results */}
-            <div className="overflow-auto p-4 space-y-4 bg-gray-50">
-              <TestResults results={testResults} isRunning={isRunning} />
+            {/* Console with inline Test Results */}
+            <div className="overflow-auto p-4 bg-gray-50">
               <Console
                 output={output}
                 isLoading={isRunning}
@@ -310,6 +308,7 @@ export default function ProblemPage() {
                 onTestCasesChange={setEditableTestCases}
                 problemId={problemId}
                 resetKey={resetKey}
+                testResults={testResults}
               />
             </div>
           </Split>
@@ -409,9 +408,8 @@ export default function ProblemPage() {
                 />
               </div>
 
-              {/* Console and Test Results */}
-              <div className="overflow-auto p-4 space-y-4 bg-gray-50">
-                <TestResults results={testResults} isRunning={isRunning} />
+              {/* Console with inline Test Results */}
+              <div className="overflow-auto p-4 bg-gray-50">
                 <Console
                   output={output}
                   isLoading={isRunning}
@@ -419,6 +417,7 @@ export default function ProblemPage() {
                   onTestCasesChange={setEditableTestCases}
                   problemId={problemId}
                   resetKey={resetKey}
+                  testResults={testResults}
                 />
               </div>
             </Split>
