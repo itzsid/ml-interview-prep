@@ -424,10 +424,10 @@ export default function ProblemPage() {
           {/* Left Panel - Tabbed Problem Description */}
           <div className="problem-panel flex flex-col overflow-hidden bg-gray-50 dark:bg-gray-800 min-w-0">
             {/* Tab Bar */}
-            <div className="flex border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 shrink-0">
+            <div className="flex overflow-x-auto whitespace-nowrap border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 shrink-0">
               <button
                 onClick={() => setDescriptionTab('description')}
-                className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                className={`whitespace-nowrap shrink-0 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
                   descriptionTab === 'description'
                     ? 'border-primary-500 text-primary-600'
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
@@ -437,7 +437,7 @@ export default function ProblemPage() {
               </button>
               <button
                 onClick={() => setDescriptionTab('examples')}
-                className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                className={`whitespace-nowrap shrink-0 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
                   descriptionTab === 'examples'
                     ? 'border-primary-500 text-primary-600'
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
@@ -447,7 +447,7 @@ export default function ProblemPage() {
               </button>
               <button
                 onClick={() => setDescriptionTab('hints')}
-                className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                className={`whitespace-nowrap shrink-0 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
                   descriptionTab === 'hints'
                     ? 'border-primary-500 text-primary-600'
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'

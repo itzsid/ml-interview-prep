@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'DM Sans', -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light;
@@ -17,8 +17,8 @@
 
 .dark {
   color-scheme: dark;
-  color: #e2e8f0;
-  background-color: #0f172a;
+  color: #e8ecf4;
+  background-color: #0c0f14;
 }
 
 body {
@@ -33,7 +33,34 @@ body {
   flex-direction: column;
 }
 
-/* Custom scrollbar */
+/* ===== BACKGROUND ATMOSPHERE (dark mode) ===== */
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(108, 92, 231, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 10%, rgba(0, 201, 167, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 50% 100%, rgba(108, 92, 231, 0.03) 0%, transparent 50%);
+}
+
+.bg-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hide atmosphere in light mode */
+:root:not(.dark) .bg-mesh,
+:root:not(.dark) .bg-noise {
+  display: none;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -44,7 +71,7 @@ body {
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: #13161d;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -53,7 +80,7 @@ body {
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: #2e3440;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -61,10 +88,10 @@ body {
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: #5a6478;
 }
 
-/* Code block styling */
+/* ===== CODE BLOCKS ===== */
 pre {
   background-color: #f1f5f9;
   border-radius: 0.5rem;
@@ -73,15 +100,15 @@ pre {
 }
 
 .dark pre {
-  background-color: #1e293b;
+  background-color: #13161d;
 }
 
 code {
-  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
   font-size: 0.875rem;
 }
 
-/* Split pane styles */
+/* ===== SPLIT PANE GUTTER ===== */
 .gutter {
   background-color: #e2e8f0;
   background-repeat: no-repeat;
@@ -89,7 +116,7 @@ code {
 }
 
 .dark .gutter {
-  background-color: #334155;
+  background-color: #22272f;
 }
 
 .gutter.gutter-horizontal {
@@ -101,10 +128,10 @@ code {
 }
 
 .gutter:hover {
-  background-color: #22c55e;
+  background-color: #6c5ce7;
 }
 
-/* Problem description panel - prevent horizontal overflow */
+/* ===== PROBLEM PANEL OVERFLOW ===== */
 .problem-panel {
   word-break: break-word;
   overflow-wrap: break-word;
@@ -120,8 +147,7 @@ code {
   word-break: break-all;
 }
 
-
-/* Success banner animation */
+/* ===== ANIMATIONS ===== */
 @keyframes slide-down {
   from {
     transform: translateY(-100%);
@@ -136,3 +162,24 @@ code {
 .animate-slide-down {
   animation: slide-down 0.3s ease-out;
 }
+
+/* ===== GRADIENT PROGRESS BAR ===== */
+.progress-gradient {
+  background: linear-gradient(90deg, #6c5ce7, #00c9a7);
+}
+
+/* ===== STAGGERED CARD ANIMATIONS ===== */
+.card-stagger:nth-child(1) { animation-delay: 0.05s; }
+.card-stagger:nth-child(2) { animation-delay: 0.10s; }
+.card-stagger:nth-child(3) { animation-delay: 0.15s; }
+.card-stagger:nth-child(4) { animation-delay: 0.20s; }
+.card-stagger:nth-child(5) { animation-delay: 0.25s; }
+.card-stagger:nth-child(6) { animation-delay: 0.30s; }
+.card-stagger:nth-child(7) { animation-delay: 0.35s; }
+.card-stagger:nth-child(8) { animation-delay: 0.40s; }
+.card-stagger:nth-child(9) { animation-delay: 0.45s; }
+.card-stagger:nth-child(10) { animation-delay: 0.50s; }
+.card-stagger:nth-child(11) { animation-delay: 0.55s; }
+.card-stagger:nth-child(12) { animation-delay: 0.60s; }
+.card-stagger:nth-child(13) { animation-delay: 0.65s; }
+.card-stagger:nth-child(14) { animation-delay: 0.70s; }

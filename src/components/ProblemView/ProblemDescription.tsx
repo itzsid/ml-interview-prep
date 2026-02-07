@@ -12,7 +12,7 @@ export default function ProblemDescription({ problem }: ProblemDescriptionProps)
       <div className="flex items-center gap-3 mb-4">
         <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 m-0">{problem.title}</h1>
         <span
-          className={`px-2 py-0.5 rounded text-xs font-medium ${
+          className={`px-2 py-0.5 rounded text-xs font-medium whitespace-nowrap ${
             problem.difficulty === 'easy'
               ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
               : problem.difficulty === 'medium'

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { sections } from '../data/sections';
 import { useProgress } from '../context/ProgressContext';
@@ -13,34 +14,54 @@ export default function HomePage() {
 
   const overallProgress = getOverallProgress(sectionInfo);
 
+  const totalProblems = useMemo(() =>
+    sections.reduce((sum, s) => sum + s.problems.length, 0),
+    []
+  );
+
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-[1200px] mx-auto">
       <SEO canonical="/" />
+
       {/* Hero Section */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-          Learn ML By Building
+      <div className="text-center mb-16 pt-8">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white dark:bg-dark-800 border border-gray-200 dark:border-dark-500 rounded-full text-sm text-gray-600 dark:text-dark-200 mb-8 animate-fade-up">
+          <span className="w-2 h-2 rounded-full bg-accent-500 animate-pulse-dot" />
+          100% browser-based &middot; No setup required
+        </div>
+
+        <h1 className="font-display text-[clamp(2.5rem,6vw,4.2rem)] font-normal leading-[1.1] tracking-tight text-gray-900 dark:text-dark-100 mb-6 animate-fade-up [animation-delay:0.1s]">
+          Learn Machine Learning<br />by <em className="text-primary-400 dark:text-primary-300">Building</em>
         </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
-          Practice hands-on machine learning coding problems. Run Python code directly in your
-          browser with NumPy and scikit-learn support.
+
+        <p className="text-lg text-gray-500 dark:text-dark-200 max-w-[560px] mx-auto mb-10 font-light leading-relaxed animate-fade-up [animation-delay:0.2s]">
+          Implement algorithms from scratch — NumPy, neural networks, transformers,
+          diffusion models. Write real Python with instant feedback, directly in your browser.
         </p>
 
-        {/* Overall Progress */}
-        <div className="inline-flex items-center gap-4 bg-white dark:bg-gray-900 rounded-lg px-6 py-3 shadow-sm border border-gray-200 dark:border-gray-700">
-          <span className="text-gray-600 dark:text-gray-400">Overall Progress</span>
-          <div className="w-48 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-primary-500 transition-all duration-500"
-              style={{ width: `${overallProgress}%` }}
-            />
+        <div className="flex justify-center gap-12 animate-fade-up [animation-delay:0.3s]">
+          <div className="text-center">
+            <div className="font-mono text-2xl font-bold text-gray-900 dark:text-dark-100">{totalProblems}+</div>
+            <div className="text-[11px] text-gray-400 dark:text-dark-300 uppercase tracking-widest mt-1">Problems</div>
           </div>
-          <span className="text-primary-600 dark:text-primary-400 font-medium">{overallProgress}%</span>
+          <div className="text-center">
+            <div className="font-mono text-2xl font-bold text-gray-900 dark:text-dark-100">{sections.length}</div>
+            <div className="text-[11px] text-gray-400 dark:text-dark-300 uppercase tracking-widest mt-1">Sections</div>
+          </div>
+          <div className="text-center">
+            <div className="font-mono text-2xl font-bold text-gray-900 dark:text-dark-100">{overallProgress}%</div>
+            <div className="text-[11px] text-gray-400 dark:text-dark-300 uppercase tracking-widest mt-1">Complete</div>
+          </div>
         </div>
       </div>
 
+      {/* Curriculum Label */}
+      <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400 dark:text-dark-300 mb-6 font-mono">
+        Curriculum
+      </div>
+
       {/* Sections Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {sections.map((section, index) => {
           const progress = getSectionProgress(section.id, section.problems.length);
 
@@ -48,66 +69,81 @@ export default function HomePage() {
             <Link
               key={section.id}
               to={`/section/${section.id}`}
-              className="group bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:border-primary-400 hover:shadow-md transition-all duration-200"
+              className="card-stagger animate-fade-up group relative flex gap-4 p-5 bg-white dark:bg-dark-800 rounded-[14px] border border-gray-200 dark:border-dark-500 hover:border-gray-300 dark:hover:border-dark-400 hover:bg-gray-50 dark:hover:bg-dark-700 hover:-translate-y-0.5 hover:shadow-lg dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)] transition-all duration-250 overflow-hidden"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center text-2xl group-hover:bg-primary-50 dark:group-hover:bg-primary-900/20 transition-colors">
-                  {section.icon}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-gray-400 dark:text-gray-500 text-sm">{index + 1}.</span>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                      {section.title}
-                    </h3>
-                  </div>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
-                    {section.description}
-                  </p>
+              {/* Hover glow overlay */}
+              <div className="absolute inset-0 rounded-[14px] bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-400 dark:text-gray-500 text-sm">
-                      {section.problems.length} problems
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <div className="w-24 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary-500 transition-all duration-300"
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">{progress}%</span>
+              <div className="shrink-0 w-11 h-11 bg-gray-100 dark:bg-dark-600 border border-gray-200 dark:border-dark-500 rounded-[10px] flex items-center justify-center text-[22px] group-hover:bg-primary-50 dark:group-hover:bg-primary-500/10 group-hover:border-primary-200 dark:group-hover:border-primary-500/25 transition-all relative z-[1]">
+                {section.icon}
+              </div>
+
+              <div className="flex-1 min-w-0 relative z-[1]">
+                <div className="font-mono text-[11px] text-gray-400 dark:text-dark-300 mb-0.5">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+                <div className="text-base font-semibold text-gray-900 dark:text-dark-100 tracking-tight mb-1.5 group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">
+                  {section.title}
+                </div>
+                <div className="text-[13px] text-gray-500 dark:text-dark-300 leading-relaxed mb-3.5">
+                  {section.description}
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] text-gray-400 dark:text-dark-300">
+                    {section.problems.length} problems
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-[60px] h-[3px] bg-gray-200 dark:bg-dark-500 rounded-full overflow-hidden">
+                      <div
+                        className="h-full progress-gradient rounded-full transition-all duration-500"
+                        style={{ width: `${progress}%` }}
+                      />
                     </div>
+                    <span className="font-mono text-[11px] text-gray-400 dark:text-dark-300">{progress}%</span>
                   </div>
                 </div>
               </div>
+
+              {/* Hover arrow */}
+              <span className="absolute right-5 top-1/2 -translate-y-1/2 -translate-x-1 opacity-0 text-primary-500 dark:text-primary-300 text-lg group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-250">
+                &rarr;
+              </span>
             </Link>
           );
         })}
       </div>
 
       {/* Features Section */}
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-700">
-          <div className="text-3xl mb-3">🐍</div>
-          <h3 className="text-gray-900 dark:text-gray-100 font-medium mb-2">Python in Browser</h3>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
-            Run Python code with NumPy, pandas, and more - no setup required.
-          </p>
-        </div>
-        <div className="bg-white dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-700">
-          <div className="text-3xl mb-3">✅</div>
-          <h3 className="text-gray-900 dark:text-gray-100 font-medium mb-2">Instant Feedback</h3>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
-            Test your code against multiple test cases and see results immediately.
-          </p>
-        </div>
-        <div className="bg-white dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-700">
-          <div className="text-3xl mb-3">📊</div>
-          <h3 className="text-gray-900 dark:text-gray-100 font-medium mb-2">Track Progress</h3>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
-            Your progress is saved locally. Pick up where you left off anytime.
-          </p>
+      <div className="mt-16 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-gray-200 dark:bg-dark-500 border border-gray-200 dark:border-dark-500 rounded-[14px] overflow-hidden">
+          <div className="bg-white dark:bg-dark-800 p-8 text-center hover:bg-gray-50 dark:hover:bg-dark-700 transition-colors">
+            <div className="w-12 h-12 mx-auto mb-4 bg-gray-100 dark:bg-dark-600 border border-gray-200 dark:border-dark-500 rounded-xl flex items-center justify-center text-[22px]">
+              🐍
+            </div>
+            <div className="font-semibold text-sm text-gray-900 dark:text-dark-100 tracking-tight mb-2">Python in Browser</div>
+            <div className="text-[13px] text-gray-500 dark:text-dark-300 leading-relaxed">
+              Full Python runtime with NumPy, pandas, and scikit-learn. No install, no config.
+            </div>
+          </div>
+          <div className="bg-white dark:bg-dark-800 p-8 text-center hover:bg-gray-50 dark:hover:bg-dark-700 transition-colors">
+            <div className="w-12 h-12 mx-auto mb-4 bg-gray-100 dark:bg-dark-600 border border-gray-200 dark:border-dark-500 rounded-xl flex items-center justify-center text-[22px]">
+              ✅
+            </div>
+            <div className="font-semibold text-sm text-gray-900 dark:text-dark-100 tracking-tight mb-2">Instant Feedback</div>
+            <div className="text-[13px] text-gray-500 dark:text-dark-300 leading-relaxed">
+              Run your code against test suites and see results immediately.
+            </div>
+          </div>
+          <div className="bg-white dark:bg-dark-800 p-8 text-center hover:bg-gray-50 dark:hover:bg-dark-700 transition-colors">
+            <div className="w-12 h-12 mx-auto mb-4 bg-gray-100 dark:bg-dark-600 border border-gray-200 dark:border-dark-500 rounded-xl flex items-center justify-center text-[22px]">
+              💾
+            </div>
+            <div className="font-semibold text-sm text-gray-900 dark:text-dark-100 tracking-tight mb-2">Progress Saved Locally</div>
+            <div className="text-[13px] text-gray-500 dark:text-dark-300 leading-relaxed">
+              Your code and progress persist in your browser. Pick up anytime.
+            </div>
+          </div>
         </div>
       </div>
     </div>
